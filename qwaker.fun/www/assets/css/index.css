@@ -1,0 +1,14 @@
+h2.qak-index-message {
+	padding: 0;
+	margin: 20px;
+	margin-bottom: 10px;
+	color: var(--color-html-text);
+	opacity: .5;
+	font-weight: 500;
+	font-size: 14px;
+	font-family: system-ui;
+}
+
+div#container-data-index {
+	margin-top: 20px;
+}

@@ -1,0 +1,209 @@
+input.qak-input-post {
+	
+}
+textarea.qak-textarea-post {
+	margin-top: 10px;
+	resize: vertical;
+	height: 100px;
+	max-height: 180px;
+	min-height: 100px;
+}
+div.qak-post-container {
+	width: var(--default-page-width-container);
+}
+button.qak-button-public-post {
+	white-space: nowrap;
+}
+
+div.qak-post-div-cntr-bottom {
+	display: flex;
+	align-items: center;
+	margin-top: 10px;
+}
+
+h3.qak-container-popup-text {
+	margin-right: 10px;
+}
+
+ol.popup.category {
+    margin-top: 90px;
+    margin-left: -3px;
+    width: 180px;
+}
+
+div.qak-action-deffred-post {
+	padding: 8px;
+	margin: 0px 5px;
+	border: 2px solid var(--color-html-text);
+	border-radius: 100px;
+	cursor: pointer;
+	opacity: .5;
+}
+div.qak-action-deffred-post::after {
+	content: "";
+	position: absolute;
+	width: 5px;
+	height: 2px;
+	background: var(--color-html-text);
+	/* border: 3px solid var(--color-html-background); */
+	margin-top: 0px;
+	margin-left: -5px;
+	transform: rotate(17deg);
+}
+div.qak-action-deffred-post::before {
+	content: "";
+	position: absolute;
+	width: 7px;
+	height: 2px;
+	background: var(--color-html-text);
+	/* border: 3px solid var(--color-html-background); */
+	margin-top: -2px;
+	margin-left: -3px;
+	transform: rotate(90deg);
+}
+div.qak-action-deffred-post:hover {
+	opacity: .7;
+}
+
+div.qak-action-picture-add {
+	padding: 8px;
+	margin: 0 10px;
+	border: 2px solid var(--color-html-text);
+	border-radius: 5px;
+	cursor: pointer;
+	opacity: .5;
+}
+div.qak-action-picture-add::after {
+	content: "";
+	position: absolute;
+	width: 8px;
+	height: 2px;
+	background: var(--color-html-text);
+	/* border: 3px solid var(--color-html-background); */
+	margin-top: -1px;
+	margin-left: -4px;
+}
+div.qak-action-picture-add::before {
+	content: "";
+	position: absolute;
+	width: 8px;
+	height: 2px;
+	background: var(--color-html-text);
+	/* border: 3px solid var(--color-html-background); */
+	margin-top: -1px;
+	margin-left: -4px;
+	transform: rotate(90deg);
+}
+div.qak-action-picture-add:hover {
+	opacity: .7;
+}
+
+ol.post-pic-list-popup {
+	margin: 0;
+	margin-top: 10px;
+	width: 292px;
+	right: 1px;
+}
+ol.post-pic-list-popup div {
+	display: flex;
+	align-items: center;
+}
+img.post-pic-item {
+	padding: 0;
+	margin: 7px 13px;
+	--size-post-pic: 80px;
+	width: var(--size-post-pic);
+	max-width: var(--size-post-pic);
+	min-width: var(--size-post-pic);
+	height: var(--size-post-pic);
+	max-height: var(--size-post-pic);
+	min-height: var(--size-post-pic);
+	background: var(--color-img-default-background);
+	border: none;
+	outline: none;
+	border-radius: 4px;
+	overflow: hidden;
+	/* margin-top: 3px; */
+	margin-right: 0;
+	object-fit: cover;
+	object-position: center;
+}
+img.post-pic-item:hover::after {
+	content: "";
+	position: absolute;
+	padding: 9px;
+	background: red;
+	box-shadow: 0 2px 10px rgba(0,0,0,.1);
+	border-radius: 100px;
+	margin-left: -10px;
+	margin-top: -5px;
+}
+img.post-pic-item:hover::before {
+	content: "";
+	position: absolute;
+	width: 10px;
+	height: 3px;
+	background: white;
+	margin-left: 74px;
+	margin-top: 2px;
+	/* right: 9px; */
+	z-index: 1;
+}
+
+div.qak-post-container {
+	padding: 0 10px;
+	margin: 50px;
+	padding-bottom: 10px;
+	width: 500px;
+	background: var(--color-container-background);
+	border: 1px solid var(--color-container-border);
+	border-radius: 21px;
+	box-shadow: 0 10px 30px rgba(0,0,0,.1);
+}
+
+ol.post-deffred-popup {
+	width: 230px;
+	right: 36px;
+	top: 31px;
+}
+
+input.post-deffred-ddd {
+	padding: 5px;
+	width: -webkit-fill-available;
+	margin: 0 5px;
+	max-width: 50px;
+}
+h2.post-deffred-ddd {
+	padding: 0;
+	margin: 0 5px;
+	width: -webkit-fill-available;
+	text-align: left;
+	font-weight: 100;
+	font-size: 10px;
+	font-family: system-ui;
+}
+div.post-deffred-ddd-ttt {
+	padding: 0 5px;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	width: -webkit-fill-available;
+	margin-bottom: 2px;
+	margin-top: 1px;
+	user-select: none;
+	pointer-events: none;
+}
+div.post-deffred-ddd-ccc {
+	padding: 0 5px;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	width: -webkit-fill-available;
+	margin-bottom: 4px;
+}
+button.post-deffred-aply {
+	margin-top: 5px;
+}
+hr.post-deffred-divider {
+	margin-top: 10px;
+}

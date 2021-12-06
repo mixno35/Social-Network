@@ -1,0 +1,19 @@
+order allow,deny
+deny from 127.0.0.10
+#newIPAddres
+allow from all
+
+Options -MultiViews
+
+RewriteEngine On
+RewriteBase /
+RewriteCond %{SERVER_PORT} !^443$
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+#RewriteRule ^dialog/([^/]+)/?$ dialog.php?id=$1 [L]
+
+ErrorDocument 400 /error.php
+ErrorDocument 401 /error.php
+ErrorDocument 403 /error.php
+ErrorDocument 404 /error.php
+ErrorDocument 500 /error.php

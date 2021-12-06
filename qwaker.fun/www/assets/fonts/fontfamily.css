@@ -1,0 +1,10 @@
+@font-face {
+    font-family: MonserratBlack;
+    font-weight: bold;
+    src: url("Monserrat-Black.otf") format("opentype");
+}
+@font-face {
+    font-family: MonserratMedium;
+    font-weight: bold;
+    src: url("Monserrat-Medium.otf") format("opentype");
+}

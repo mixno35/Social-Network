@@ -1,0 +1,240 @@
+div.qak-auth-container {
+	padding: 10px 30px;
+	margin: 40px;
+	width: 300px;
+	margin-bottom: 20px;
+	background-color: var(--color-container-background);
+	border: 1px solid var(--color-container-border);
+	border-radius: 22px;
+	display: block;
+	text-align: center;
+	box-shadow: 0 10px 30px rgba(0,0,0,.1);
+}
+
+div.qak-auth-container hr.up {
+	padding: 0;
+	margin: 20px 0;
+	outline: none;
+	border: none;
+	height: 1px;
+	background: var(--color-container-border);
+}
+
+h2.title-qak-text {
+	padding: 0px;
+	font-size: 20px;
+	margin-bottom: 30px;
+	margin-top: 15px;
+	text-align: center;
+}
+
+ul.tablayout-qak {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+h2.qak-auth-message {
+	padding: 0;
+	margin: 20px;
+	margin-bottom: 10px;
+	color: var(--color-html-text);
+	opacity: .5;
+	font-weight: 500;
+	font-size: 14px;
+	font-family: system-ui;
+}
+
+div.qak-auth-container-data {
+	transition: opacity .2s, height .2s;
+	width: -webkit-fill-available;
+	padding: 0;
+	margin: 0;
+}
+
+img.qak-auth-logo {
+	--size-logo-qak: 60px;
+	padding: 3px;
+	margin: 0;
+	pointer-events: none;
+	user-select: none;
+	width: var(--size-logo-qak);
+	max-width: var(--size-logo-qak);
+	min-width: var(--size-logo-qak);
+	height: var(--size-logo-qak);
+	max-height: var(--size-logo-qak);
+	min-height: var(--size-logo-qak);
+	-webkit-mask-box-image-source: url('/assets/images/qak-favicon-v3-mask-border.png');
+	-webkit-mask-box-image-width: auto;
+	background: var(--color-background-qak-logo);
+}
+
+div.qak-sign-container {
+	padding: 0;
+	margin: 0;
+	display: block;
+	margin-bottom: 10px;
+}
+
+h4.qak-short-hint {
+	margin: 0;
+	margin-bottom: 2px;
+}
+h4.qak-short-hint::after {
+	display: none;
+}
+
+button.qak-sign-button {
+	
+}
+
+h2.qak-restore-password-button {
+	padding: 0;
+	margin: 0;
+	font-weight: 500;
+	font-size: 12px;
+	font-family: system-ui;
+	margin-top: 6px;
+	color: var(--color-html-accent);
+	cursor: pointer;
+	width: fit-content;
+}
+h2.qak-restore-password-button:hover {
+	text-decoration: underline;
+}
+h3.qak-alert-container-message-or {
+	padding: 15px 0;
+	margin: 0;
+	text-transform: lowercase;
+	color: var(--color-html-text-sub);
+	font-size: 12px;
+	font-weight: 500;
+	font-family: system-ui;
+	position: relative;
+	display: block;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	width: -webkit-fill-available;
+}
+h3.qak-alert-container-message-or::after {
+	content: "";
+	position: absolute;
+	height: 1px;
+	width: 45%;
+	background: var(--color-container-border);
+	left: 0;
+	margin-top: 9px;
+}
+h3.qak-alert-container-message-or::before {
+	content: "";
+	position: absolute;
+	height: 1px;
+	width: 45%;
+	background: var(--color-container-border);
+	right: 0;
+	margin-top: 9px;
+}
+div.qak-sign-container-other-auth {
+	padding: 10px 0;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-bottom: 0;
+}
+div.qak-sign-container-other-auth img {
+	--size-auth-other: 20px;
+	padding: 10px;
+	margin: 0;
+	width: var(--size-auth-other);
+	max-width: var(--size-auth-other);
+	min-width: var(--size-auth-other);
+	height: var(--size-auth-other);
+	max-height: var(--size-auth-other);
+	min-height: var(--size-auth-other);
+	cursor: pointer;
+	object-fit: cover;
+	object-position: center;
+	shape-rendering: optimizeSpeed;
+	border-radius: 100px;
+	border: 1px solid var(--color-container-border);
+}
+div.qak-sign-container-other-auth img:hover {
+	box-shadow: 0 10px 30px rgba(0,0,0,.1);
+}
+
+div.qak-auth-container-links {
+	padding: 0;
+	margin: 0;
+	display: block;
+	justify-content: center;
+	align-items: center;
+}
+div.qak-auth-container-links hr {
+	padding: 0;
+	margin: 0 10px;
+	width: 1px;
+	height: 13px;
+	outline: none;
+	border: none;
+	background: var(--color-container-border);
+	display: none;
+}
+div.qak-auth-container-links a {
+	padding: 0;
+	margin: 0;
+	width: fit-content;
+	font-weight: 500;
+	font-size: 12px;
+	font-family: system-ui;
+	color: var(--color-html-text-sub);
+	text-decoration: none;
+	display: block;
+	margin-bottom: 10px;
+}
+div.qak-auth-container-links a:hover {
+	text-decoration: underline;
+}
+
+h3.qak-sign-container-messane-sign-up {
+	padding: 5px 40px;
+	margin: 0;
+	margin-bottom: 20px;
+	margin-top: 10px;
+	display: inline-block;
+	font-weight: 500;
+	font-family: system-ui;
+	font-size: 12px;
+	color: var(--color-html-text-sub);
+	border: 1px solid var(--color-container-border);
+	border-radius: 4px;
+	box-shadow: 0 10px 20px rgba(0,0,0,.1);
+}
+h3.qak-sign-container-messane-sign-up a {
+	color: var(--color-html-accent);
+}
+
+h3.qak-sign-container-messane-sign-up hr {
+	margin: 10px 0;
+	width: -webkit-fill-available;
+	height: 1px;
+	outline: none;
+	border: none;
+	background: var(--color-container-border);
+}
+
+h5.qak-input-what {
+	padding: 4px 10px;
+	margin: 0;
+	width: -webkit-fill-available;
+	text-align: right;
+	color: var(--color-html-accent);
+	font-weight: 500;
+	font-size: 12px;
+	font-family: system-ui;
+	cursor: pointer;
+	user-select: none;
+}
+h5.qak-input-what:hover {
+	text-decoration: underline;
+}

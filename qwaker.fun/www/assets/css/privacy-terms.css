@@ -1,0 +1,62 @@
+div.qak-pt-container {
+	padding: 20px;
+	margin: 40px;
+	width: 540px;
+	background-color: var(--color-container-background);
+	border: 1px solid var(--color-container-border);
+	border-radius: 22px;
+	display: block;
+	text-align: center;
+	box-shadow: 0 50px 130px rgb(0 0 0 / 10%);
+}
+
+h1 {
+	padding: 0 140px;
+	margin: 0;
+	font-weight: 500;
+	font-size: 23px;
+	font-family: system-ui;
+	margin-bottom: 30px;
+}
+
+h2 {
+	padding: 0;
+	margin: 20px 0;
+	font-weight: 500;
+	font-size: 19px;
+	font-family: system-ui;
+}
+
+p {
+	padding: 0;
+	margin: 0;
+	margin-bottom: 10px;
+	font-weight: 400;
+	font-size: 13px;
+	font-family: system-ui;
+	color: var(--color-html-text);
+}
+p i {
+	border: 1px solid;
+	border-color: var(--color-container-border);
+	border-radius: 4px;
+	padding: 0 5px;
+	font-weight: 500;
+/* 	opacity: .5; */
+}
+p a {
+	color: var(--color-html-accent);
+}
+
+ul {
+	padding: 0 60px;
+	margin: 20px 0;
+	font-weight: 400;
+	font-size: 13px;
+	font-family: system-ui;
+}
+ul li {
+	padding: 0;
+	margin: 0;
+	text-align: left;
+}

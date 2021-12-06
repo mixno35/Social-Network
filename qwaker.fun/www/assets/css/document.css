@@ -1,0 +1,59 @@
+html {
+	background: white;
+	padding: 0;
+	margin: 0;
+}
+body {
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+h1 {
+	padding: 20px;
+	margin: 0;
+	background: #6d58ce;
+	color: white;
+	font-weight: 800;
+	font-size: 35px;
+	font-family: system-ui;
+	position: absolute;
+	width: 400px;
+	transform: rotate(-45deg);
+	top: 20px;
+	left: -160px;
+}
+h2 {
+	padding: 0;
+	margin: 0;
+	margin-top: 30px;
+	font-weight: 500;
+	font-size: 23px;
+	font-family: system-ui;
+	color: black;
+}
+h3 {
+	padding: 0;
+	margin: 0;
+	font-weight: 500;
+	font-size: 12px;
+	font-family: system-ui;
+	opacity: .6;
+	color: black;
+}
+h4 {
+	padding: 0;
+	margin: 0;
+	font-weight: 400;
+	font-size: 13px;
+	font-family: system-ui;
+	color: black;
+	opacity: .4;
+}
+
+hr {
+	padding: 0;
+	margin: 30px 0px;
+	height: 1px;
+	background: #d4d4d4;
+	border: none;
+}

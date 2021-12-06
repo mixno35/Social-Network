@@ -1,0 +1,103 @@
+h1.title {
+	padding: 0;
+	margin: 0;
+	font-weight: 800;
+	font-size: 25px;
+	font-family: system-ui;
+	background-color: var(--color-html-text-sub);
+	/* box-shadow: inset 0 2px 10px rgba(0,0,0,1); */
+	color: transparent;
+	/* text-shadow: 0px 2px 3px rgba(255,255,255,0.5); */
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	margin-top: 10px;
+}
+
+img.avatar-user {
+	--size-avatar: 80px;
+	width: var(--size-avatar);
+	max-width: var(--size-avatar);
+	min-width: var(--size-avatar);
+	height: var(--size-avatar);
+	max-height: var(--size-avatar);
+	min-height: var(--size-avatar);
+	pointer-events: none;
+	object-fit: cover;
+	object-position: center;
+	border-radius: 100%;
+	background-color: var(--color-img-default-background);
+}
+
+img.type-avatar-user {
+	--size-type-avatar: 13px;
+	width: var(--size-type-avatar);
+	max-width: var(--size-type-avatar);
+	min-width: var(--size-type-avatar);
+	height: var(--size-type-avatar);
+	max-height: var(--size-type-avatar);
+	min-height: var(--size-type-avatar);
+	pointer-events: none;
+	object-fit: cover;
+	object-position: center;
+	border-radius: 100%;
+	position: absolute;
+	padding: 6px;
+	background: var(--color-container-background);
+	border: 1px solid var(--color-container-data-border);
+	margin-top: 49px;
+	margin-left: -24px;
+}
+
+h2.name-user {
+	padding: 0;
+	margin: 0;
+	font-weight: 500;
+	font-size: 14px;
+	font-family: system-ui;
+	color: var(--color-html-text);
+}
+
+h3.sub-name-user {
+	padding: 0;
+	margin: 0;
+	font-weight: 500;
+	font-size: 12px;
+	font-family: system-ui;
+	color: var(--color-html-text-sub);
+}
+
+button.button-next {
+	margin: 0;
+	margin-top: 2px;
+}
+
+hr {
+	border: none;
+	height: 1px;
+	background: var(--color-container-data-border);
+	width: -webkit-fill-available;
+}
+
+div.qak-auth-container {
+	padding: 10px 0;
+}
+
+h4.small-message {
+	padding: 0;
+	margin: 0;
+	font-weight: 400;
+	font-size: 12px;
+	font-family: system-ui;
+	background-color: var(--color-html-text-sub);
+	color: transparent;
+	/* text-shadow: 0px 2px 3px rgba(255,255,255,0.5); */
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	margin-top: 10px;
+	width: 310px;
+}
+h4.small-message a {
+	color: var(--color-html-accent);
+}

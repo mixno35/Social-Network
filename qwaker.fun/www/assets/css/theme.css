@@ -1,0 +1,333 @@
+html.theme-default-light {
+	--color-null-auht-background: #22b16f;
+	--color-null-auth-background-button: transparent;
+	--color-null-auth-background-button-hover: rgba(0,0,0,.15);
+	--color-null-auth-text-button: #2e2e32;
+	--color-null-auth-text-button-border: rgba(0,0,0,.2);
+	--color-null-auth-text: #FFFFFF;
+	--color-null-auth-border: transparent;
+	
+	--color-button-default-background: #22b16f;
+	--color-button-default-background-hover: #1d925c;
+	--color-button-default-text: #FFFFFF;
+	--color-button-border-default-background: transparent;
+	--color-button-border-default-background-hover: rgba(0,0,0,.05);
+	--color-button-border-default-border: rgba(0,0,0,.1);
+	--color-button-border-default-text: #22b16f;
+	--color-button-fab-background: #22b16f;
+	--color-button-fab-background-hover: #1d925c;
+	--color-button-fab-text: #FFFFFF;
+
+	--color-html-text: #000000;
+	--color-html-text-sub: rgba(0,0,0,.4);
+	--color-html-accent: #22b16f;
+	--color-html-background: #f7f7f7;
+	--color-html-selected-item: #0404040f;
+
+	--color-body-background: #f7f7f7;
+
+	--color-container-background: #FFFFFF;
+	--color-container-border: rgb(0 0 0 / 12%);
+
+	--color-qak-logo-background: #000000;
+
+	--color-text-short-hint: rgba(0,0,0,.3);
+
+	--color-img-default-background: rgba(0,0,0,.2);
+
+	--color-tablayout-background: #e3e3e3;
+	--color-tablayout-background-item: transparent;
+	--color-tablayout-background-item-active: #ffffff;
+	--color-tablayout-text-item: #000000;
+	--color-tablayout-text-item-active: #000000;
+	--color-tablayout-border: rgb(0 0 0 / 12%);
+
+	--color-input-background: rgb(0 0 0 / 8%);
+	--color-input-placeholder: rgb(0 0 0 / 27%);
+	--color-input-text: #000000;
+	--color-input-border: #e5e5e5;
+
+	--color-bar-background: #ffffff;
+	--color-bar-arrow: #000000;
+	--color-bar-border: rgb(0 0 0 / 12%);
+	--color-bar-notification-text: #FFFFFF;
+	--color-bar-notification-background: #FF0000;
+	--color-bar-item-hover: rgb(0 0 0 / 10%);
+	--color-bar-find-background: rgb(0 0 0 / 10%);
+	--color-bar-find-text: #ffffff;
+	--color-bar-title: #616161;
+	--color-bar-subtitle: rgb(90 90 90 / 70%);
+	--color-bar-menu-item-name: #616161;
+	--color-bar-menu-item-name-hover: #616161;
+	--color-bar-menu-background: rgb(0 0 0 / 4%);
+	--color-bar-menu-border: rgb(0 0 0 / 15%);
+
+	--color-news-item-container-background: #22b16f;
+	--color-news-item-container-text: #FFFFFF;
+	--color-news-item-container-border: rgba(0,0,0,.2);
+
+	--color-container-data-background: #FFFFFF;
+	--color-container-data-border: rgba(0,0,0,.1);
+
+	--color-toast-background: rgb(0 0 0 / 98%);
+	--color-toast-text: #ffffff;
+
+	--color-popup-background: #ffffff;
+	--color-popup-border: rgb(0 0 0 / 10%);
+	--color-popup-item-text: #000000;
+	--color-popup-item-text-hover: #000000;
+	--color-popup-item-background: transparent;
+	--color-popup-item-background-hover: rgba(0,0,0,0.1);
+	--color-popup-item-selected-background: rgb(27 255 0 / 14%);
+	--color-popup-item-selected: rgb(11 103 0);
+
+	--color-divider: rgba(0,0,0,.1);
+
+	--color-dialog-status: #22b16f;
+	--color-dialog-status-text: white;
+	--color-dialog-status-text-open: white;
+	--color-dialog-status-open: #000000;
+	--color-dialog-background: transparent;
+	--color-dialog-backgronud-hover: rgba(0,0,0,.1);
+	--color-dialog-background-open: rgb(0 0 0 / 10%);
+	--color-dialog-text: #000000;
+	--color-dialog-text-hover: #000000;
+	--color-dialog-text-open: #000000;
+	--color-dialog-background-message-item: #e5e5e5;
+	--color-dialog-text-message-item: rgba(0,0,0,1);
+	--color-dialog-background-message-item-you: #22b16f;
+	--color-dialog-text-message-item-you: rgb(255 255 255);
+
+	--color-scroll-background: #e5e5e5;
+	--color-scroll-background-thumb: rgba(0,0,0,.2);
+	--color-scroll-background-thumb-hover: rgba(0,0,0,.3);
+
+	--color-alert-background-overlay: rgba(0,0,0,.4);
+	--color-alert-background-overlay-v2: rgba(255,255,255,.7);
+	--color-alert-background-overlay-v3: rgba(255,255,255,1);
+	--color-alert-background-holder: #FFFFFF;
+	--color-alert-background-holder-border: rgba(0,0,0,.1);
+	--color-alert-title-background: #f5f5f5;
+	--color-alert-title-close: #b7b7b7;
+	--color-alert-title: #040404;
+	--color-alert-action: #212121;
+	--color-alert-action-background: #FFFFFF;
+	--color-alert-action-border: #F7F7F7;
+
+	--color-online: #1bda17;
+	--color-online-text: #ffffff;
+
+	--color-verification-background: #22b16f;
+	--color-verification: #ffffff;
+
+	--color-scam-background: transparent;
+	--color-scam-border: #d60000;
+	--color-scam-text: #d60000;
+
+	--color-progress-background: rgba(0,0,0,.1);
+	--color-progress-background-active: rgba(0,0,0,1);
+
+	--color-post-emotion-bacground: #FFFFFF;
+	--color-post-emotion-bacground-hover: rgb(0 0 0 / 4%);
+	--color-post-emotion-border: rgba(0,0,0,.1);
+	--color-post-emotion-pasted: yellow;
+
+	--color-holder-background: #e1e1e1;
+	--color-holder-border: #c9c9c9;
+	--color-holder-title: #292929;
+	--color-holder-message: #888888;
+
+	--color-checkbox-background: rgba(0,0,0,.1);
+	--color-checkbox-background-checked: #22b16f;
+	--color-checkbox-background-tumbler: white;
+	--color-checkbox-background-tumbler-checked: white;
+
+	--color-message-default-color: #585858;
+	--color-message-default-background: rgba(0,0,0,.03);
+	--color-message-default-border: rgb(0 0 0 / 6%);
+
+	--color-message-success-color: #00c218;
+	--color-message-success-background: rgb(0 194 24 / 8%);
+	--color-message-success-border: rgb(7 217 21 / 12%);
+
+	--color-message-error-color: #dd0303;
+	--color-message-error-background: rgb(255 0 0 / 8%);
+	--color-message-error-border: rgb(255 0 0 / 8%);
+
+	--color-message-warning-color: #f0c803;
+	--color-message-warning-background: rgb(255 224 0 / 12%);
+	--color-message-warning-border: rgba(0,0,0,.03);
+
+	--color-message-info-color: #00adff;
+	--color-message-info-background: rgb(0 184 254 / 8%);
+	--color-message-info-border: rgba(0,0,0,.03);
+}
+
+
+/* --------------------------------------------------------------------------------------------------------------------------------------------- */
+
+
+html.theme-default-dark {
+	--color-null-auht-background: #19191d;
+	--color-null-auth-background-button: transparent;
+	--color-null-auth-background-button-hover: rgb(255 255 255 / 14%);
+	--color-null-auth-text-button: #ffffff;
+	--color-null-auth-text-button-border: rgb(255 255 255 / 12%);
+	--color-null-auth-text: #FFFFFF;
+	--color-null-auth-border: rgb(255 255 255 / 23%);
+	
+	--color-button-default-background: rgb(255 255 255 / 8%);
+	--color-button-default-background-hover: rgb(255 255 255 / 14%);
+	--color-button-default-text: #FFFFFF;
+	--color-button-border-default-background: transparent;
+	--color-button-border-default-background-hover: rgb(255 255 255 / 5%);
+	--color-button-border-default-border: rgb(255 255 255 / 10%);
+	--color-button-border-default-text: #ffffff5c;
+	--color-button-fab-background: rgb(255 255 255 / 27%);
+	--color-button-fab-background-hover: rgb(255 255 255 / 38%);
+	--color-button-fab-text: #FFFFFF;
+
+	--color-html-text: #FFFFFF;
+	--color-html-text-sub: rgba(255,255,255,.4);
+	--color-html-accent: rgb(255 255 255 / 22%);
+	--color-html-background: #202025;
+	--color-html-selected-item: #ffffff21;
+
+	--color-body-background: #202025;
+
+	--color-container-background: #2c2c33;
+	--color-container-border: rgb(255 255 255 / 12%);
+
+	--color-qak-logo-background: rgb(255 255 255 / 71%);
+
+	--color-text-short-hint: rgba(255,255,255,.3);
+
+	--color-img-default-background: rgba(255,255,255,.2);
+
+	--color-tablayout-background: rgb(255 255 255 / 8%);
+	--color-tablayout-background-item: transparent;
+	--color-tablayout-background-item-active: rgb(255 255 255 / 30%);
+	--color-tablayout-text-item: #ffffff;
+	--color-tablayout-text-item-active: #ffffff;
+	--color-tablayout-border: rgb(255 255 255 / 12%);
+
+	--color-input-background: rgb(255 255 255 / 8%);
+	--color-input-placeholder: rgb(255 255 255 / 27%);
+	--color-input-text: #ffffff;
+	--color-input-border: #4e4e5a;
+
+	--color-bar-background: rgb(44 44 51);
+	--color-bar-arrow: #ffffff;
+	--color-bar-border: rgb(255 255 255 / 12%);
+	--color-bar-notification-text: #FFFFFF;
+	--color-bar-notification-background: #FF0000;
+	--color-bar-item-hover: rgba(255,255,255,.1);
+	--color-bar-find-background: #202025;
+	--color-bar-find-text: rgb(255 255 255 / 53%);
+	--color-bar-title: #ffffff;
+	--color-bar-subtitle: #ffffff;
+	--color-bar-menu-item-name: #ffffff;
+	--color-bar-menu-item-name-hover: #ffffff;
+	--color-bar-menu-background: #ffffff17;
+	--color-bar-menu-border: #ffffff14;
+
+	--color-news-item-container-background: #2c2c33;
+	--color-news-item-container-text: #FFFFFF;
+	--color-news-item-container-border: #4e4e5a;
+
+	--color-container-data-background: #2c2c33;
+	--color-container-data-border: #4e4e5a;
+
+	--color-toast-background: black;
+	--color-toast-text: white;
+
+	--color-popup-background: rgb(24 24 29);
+	--color-popup-border: rgb(255 255 255 / 20%);
+	--color-popup-item-text: #ffffff;
+	--color-popup-item-text-hover: #ffffff;
+	--color-popup-item-background: transparent;
+	--color-popup-item-background-hover: rgba(255,255,255,0.1);
+	--color-popup-item-selected-background: rgb(106 255 88 / 14%);
+	--color-popup-item-selected: rgb(105 202 93);
+
+	--color-divider: rgba(255,255,255,.1);
+
+	--color-dialog-status: #d20000;
+	--color-dialog-status-text: white;
+	--color-dialog-status-text-open: #1e1e23;
+	--color-dialog-status-open: #ffffff;
+	--color-dialog-background: transparent;
+	--color-dialog-background-hover: rgba(255,255,255,.1);
+	--color-dialog-background-open: rgb(0 0 0 / 32%);
+	--color-dialog-text: #ffffff;
+	--color-dialog-text-hover: #ffffff;
+	--color-dialog-text-open: #ffffff;
+	--color-dialog-background-message-item: #424248;
+	--color-dialog-text-message-item: rgba(255,255,255,1);
+	--color-dialog-background-message-item-you: #22b16f;
+	--color-dialog-text-message-item-you: rgba(255,255,255,1);
+
+	--color-scroll-background: #2f2f34;
+	--color-scroll-background-thumb: rgba(255,255,255,.2);
+	--color-scroll-background-thumb-hover: rgba(255,255,255,.3);
+
+	--color-alert-background-overlay: rgb(0 0 0 / 60%);
+	--color-alert-background-overlay-v2: rgba(0,0,0,.4);
+	--color-alert-background-overlay-v3: rgba(0,0,0,.9);
+	--color-alert-background-holder: #2c2c33;
+	--color-alert-background-holder-border: #4e4e5a;
+	--color-alert-title-background: rgba(255,255,255,.1);
+	--color-alert-title-close: rgb(161 161 164);
+	--color-alert-title: #FFFFFF;
+	--color-alert-action: #ffffff;
+	--color-alert-action-background: #2c2c33;
+	--color-alert-action-border: #4e4e5a;
+
+	--color-online: #47ff44;
+	--color-online-text: #2c2c33;
+
+	--color-verification-background: #22b16f;
+	--color-verification: #ffffff;
+
+	--color-scam-background: transparent;
+	--color-scam-border: #ff5b5b;
+	--color-scam-text: #ff5b5b;
+
+	--color-progress-background: rgba(255,255,255,.1);
+	--color-progress-background-active: rgba(255,255,255,1);
+
+	--color-post-emotion-bacground: #2c2c33;
+	--color-post-emotion-bacground-hover: #4e4e5a;
+	--color-post-emotion-border: #4e4e5a;
+	--color-post-emotion-pasted: yellow;
+
+	--color-holder-background: #121215;
+	--color-holder-border: #c9c9c9;
+	--color-holder-title: #ffffff;
+	--color-holder-message: #ffffffb5;
+
+	--color-checkbox-background: rgba(255,255,255,.1);
+	--color-checkbox-background-checked: #22b16f;
+	--color-checkbox-background-tumbler: #2c2c33;
+	--color-checkbox-background-tumbler-checked: #2c2c33;
+
+	--color-message-default-color: #585858;
+	--color-message-default-background: rgba(0,0,0,.03);
+	--color-message-default-border: rgb(0 0 0 / 6%);
+
+	--color-message-success-color: #5ecb6c;
+	--color-message-success-background: rgb(0 194 24 / 8%);
+	--color-message-success-border: rgb(7 217 21 / 12%);
+
+	--color-message-error-color: #ff5c5c;
+	--color-message-error-background: rgb(255 0 0 / 8%);
+	--color-message-error-border: rgb(179 105 105 / 22%);
+
+	--color-message-warning-color: #f0c803;
+	--color-message-warning-background: rgb(255 224 0 / 7%);
+	--color-message-warning-border: rgb(255 235 0 / 12%);
+
+	--color-message-info-color: #00adff;
+	--color-message-info-background: rgb(0 184 254 / 19%);
+	--color-message-info-border: rgb(165 218 255 / 12%);
+}

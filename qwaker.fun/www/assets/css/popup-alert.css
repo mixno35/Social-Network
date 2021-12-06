@@ -1,0 +1,191 @@
+div.qak-popup-alert-item {
+	/* padding: 0 10px; */
+	margin: 0;
+	display: flex;
+	padding-top: 10px;
+	padding-left: 15px;
+}
+img.qak-popup-alert-item-avatar {
+	--size-p-a-avatar: 35px;
+	padding: 0;
+	margin: 0;
+	width: var(--size-p-a-avatar);
+	max-width: var(--size-p-a-avatar);
+	min-width: var(--size-p-a-avatar);
+	height: var(--size-p-a-avatar);
+	max-height: var(--size-p-a-avatar);
+	min-height: var(--size-p-a-avatar);
+	border-radius: 100px;
+	object-fit: cover;
+	object-position: center;
+	background-color: var(--color-img-default-background);
+	pointer-events: none;
+}
+div.qak-popup-alert-item-content {
+	padding: 0;
+	margin: 0;
+	margin-left: 9px;
+	margin-top: -2px;
+	width: -webkit-fill-available;
+}
+h2.qak-popup-alert-item-title {
+	padding: 0;
+	margin: 0;
+	font-weight: 500;
+	font-size: 14px;
+	font-family: system-ui;
+}
+h2.qak-popup-alert-item-title font {
+	display: inline-block;
+	font-size: 11px;
+	border: 1px solid var(--color-popup-border);
+	padding: 0 4px;
+	border-radius: 5px;
+}
+h2.qak-popup-alert-item-title font2 {
+	display: inline-block;
+	font-size: 11px;
+	text-align: right;
+	border: 1px solid var(--color-popup-border);
+	border-radius: 6px;
+	padding: 0px 5px;
+	float: right;
+	margin-right: 10px;
+	margin-top: 2px;
+}
+
+h2.qak-popup-alert-item-message {
+	padding: 0;
+	margin: 0;
+	font-weight: 500;
+	font-size: 13px;
+	font-family: system-ui;
+	/* opacity: .5; */
+	padding-right: 5px;
+}
+h2.qak-popup-alert-item-message img.notification-img-emotion {
+	--size-img-notify-emotion: 13px;
+	padding: 0;
+	margin: 0;
+	width: var(--size-img-notify-emotion);
+	max-width: var(--size-img-notify-emotion);
+	min-width: var(--size-img-notify-emotion);
+	height: var(--size-img-notify-emotion);
+	max-height: var(--size-img-notify-emotion);
+	min-height: var(--size-img-notify-emotion);
+	user-select: none;
+	pointer-events: none;
+}
+h2.qak-popup-alert-item-message b {
+	opacity: 1;
+	background: var(--color-popup-border);
+	padding: 0 4px;
+	border-radius: 3px;
+	font-weight: 500;
+}
+h2.qak-popup-alert-item-message post-l {
+	opacity: 1;
+	/* background: var(--color-popup-border); */
+	/* padding: 1px 1px; */
+	/* border-radius: 3px; */
+	font-weight: 500;
+	/* text-transform: uppercase; */
+	cursor: pointer;
+	text-transform: capitalize;
+	/* border: 1px solid var(--color-alert-background-holder-border); */
+}
+h2.qak-popup-alert-item-message post-l:hover {
+/* 	background: var(--color-popup-border); */
+    text-decoration: underline;
+}
+h2.qak-popup-alert-item-message a {
+	color: var(--color-html-text);
+	text-decoration: none;
+}
+h2.qak-popup-alert-item-message a:hover {
+	text-decoration: underline;
+}
+
+divider-title-p-a {
+	padding: 4px;
+	margin: 0 2px;
+	border-radius: 100px;
+	display: inline-block;
+	background: var(--color-popup-border);
+}
+
+div.qak-popup-alert-item-actions {
+	padding: 0;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	margin-top: 5px;
+}
+div.qak-popup-alert-item-actions button {
+	padding: 4px 10px;
+	margin-right: 5px;
+}
+
+div.qak-popup-alert-container {
+	width: -webkit-fill-available;
+	padding: 0;
+	margin: 0;
+	max-height: 400px;
+	overflow-y: auto;
+	padding-bottom: 15px;
+	padding-top: 50px;
+}
+
+ul.tablayout-qak.find {
+	margin: 0;
+	padding-top: 5px;
+	padding-bottom: 11px;
+	margin-top: 10px;
+	width: -webkit-fill-available;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	border: none;
+	background: none;
+	border-radius: 0;
+	/* background: linear-gradient(0deg, var(--color-popup-item-background-hover), transparent); */
+	border-bottom: 1px solid var(--color-popup-border);
+}
+ul.tablayout-qak.find li {
+	padding: 4px 10px;
+	margin: 0;
+	position: relative;
+	background: none;
+	box-shadow: none;
+	font-weight: 700;
+	font-size: 13px;
+	color: var(--color-bar-menu-item-name);
+	display: flex;
+	justify-content: center;
+	transition: all .2s;
+}
+ul.tablayout-qak.find li::after {
+	padding: 0px;
+	transition: all .2s;
+	max-width: 20px;
+}
+ul.tablayout-qak.find li:hover:after {
+	content: "";
+	position: absolute;
+	padding: 1px;
+	margin: 0;
+	max-width: 20px;
+	border-radius: 100px;
+	background: var(--color-bar-menu-item-name-hover);
+	bottom: -1px;
+}
+ul.tablayout-qak.find li.active::after {
+	content: "";
+	position: absolute;
+	padding: 1px;
+	margin: 0;
+	width: 50px;
+	border-radius: 100px;
+	background: var(--color-bar-menu-item-name-hover);
+	bottom: -1px;
+}

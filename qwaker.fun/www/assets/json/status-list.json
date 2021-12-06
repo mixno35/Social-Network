@@ -1,0 +1,37 @@
+[
+	{
+		"name":"status_name_default",
+		"description":"status_description_default",
+		"key":"default"
+	},
+	{
+		"name":"status_name_jobs",
+		"description":"status_description_jobs",
+		"key":"jobs"
+	},
+	{
+		"name":"status_name_relax",
+		"description":"status_description_relax",
+		"key":"relax"
+	},
+	{
+		"name":"status_name_playing",
+		"description":"status_description_playing",
+		"key":"playing"
+	},
+	{
+		"name":"status_name_video",
+		"description":"status_description_video",
+		"key":"video"
+	},
+	{
+		"name":"status_name_brush",
+		"description":"status_description_brush",
+		"key":"brush"
+	},
+	{
+		"name":"status_name_fishing",
+		"description":"status_description_fishing",
+		"key":"fishing"
+	}
+]
