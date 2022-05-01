@@ -15,13 +15,15 @@
 	$token = trim(mysqli_real_escape_string($connect, $_GET['token']));
 ?>
 <?php
-	$check_user = mysqli_query($connect, "SELECT * FROM `users` WHERE `token` = '$token' LIMIT 1");
-	if (mysqli_num_rows($check_user) > 0) {
-		$user = mysqli_fetch_assoc($check_user);
+	$check_session = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
+	if (mysqli_num_rows($check_session) > 0) {
+		$session = mysqli_fetch_assoc($check_session);
+
+		mysqli_query($connect, "UPDATE `user_sessions` SET `lasttime`='$timeUSER' WHERE `sid`='$token'");
 	}
 ?>
 <?php
-	if (mysqli_num_rows($check_user) > 0) {
+	if (mysqli_num_rows($check_session) > 0 and intval($session['maxtime']) > intval(time())) {
 		echo 'true';
 		exit();
 	} else {

@@ -12,6 +12,7 @@
 	<?php include $_SERVER['DOCUMENT_ROOT'].'/vendor/page/style.php'; ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo $default_theme_site; ?>privacy-terms.css?v=<?php echo time(); ?>">
 	<link rel="shortcut icon" href="/assets/images/qak-favicon.png" type="image/png">
+	<?php include $_SERVER['DOCUMENT_ROOT'].'/vendor/page/meta.php'; ?>
 </head>
 <body>
 	<center>
@@ -37,6 +38,13 @@
 			<p><?php echo $string['string_term_7']; ?></p>
 			<p><?php echo $string['string_term_8']; ?></p>
 			<p><?php echo $string['string_term_10']; ?></p>
+			<p><?php echo $string['string_term_11']; ?></p>
+			<p><?php echo $string['string_term_14']; ?></p>
+
+			<h2><?php echo $string['string_term_title_5']; ?></h2>
+
+			<p><?php echo $string['string_term_12']; ?></p>
+			<p><?php echo $string['string_term_13']; ?></p>
 		</div>
 	</center>
 </body>

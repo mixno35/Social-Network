@@ -9,7 +9,12 @@
 	$title_page = $string['title_home'];
 
 	$posts_type = strval($_GET['act']);
-	$posts_limit = intval(100);
+	$posts_limit = intval($_GET['limit']);
+	$posts_hashtag = strval($_GET['hashtag']);
+
+	if (intval($posts_limit) < 10) {
+		$posts_limit = intval(10);
+	}
 
 	if ($posts_type == 'sub' or $posts_type == 'rec') {} else {
 		$posts_type = 'sub';
@@ -47,8 +52,8 @@
 	<center style="margin-top: 0px;">
 		<center style="position: sticky;top: 0;z-index: 10;padding: 20px 0;background: linear-gradient(180deg, var(--color-html-background), transparent);">
 			<ul class="tablayout-qak">
-				<li id="sub" onclick="openType('sub', posts_limit)"><?php echo $string['action_tab_follow']; ?></li>
-				<li id="rec" onclick="openType('rec', posts_limit)"><?php echo $string['action_tab_recomendation']; ?></li>
+				<li id="sub" onclick="openType('sub', posts_limit, '')"><?php echo $string['action_tab_follow']; ?></li>
+				<li id="rec" onclick="openType('rec', posts_limit, '')"><?php echo $string['action_tab_recomendation']; ?></li>
 			</ul>
 		</center>
 
@@ -61,7 +66,14 @@
 		var posts_type = 'rec';
 		var posts_limit = <?php echo $posts_limit; ?>
 
-		function openType(arguments, arguments2) {
+		function openType(arguments, arguments2, arguments3) {
+			try {
+				event.stopPropagation();
+			} catch (exx) {}
+			try {
+				event.preventDefault();
+			} catch (exx) {}
+
 			if (arguments == 'sub') {
 				document.getElementById('sub').classList.add('active');
 				document.getElementById('rec').classList.remove('active');
@@ -79,13 +91,23 @@
 
 			posts_limit = arguments2;
 			posts_type = arguments;
+			posts_hashtag = arguments3;
 
+			// if (posts_hashtag == '') {
+			// 	try {
+			// 		removeParam('hashtag');
+			// 	} catch (exx) {}
+			// } else {
+			// 	updParam('hashtag', arguments3);
+			// }
 			updParam('act', arguments);
 			updParam('limit', arguments2);
 			try {
 				document.getElementById('container-data-index').style.opacity = '0.4';
 			} catch (exx) {}
-			$.ajax({type: "GET", url:  '/post/'+arguments+'.php', data: {limit: posts_limit}, success: function(result) {
+			showProgressBar();
+			$.ajax({type: "GET", url:  '/post/'+arguments+'.php', data: {limit: posts_limit, hashtag: posts_hashtag}, success: function(result) {
+					hideProgressBar();
 					$('#container-data-index').empty();
 					$('#container-data-index').append(result);
 					try {
@@ -97,7 +119,7 @@
 	</script>
 
 	<script type="text/javascript">
-		openType('<?php echo $posts_type; ?>', posts_limit);
+		openType('<?php echo $posts_type; ?>', posts_limit, '');
 	</script>	
 
 	<?php include $_SERVER['DOCUMENT_ROOT'].'/assets/design/bar.php'; ?>

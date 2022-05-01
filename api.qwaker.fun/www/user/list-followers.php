@@ -20,6 +20,17 @@
 <?php
 	$token = trim(mysqli_real_escape_string($connect, $_GET['token']));
 	$id = trim(mysqli_real_escape_string($connect, $_GET['id']));
+
+	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
+	if (mysqli_num_rows($checkSESSION) > 0) {
+		$session = mysqli_fetch_assoc($checkSESSION);
+		$sessionUTOKEN = $session['utoken'];
+		$check_u = mysqli_query($connect, "SELECT * FROM `users` WHERE `token_public` = '$sessionUTOKEN' LIMIT 1");
+		if (mysqli_num_rows($check_u) > 0) {
+			$sUSER = mysqli_fetch_assoc($check_u);
+			$token = $sUSER['token'];
+		}
+	}
 ?>
 <?php
 	$check_user = mysqli_query($connect, "SELECT * FROM `users` WHERE `id` = '$id' LIMIT 1");
@@ -94,6 +105,7 @@
 				$user_post_avatar = strval($user_follow['avatar']);
 				$user_post_language = strval($user_follow['language']);
 				$user_post_verification = intval($user_follow['verification']);
+				$user_post_about = strval($user_follow['about']);
 			} else {
 				$user_post_id = null;
 				$user_post_login = strval($user_follow['login']);
@@ -101,6 +113,7 @@
 				$user_post_avatar = 'unknown';
 				$user_post_language = 'en';
 				$user_post_verification = intval(0);
+				$user_post_about = null;
 			}
 		} else {
 			$user_post_id = null;
@@ -109,6 +122,7 @@
 			$user_post_avatar = 'unknown';
 			$user_post_language = 'en';
 			$user_post_verification = intval(0);
+			$user_post_about = null;
 		}
 
 		$num_follows = $num_follows - 1;
@@ -120,6 +134,7 @@
 			"user_avatar" => $user_post_avatar,
 			"user_language" => $user_post_language,
 			"user_verification" => $user_post_verification,
+			"user_about" => $user_post_about,
 			"follow_you" => $value_you,
 			"follow_confirm" => intval($row['confirm']),
 			"follow_date" => strval($row['date_follow']),

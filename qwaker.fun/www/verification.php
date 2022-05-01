@@ -37,8 +37,8 @@
 <html lang="<?php echo $langTAG; ?>" class="<?php echo $default_theme; ?>">
 <head>
 	<title><?php echo $string['title_verification']; ?></title>
-	<?php include $_SERVER['DOCUMENT_ROOT'].'/vendor/page/style.php'; ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo $default_theme_site; ?>verification.css?v=<?php echo time(); ?>">
+	<?php include $_SERVER['DOCUMENT_ROOT'].'/vendor/page/style.php'; ?>
 	<link rel="shortcut icon" href="/assets/images/qak-favicon.png" type="image/png">
 	<?php include $_SERVER['DOCUMENT_ROOT'].'/vendor/page/script.php'; ?>
 	<?php include $_SERVER['DOCUMENT_ROOT'].'/vendor/page/meta.php'; ?>
@@ -101,12 +101,14 @@
 					<script type="text/javascript">
 						function goVerify() {
 							if (confirm(stringOBJ['message_verification_account_are'])) {
+								showProgressBar();
 								$.ajax({
 									type: "POST", 
 									url: "<?php echo $default_api; ?>/user/edit/verify.php", 
 									data: {token: '<?php echo $_COOKIE['USID'] ?>'}, 
 							    	success: function(result){
 										// console.log(result);
+										hideProgressBar();
 										var jsonOBJ = JSON.parse(result);
 										alert(jsonOBJ['message']);
 										if (jsonOBJ['type'] == 'success') {

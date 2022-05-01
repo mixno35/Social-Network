@@ -38,7 +38,7 @@
 		<?php $num_posts = intval(sizeof($result_post)); ?>
 		<?php foreach($result_post as $key => $value) { ?>
 			<?php $num_posts = $num_posts - 1; ?>
-			<div id="qak-p-<?php echo $value['id']; ?>">
+			<div id="qak-p-<?php echo $value['id']; ?>" <?php if (isMobile()) { ?>style="position: relative;"<?php } ?>>
 					
 				<div class="qak-p-container-data" onclick="showAlertPost(<?php echo $value['id']; ?>)">
 					<div class="qak-post-menu" onclick="closePopups(); popupWindow('qak-post-menu-popup-<?php echo $value['id']; ?>')">
@@ -47,6 +47,9 @@
 							<?php if ($value['post_you'] == 1) { ?>
 								<li onclick="goEditPost(<?php echo $value['id']; ?>)"><?php echo $string['action_post_edit']; ?></li>
 								<li onclick="goArchivePost(<?php echo $value['id']; ?>)"><?php echo $string['action_post_archive']; ?></li>
+								<hr>
+								<li onclick="goStatPost(<?php echo $value['id']; ?>)"><?php echo $string['action_post_stat']; ?></li>
+								<li onclick="goSettingsPost(<?php echo $value['id']; ?>)"><?php echo $string['action_post_settings']; ?></li>
 								<li onclick="goRemovePost(<?php echo $value['id']; ?>)"><?php echo $string['action_post_remove']; ?></li>
 							<?php } ?>
 							<?php if ($value['post_you'] == 0) { ?>
@@ -67,7 +70,7 @@
 							</h2>
 							<!-- <bouble-divider></bouble-divider> -->
 							<div class="p-date-cont">
-								<h2 class="qak-p-date-public-user"><?php echo convertTimeRus($value['post_date_public']); ?></h2>
+								<h2 class="qak-p-date-public-user"><?php echo convertTimeRus(date('d.m.Y H:m:i', $value['post_date_view'])); ?></h2>
 								<h2 class="qak-p-message-bottom-info">
 									<?php echo declOfNum(intval($value['post_comments']), array($string['character_comment_1'], $string['character_comment_2'], $string['character_comment_3'])); ?>
 								</h2>
@@ -87,7 +90,16 @@
 							</div>
 						<?php } ?>
 						<h2 class="qak-p-message">
-							<?php echo nl2br($value['post_message'], true); ?>
+							<?php
+								$text = $value['post_message'];
+
+								if (preg_match_all('~#+\S+~', $text, $postTAG)) {
+									foreach($postTAG[0] as $usedTAG) {
+										$text = str_replace($usedTAG, '<post-tag>'.$usedTAG.'</post-tag>', $text);
+									}
+								}
+							?>
+							<?php echo nl2br($text, true); ?>
 						</h2>
 					</div>
 					<div class="qak-p-content-bottom">
@@ -140,12 +152,14 @@
 			window.location = '/post/edit.php?id='+argument;
 		}
 		function goArchivePost(argument) {
+			showProgressBar();
 			$.ajax({
 				type: "POST", 
 				url: "<?php echo $default_api; ?>/post/archive.php", 
 				data: {token: '<?php echo $_COOKIE['USID'] ?>', id: argument}, 
 		    	success: function(result){
 					// console.log(result);
+					hideProgressBar();
 					var jsonOBJ = JSON.parse(result);
 					toast(jsonOBJ['message']);
 					if (jsonOBJ['type'] == 'success') {
@@ -161,12 +175,14 @@
 		}
 		function goRemovePost(argument) {
 			if (confirm(stringOBJ['message_remove_post_are'])) {
+				showProgressBar();
 				$.ajax({
 					type: "POST", 
 					url: "<?php echo $default_api; ?>/post/remove.php", 
 					data: {token: '<?php echo $_COOKIE['USID'] ?>', id: argument}, 
 			    	success: function(result){
 						// console.log(result);
+						hideProgressBar();
 						var jsonOBJ = JSON.parse(result);
 						toast(jsonOBJ['message']);
 						if (jsonOBJ['type'] == 'success') {
@@ -181,22 +197,54 @@
 				});
 			}
 		}
+
 		function goReportPost(argument) {
+			showProgressBar();
 			$.ajax({
 				type: "GET", 
 				url:  '/assets/alert/view-report-post.php', 
 				data: {id: argument}, 
 				success: function(result) {
+					hideProgressBar();
 					$('body').append(result);
 				}
 			});
 		}
+
+		function goStatPost(argument) {
+			showProgressBar();
+			$.ajax({
+				type: "GET", 
+				url:  '/assets/alert/view-stat-post.php', 
+				data: {id: argument}, 
+				success: function(result) {
+					hideProgressBar();
+					$('body').append(result);
+				}
+			});
+		}
+
+		function goSettingsPost(argument) {
+			showProgressBar();
+			$.ajax({
+				type: "GET", 
+				url:  '/assets/alert/view-post-settings.php', 
+				data: {id: argument}, 
+				success: function(result) {
+					hideProgressBar();
+					$('body').append(result);
+				}
+			});
+		}
+
 		function goSharePost(argument, argument2, argument3) {
+			showProgressBar();
 			$.ajax({
 				type: "GET", 
 				url:  '/assets/alert/view-share.php', 
 				data: {url: argument, text: argument2, name: argument3}, 
 				success: function(result) {
+					hideProgressBar();
 					$('body').append(result);
 				}
 			});

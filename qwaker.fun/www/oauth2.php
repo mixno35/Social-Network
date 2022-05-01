@@ -8,11 +8,11 @@
 <?php
 	$redirect = $_GET['redirect'];
 
-	$url_user = $default_api.'/user/data?id='.$_COOKIE['USID'].'&token='.$_COOKIE['USID'];
+	$url_user = $default_api.'/user/data?token='.$_COOKIE['USID'];
 	$result_user = json_decode(file_get_contents($url_user, false), true);
 
-	$url_at = $default_api.'/oauth/create-access-token?token='.$_COOKIE['USID'];
-	$result_at = json_decode(file_get_contents($url_at, false), true);
+	// $url_at = $default_api.'/oauth/create-access-token?token='.$_COOKIE['USID'];
+	// $result_at = json_decode(file_get_contents($url_at, false), true);
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $langTAG; ?>" class="<?php echo $default_theme; ?>">
@@ -46,8 +46,8 @@
 
 		<script type="text/javascript">
 			function goOtherAuth() {
-				var urlRes = updParam2('<?php echo $redirect; ?>', 'access_token', '<?php echo $result_at['access_token']; ?>');
-				urlRes = updParam2(urlRes, 'id', <?php echo $result_at['id']; ?>);
+				var urlRes = updParam2('<?php echo $redirect; ?>', 'access_token', '<?php echo $_COOKIE['USID']; ?>');
+				urlRes = updParam2(urlRes, 'id', '<?php echo $result_user['id_user']; ?>');
 				window.location.replace(urlRes);
 			}
 

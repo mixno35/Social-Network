@@ -225,3 +225,28 @@ ul.tablayout-qak div.tl div.tl-item.account::before {
 	border-top-right-radius: 7px;
 	border-bottom: 2px;
 }
+
+/*PRIVATE*/
+ul.tablayout-qak div.tl div.tl-item.private::after {
+	content: "";
+	position: absolute;
+	width: 17px;
+	height: 2px;
+	/* background: var(--color-html-text); */
+	margin-bottom: 12px;
+	background: var(--color-html-text);
+	/* border-radius: 10px; */
+	/* margin-left: -2px; */
+}
+ul.tablayout-qak div.tl div.tl-item.private::before {
+	content: "";
+	position: absolute;
+	width: 13px;
+	height: 11px;
+	border: 2px solid var(--color-html-text);
+	margin-top: 5px;
+	/* margin-left: 9px; */
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+	border-top: 2px;
+}

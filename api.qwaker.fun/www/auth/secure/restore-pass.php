@@ -1,5 +1,5 @@
 <?php
-	header('Access-Control-Allow-Origin: https://qwaker.fun');
+	header('Access-Control-Allow-Origin: *');
 	header('Vary: Accept-Encoding, Origin');
 	header('Content-Length: 235');
 	header('Keep-Alive: timeout=2, max=99');
@@ -81,6 +81,20 @@
 		exit();
 	}
 
+	$timeLast = $user['date_last_restore_password'] + 86400;
+	if ($timeUSER < $timeLast) {
+		echo normJsonStr(json_encode(array(
+			"id" => "id_secure_last_error",
+			"type" => "error", 
+			"task" => "user:secure:date-last", 
+			"camp" => "user", 
+			"message" => 'Вы уже получили письмо для восстановления пароля <b>'.date("d.m.Y H:i", $user['date_last_restore_password']).'</b>. Новое письмо для восстановления пароля можно отправить раз в сутки. Следующее письмо будет доступно <b>'.date("d.m.Y H:i", $timeLast).'</b>',
+			"error_value" => null,
+			"time" => $serverTIME
+		)));
+		exit();
+	}
+
 	if (!filter_var($user['email'], FILTER_VALIDATE_EMAIL)) {
 		echo normJsonStr(json_encode(array(
 			"id" => "id_secure_email_unvalid",
@@ -110,7 +124,7 @@
 
 	$to = $user['email'];
 	$subject = 'Восстановление пароля';
-	$link = 'https://'.str_replace('api.', '', $_SERVER['SERVER_NAME']).'/restore-password?code='.$code_generate;
+	$link = 'https://'.str_replace('api.', '', $_SERVER['SERVER_NAME']).'/restore-password.php?code='.$code_generate;
 	$message_result = '<html style="
 				    padding: 20px;
 				    margin: 0;
@@ -134,7 +148,7 @@
 				    cursor: pointer;
 				    margin: 10px;
 				    display: block;
-				">Нажмите, если хотите восстановить пароль</a><font style="font-size: 12px;font-family: system-ui;font-weight: 500;opacity: .5;display: block;">Была произведена попытка восстановления пароля для учетной записи "%2s", если это были не вы - рекомендуем сменить логин. Никому не сообщайте код и ссылку для восстановления пароля!</font>
+				">Нажмите, если хотите восстановить пароль</a><font style="font-size: 12px;font-family: system-ui;font-weight: 500;opacity: .5;display: block;">Была произведена попытка восстановления пароля для учетной записи "%2s", если это были не вы - рекомендуем сменить почтовый ящик. Никому не сообщайте код и ссылку для восстановления пароля!</font>
 				    <font style="
 				    display: block;
 				    margin-top: 20px;
@@ -159,6 +173,7 @@
 	$headers = 'From: no-reply <' . $emailSENDER . ">\r\n" . 'Content-Type: text/html; charset=UTF-8';
 
 	if (mail($to, $subject, $message, $headers, "-f" .$emailSENDER)) {
+		mysqli_query($connect, "UPDATE `users` SET `date_last_restore_password`='$timeUSER' WHERE `id`='$user_id'");
 		mysqli_query($connect, "UPDATE `users` SET `email_restore_password_code`='$code_generateMD5', `date_upd_restore_password`='$timeUSER' WHERE `id`='$user_id'");
 		$user_email = $user['email'];
 		$length = strpos($user_email, '@') - 2;

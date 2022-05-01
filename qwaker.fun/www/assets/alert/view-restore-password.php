@@ -10,7 +10,7 @@
 		<h2 class="qak-alert-container-holder-title"><?php echo $string['title_alert_restore_password']; ?></h2>
 		<div class="qak-alert-close" onclick="document.getElementById('qak-alert-container').remove()"></div>
 		<div class="container-restore-password-alert">
-			<input type="password" name="" id="password-restore" placeholder="<?php echo $string['hint_enter_email_restore_password']; ?>">
+			<input type="email" name="" id="password-restore" placeholder="<?php echo $string['hint_enter_email_restore_password']; ?>">
 			<center>
 				<button onclick="goRestorePass()"><?php echo $string['action_restore_password']; ?></button>
 			</center>

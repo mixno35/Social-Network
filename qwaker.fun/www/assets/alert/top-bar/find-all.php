@@ -14,7 +14,7 @@
 	<ul class="tablayout-qak find">
 		<li id="it-users" onclick="changeFind('users')"><?php echo $string['action_find_users']; ?></li>
 	</ul>
-	<div class="content-find-users" id="content-find-users">
+	<div class="content-find-users scroll-new" style="max-height: 400px;" id="content-find-users">
 		<h2 class="message-find-users"><?php echo $string['message_please_wait']; ?></h2>
 	</div>
 

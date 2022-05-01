@@ -14,6 +14,8 @@
 				return $string['setting_language_en'];
 			case 'ru':
 				return $string['setting_language_ru'];
+			case 'by':
+				return $string['setting_language_by'];
 			
 			default:
 				return $string['setting_language_en'];
@@ -78,6 +80,20 @@
 				return $string['text_false_off'];
 		}
 	}
+
+	function getHidePopupRecText() {
+		include $_SERVER['DOCUMENT_ROOT'].'/vendor/lang.php';
+
+		switch ($_COOKIE['hide-popup-rec']) {
+			case 'true':
+				return $string['text_false_off'];
+			case 'false':
+				return $string['text_true_on'];
+			
+			default:
+				return $string['text_true_on'];
+		}
+	}
 ?>
 <div class="qak-alert-container" id="qak-alert-container-settings">
 	<div class="qak-alert-container-holder">
@@ -97,6 +113,7 @@
 							<div class="container">
 								<li class="<?php if($_COOKIE['lang']=='ru'){echo'selected';} ?>" onclick="chooseLanguage('ru')"><?php echo $string['setting_language_ru']; ?></li>
 								<!-- <li class="<?php if($_COOKIE['lang']=='en'){echo'selected';} ?>" onclick="chooseLanguage('en')"><?php echo $string['setting_language_en']; ?></li> -->
+								<li class="<?php if($_COOKIE['lang']=='by'){echo'selected';} ?>" onclick="chooseLanguage('by')"><?php echo $string['setting_language_by']; ?></li>
 							</div>
 						</olx>
 					</button>
@@ -184,6 +201,26 @@
 					</button>
 				</div>
 			</div>
+
+			<hr class="qak-alert-archive-divider">
+
+			<div class="qak-alert-container-settings-item">
+				<div class="v1-settings">
+					<h1><?php echo $string['setting_title_popup_rec']; ?></h1>
+					<h2><?php echo $string['setting_message_popup_rec']; ?></h2>
+				</div>
+				<div class="v2-settings">
+					<button id="settings-extract-content" class="border" onclick="showMenu('settings-hidepopuprec-content-popup')">
+						<?php echo getHidePopupRecText(); ?>
+						<olx class="popup center" style="display: none;" id="settings-hidepopuprec-content-popup">
+							<div class="container">
+								<li class="<?php if($_COOKIE['hide-popup-rec']=='false'){echo'selected';} ?>" onclick="setHidePopupRec1(false)"><?php echo $string['text_true_on']; ?></li>
+								<li class="<?php if($_COOKIE['hide-popup-rec']=='true'){echo'selected';} ?>" onclick="setHidePopupRec1(true)"><?php echo $string['text_false_off']; ?></li>
+							</div>
+						</olx>
+					</button>
+				</div>
+			</div>
 		</div>
 
 		<script type="text/javascript">
@@ -199,6 +236,16 @@
 
 			function chooseColorScheme(argument) {
 				setColorScheme(argument);
+				document.getElementById('qak-alert-container-settings').remove();
+			}
+
+			function setHidePopupRec1(argument) {
+				setHidePopupRec(argument);
+				try {
+					if (posts_type == 'rec') {
+						openType('rec', posts_limit);
+					}
+				} catch (exx) {}
 				document.getElementById('qak-alert-container-settings').remove();
 			}
 

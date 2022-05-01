@@ -12,33 +12,22 @@
 <?php include $_SERVER['DOCUMENT_ROOT'].'/vendor/data.php'; ?>
 <?php include $_SERVER['DOCUMENT_ROOT'].'/vendor/connect.php'; ?>
 <?php
-	$sid = trim(mysqli_real_escape_string($connect, $_GET['sid']));
+	$token = trim(mysqli_real_escape_string($connect, $_GET['token']));
 ?>
 <?php
-	$check_sid = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$sid' LIMIT 1");
-	if (mysqli_num_rows($check_sid) > 0) {
-		$data_sid = mysqli_fetch_assoc($check_sid);
-		$uid_sid = $data_sid['uid'];
+	$check_session = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
+	if (mysqli_num_rows($check_session) > 0) {
+		$session = mysqli_fetch_assoc($check_session);
 
-		mysqli_query($connect, "UPDATE `user_sessions` SET `lasttime`='$timeUSER' WHERE `sid`='$sid'");
-
-		if (checkIP($data_sid['uip'])) {} else {
-			echo('false');
-			exit();
-		}
-
-		$check_user_sid = mysqli_query($connect, "SELECT * FROM `users` WHERE `id` = '$uid_sid' LIMIT 1");
-		if (mysqli_num_rows($check_user_sid) > 0) {
-			$user_sid = mysqli_fetch_assoc($check_user_sid);
-			$token = $user_sid['token'];
-		} else {
-			echo('false');
-			exit();
-		}
+		mysqli_query($connect, "UPDATE `user_sessions` SET `lasttime`='$timeUSER' WHERE `sid`='$token'");
+	}
+?>
+<?php
+	if (mysqli_num_rows($check_session) > 0 and intval($session['maxtime']) > intval(time())) {
+		echo 'true';
+		exit();
 	} else {
-		echo('false');
+		echo 'false';
 		exit();
 	}
-
-	echo('true');
 ?>

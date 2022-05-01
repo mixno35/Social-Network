@@ -140,6 +140,20 @@
 
 		if (intval($user['email_authorization']) == 1) {
 			if (md5($code) != $user['email_authorization_code']) {
+				$timeLast = $user['date_last_send_code'] + 300;
+				if ($timeUSER < $timeLast) {
+					echo normJsonStr(json_encode(array(
+						"id" => "id_auth_last_error",
+						"type" => "error", 
+						"task" => "auth:in:date-last", 
+						"camp" => "user", 
+						"message" => 'Вы ввели неверный код, поэтому была попытка отправить код повторно. Войти сейчас не представляется возможным.<br>Новый код можно получить снова через 5 мин. Следующая отправка кода будет доступна <b>'.date("d M Y H:i", $timeLast).'</b>',
+						"token" => 'null',
+						"time" => $serverTIME
+					)));
+					exit();
+				}
+
 				$code_generate = substr(str_shuffle(str_repeat("0123456789", 6)), 0, 6);
 				$code_generateMD5 = md5($code_generate);
 
@@ -193,6 +207,7 @@
 				$headers = 'From: no-reply <' . $emailSENDER . ">\r\n" . 'Content-Type: text/html; charset=UTF-8';
 
 				if (mail($to, $subject, $message, $headers, "-f" .$emailSENDER)) {
+					mysqli_query($connect, "UPDATE `users` SET `date_last_send_code`='$timeUSER' WHERE `id`='$user_id'");
 					mysqli_query($connect, "UPDATE `users` SET `email_authorization_code`='$code_generateMD5' WHERE `id`='$user_id'");
 					$user_email = $user['email'];
 					$length = strpos($user_email, '@') - 2;
@@ -227,18 +242,19 @@
 
 		mysqli_query($connect, "UPDATE `users` SET `online`='$timeUSER' WHERE `id`='$user_id'");
 		if (intval($user['email_authorization']) == 1) {
-			mysqli_query($connect, "UPDATE `users` SET `email_authorization_code`='' WHERE `id`='$user_id'");
+			mysqli_query($connect, "UPDATE `users` SET `email_authorization_code`=NULL WHERE `id`='$user_id'");
+			mysqli_query($connect, "UPDATE `users` SET `email_restore_password_code`=NULL WHERE `id`='$user_id'");
 		}
 
 		$uid = $user['id'];
 		$utoken = md5($user['token']);
-		$timeSession = time();
-		$timeSessionMax = time()+31536000; // +1 год. Сессия действительна 1 год.
+		$timeSession = $timeUSER;
+		$timeSessionMax = intval($timeUSER+315300); 
 		$sid = substr(str_shuffle(str_repeat("0123456789QWERTYUIOPASDFGHJKLZXCVBNMabcdefghijklmnopqrstuvwxyz", 70)), 0, 70);
 
 		// удаляем все сессии пользователя и создаем одну.
-		mysqli_query($connect, "DELETE FROM `user_sessions` WHERE `uid` = '$uid' AND `utoken` = '$utoken'");
-		sleep(0.1);
+		// mysqli_query($connect, "DELETE FROM `user_sessions` WHERE `uid` = '$uid' AND `utoken` = '$utoken'");
+		// sleep(0.1);
 		mysqli_query($connect, "INSERT INTO `user_sessions`(`uid`, `utoken`, `time`, `maxtime`, `lasttime`, `uagent`, `uip`, `type`, `sid`) VALUES ('$uid', '$utoken', '$timeSession', '$timeSessionMax', '$timeSession', '$useragent', '$userIP', 'site', '$sid')");
 
 		echo normJsonStr(json_encode(array(
@@ -247,7 +263,7 @@
 			"task" => "auth:in:success", 
 			"camp" => "auth", 
 			"message" => 'Вы успешно вошли. Добро пожаловать, '.$login.'!',
-			"token" => $user['token'],
+			"token" => $sid,
 			"time" => $serverTIME
 		)));
 

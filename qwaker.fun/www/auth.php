@@ -54,9 +54,9 @@
 			</div>
 		</div>
 		<div class="qak-auth-container-links">
-			<a href="/privacy" target="_blank"><?php echo $string['action_privacy']; ?></a>
+			<a href="/privacy.php" target="_blank"><?php echo $string['action_privacy']; ?></a>
 			<hr>
-			<a href="/terms" target="_blank"><?php echo $string['action_terms']; ?></a>
+			<a href="/terms.php" target="_blank"><?php echo $string['action_terms']; ?></a>
 		</div>
 	</center>
 
@@ -88,7 +88,9 @@
 			try {
 				document.getElementById('qak-auth-container-data').style.opacity = '0.4';
 			} catch (exx) {}
+			showProgressBar();
 			$.ajax({type: "GET", url:  '/assets/auth/'+arguments+'.php', data: "req=ok", success: function(result) {
+					hideProgressBar();
 					$('#qak-auth-container-data').empty();
 					$('#qak-auth-container-data').append(result);
 					try {

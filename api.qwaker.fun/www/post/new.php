@@ -36,6 +36,17 @@
 
 	$maxIMAGESIZE = intval(1); // MB
 
+	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
+	if (mysqli_num_rows($checkSESSION) > 0) {
+		$session = mysqli_fetch_assoc($checkSESSION);
+		$sessionUTOKEN = $session['utoken'];
+		$check_u = mysqli_query($connect, "SELECT * FROM `users` WHERE `token_public` = '$sessionUTOKEN' LIMIT 1");
+		if (mysqli_num_rows($check_u) > 0) {
+			$sUSER = mysqli_fetch_assoc($check_u);
+			$token = $sUSER['token'];
+		}
+	}
+
 	$check_user = mysqli_query($connect, "SELECT * FROM `users` WHERE `token` = '$token'LIMIT 1");
 	if (mysqli_num_rows($check_user) > 0) {
 		$user = mysqli_fetch_assoc($check_user);
@@ -211,7 +222,7 @@
 
 	$result_path = str_replace('api.', 'sun.', $_SERVER['DOCUMENT_ROOT']);
 
-	$domain_path = 'https://sun.qwaker.fun';
+	$domain_path = 'https://sun.qwaker.net';
 
 	sleep(1);
 

@@ -4,6 +4,10 @@ div.qak-popup-alert-item {
 	display: flex;
 	padding-top: 10px;
 	padding-left: 15px;
+	position: relative;
+}
+div.qak-popup-alert-item:hover div.qak-popup-alert-item-actions {
+	display: flex;
 }
 img.qak-popup-alert-item-avatar {
 	--size-p-a-avatar: 35px;
@@ -115,11 +119,19 @@ divider-title-p-a {
 }
 
 div.qak-popup-alert-item-actions {
-	padding: 0;
+	padding: 2px 3px;
+	/* padding-left: 100px; */
 	margin: 0;
-	display: flex;
+	display: none;
 	align-items: center;
-	margin-top: 5px;
+	right: 9px;
+	position: absolute;
+	top: 0px;
+	/* background: linear-gradient(270deg, var(--color-popup-background), transparent); */
+	background: var(--color-container-background);
+	border: 1px solid var(--color-container-data-border);
+	border-radius: 6px;
+	box-shadow: 0 2px 3px rgba(0,0,0,.1);
 }
 div.qak-popup-alert-item-actions button {
 	padding: 4px 10px;
@@ -130,7 +142,7 @@ div.qak-popup-alert-container {
 	width: -webkit-fill-available;
 	padding: 0;
 	margin: 0;
-	max-height: 400px;
+	height: 400px;
 	overflow-y: auto;
 	padding-bottom: 15px;
 	padding-top: 50px;
@@ -188,4 +200,56 @@ ul.tablayout-qak.find li.active::after {
 	border-radius: 100px;
 	background: var(--color-bar-menu-item-name-hover);
 	bottom: -1px;
+}
+
+div.qak-popup-alert-item-actions div.action {
+	/* padding: 10px; */
+	margin: 5px;
+	background: lightgray;
+	border-radius: 100px;
+	display: flex;
+	width: 30px;
+	height: 30px;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+div.qak-popup-alert-item-actions div.action:hover {
+	transform: scale(.95);
+	box-shadow: inset 0 2px 3px rgba(0,0,0,.2);
+}
+div.qak-popup-alert-item-actions div.action.positive {
+	background: var(--color-button-positive);
+}
+div.qak-popup-alert-item-actions div.action.positive::after {
+	content: "";
+	border: 0px solid white;
+	width: 6px;
+	height: 10px;
+	border-left: 2px;
+	border-top: 2px;
+	border-color: white;
+	border-style: solid;
+	transform: rotate(-136deg);
+	margin-bottom: 3px;
+}
+div.qak-popup-alert-item-actions div.action.negative {
+	background: var(--color-button-negative);
+}
+div.qak-popup-alert-item-actions div.action.negative::after {
+	content: "";
+	border: 0px solid white;
+	width: 2px;
+	height: 14px;
+	background: white;
+	transform: rotate(45deg);
+	margin-left: -2px;
+}
+div.qak-popup-alert-item-actions div.action.negative::before {
+	content: "";
+	border: 0px solid white;
+	width: 2px;
+	height: 14px;
+	background: white;
+	transform: rotate(-45deg);
 }

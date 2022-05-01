@@ -1,0 +1,150 @@
+div.qak-post-menu {
+	right: 20px;
+	margin: 0;
+}
+div.qak-container-data {
+	width: -webkit-fill-available
+}
+div.container-select-rec-list {
+	width: -webkit-fill-available;
+	margin: 10px;
+}
+div.qak-container-data.new-post-container {
+	width: -webkit-fill-available;
+}
+div.qak-alert-container {
+	width: --webkit-fill-available;
+}
+div.qak-alert-container-holder {
+	width: -webkit-fill-available;
+	min-width: -webkit-fill-available;
+	max-width: -webkit-fill-available;
+	bottom: 0;
+	position: fixed;
+	margin: 10px;
+}
+
+div#alertBox {
+	width: -webkit-fill-available;
+	min-width: -webkit-fill-available;
+	max-width: -webkit-fill-available;
+	margin: 10px;
+}
+
+center.qak-center-container {
+	padding: 0;
+	margin: 0;
+	width: -webkit-fill-available;
+	display: block;
+}
+div.qak-container-data-two {
+	display: block;
+	margin: 0;
+	padding: 0;
+	width: -webkit-fill-available;
+}
+div#qak-user-post-container-data {
+	width: --webkit-fill-available;
+	display: block;
+}
+div.qak-container-data-top-sticky {
+	margin: 10px;
+}
+div.qak-post-menu {
+	/* right: 20px; */
+}
+div.qak-container-data.qak-container-data-user.user-data {
+	margin: 0;
+	margin-top: 70px;
+	padding-top: 70px;
+}
+div.qak-container-data.qak-container-data-user.other-data {
+	margin: 0;
+	margin-top: 10px;
+}
+div.qak-user-content-align.content-data-top {
+	display: flex;
+	padding: 15px 0;
+}
+center.qak-user-conent-data-top {
+	display: block;
+	text-align: center;
+}
+center.qak-user-conent-data-top h3 {
+	
+}
+center.qak-user-conent-data-top h2 {
+	/*width: fit-content;*/
+}
+div.qak-avatar-user {
+	width: 130px;
+	max-width: 130px;
+	min-width: 130px;
+	height: 130px;
+	max-height: 130px;
+	min-height: 130px;
+	left: 0;
+	position: absolute;
+	top: 70px;
+	margin-left: 30px;
+}
+div.qak-avatar-user img.qak-avatar-user {
+	border-radius: 100px;
+	width: 130px;
+	max-width: 130px;
+	min-width: 130px;
+	height: 130px;
+	max-height: 130px;
+	min-height: 130px;
+}
+div.qak-user-status {
+	margin: 10px;
+	top: 80px;
+	position: absolute;
+}
+div.qak-user-content-users-follow {
+	justify-content: center;
+}
+h3.qak-edit-title {
+	width: -webkit-fill-available;
+	max-width: -webkit-fill-available;
+	min-width: -webkit-fill-available;
+	/*display: none;*/
+}
+div.qak-verify-container {
+	width: -webkit-fill-available;
+	min-width: -webkit-fill-available;
+	max-width: -webkit-fill-available;
+	margin: 10px;
+}
+div.qak-auth-container {
+	width: -webkit-fill-available;
+	min-width: -webkit-fill-available;
+	max-width: -webkit-fill-available;
+	margin: 10px;
+}
+div.qak-rp-container {
+	width: -webkit-fill-available;
+	min-width: -webkit-fill-available;
+	max-width: -webkit-fill-available;
+	margin: 10px;
+}
+div.qak-popup-alert-container {
+	padding: 0;
+	height: auto;
+	min-height: auto;
+	max-height: auto;
+}
+h3.qak-user-content-message-top {
+	text-align: center;
+}
+
+div#toastContainer {
+	padding: 12px;
+	width: -webkit-fill-available;
+	max-width: -webkit-fill-available;
+	min-width: -webkit-fill-available;
+}
+div#toastContainer p {
+	font-size: 14px;
+}

@@ -52,12 +52,14 @@
 		var url_social = document.getElementById('url_social').value;
 		var url_phone = document.getElementById('url_phone').value;
 		var url_email = document.getElementById('url_email').value;
+		showProgressBar();
 		$.ajax({
 			type: "POST", 
 			url: "<?php echo $default_api; ?>/user/edit/url.php", 
 			data: {token: '<?php echo $_COOKIE['USID'] ?>', site: url_site, social: url_social, phone: url_phone, email: url_email}, 
 	    	success: function(result){
 				// console.log(result);
+				hideProgressBar();
 				var jsonOBJ = JSON.parse(result);
 				alert(jsonOBJ['message']);
 				if (jsonOBJ['type'] == 'success') {

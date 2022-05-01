@@ -3,9 +3,10 @@
 	include $_SERVER['DOCUMENT_ROOT'].'/vendor/lang.php';
 	include $_SERVER['DOCUMENT_ROOT'].'/vendor/default.php';
 	include $_SERVER['DOCUMENT_ROOT'].'/vendor/connect.php';
+	include $_SERVER['DOCUMENT_ROOT'].'/vendor/only-load.php';
 ?>
 <?php
-	$url_user = $default_api.'/user/data.php?id='.$_COOKIE['USID'].'&token='.$_COOKIE['USID'];
+	$url_user = $default_api.'/user/data.php?token='.$_COOKIE['USID'];
 	$result_user = json_decode(file_get_contents($url_user, false), true);
 ?>
 <!DOCTYPE html>

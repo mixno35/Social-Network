@@ -88,6 +88,20 @@
 				?>
 				<h2 class="qak-alert-comment-data-message"><?php echo $text; ?></h2>
 			</div>
+			<div class="qak-alert-comment-container-likes">
+				<div onclick="likeCommnet(<?php echo $value['id']; ?>)">
+					<?php
+						$result_image_like = '/assets/icons/comments/ic_like.png';
+						$result_class_liked = '';
+						if ($value['comment_like_you'] > 0) {
+							$result_image_like = '/assets/icons/comments/ic_liked.png';
+							$result_class_liked = 'liked';
+						}
+					?>
+					<img src="<?php echo $result_image_like; ?>">
+					<font class="<?php echo $result_class_liked; ?>"><?php echo $value['comment_likes'] ?></font>
+				</div>
+			</div>
 		</div>
 		<?php if ($num_comments > 0) { ?>
 			<hr class="qak-alert">
@@ -98,6 +112,20 @@
 		function replyComment(argument) {
 			document.getElementById('message_comment').value = argument+' ';
 			document.getElementById('message_comment').focus();
+		}
+
+		function likeCommnet(argument) {
+			$.ajax({type: "POST", url: "<?php echo $default_api; ?>/post/comment/like.php", data: {id: argument, token: '<?php echo $_COOKIE['USID']; ?>'}, success: function(result) {
+					var jsonOBJ = JSON.parse(result);
+					// console.log(result);
+					if (jsonOBJ['type'] == 'success') {
+						toast(jsonOBJ['message']);
+						loadComments();
+					} if (jsonOBJ['type'] == 'error') {
+						toast(jsonOBJ['message']);
+					}
+				}
+			});
 		}
 	</script>
 <?php } else { ?>

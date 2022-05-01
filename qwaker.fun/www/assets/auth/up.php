@@ -47,9 +47,11 @@
 
 		if (arguments3 != '' && arguments4 != '') {
 			if (arguments3 == arguments4) {
+				showProgressBar();
 				$.ajax({type: "POST", url: "<?php echo $default_api; ?>/auth/up.php", data: {login: arguments, name: arguments2, password: arguments3, invite: arguments5}, success: function(result) {
 						var jsonOBJ = JSON.parse(result);
 						// console.log(result);
+						hideProgressBar();
 						if (jsonOBJ['type'] == 'success') {
 							openSign('in');
 							alert(jsonOBJ['message']);

@@ -107,14 +107,14 @@ h2.qak-login-user {
 	/* margin-top: 10px; */
 	/* margin-bottom: 5px; */
 	text-align: left;
-	/* display: flex; */
-	/* align-items: center; */
-	overflow: hidden;
+	display: flex;
+	align-items: center;
+	/* overflow: hidden; */
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	line-height: 35px;
 	vertical-align: middle;
-	width: -webkit-fill-available;
+	width: fit-content;
 	position: relative;
 }
 h2.qak-name-user {
@@ -182,16 +182,19 @@ div.qak-user-content-data {
 	margin: 0;
 	padding-top: 0;
 	width: -webkit-fill-available;
-}
+text-align: left;}
 
 center.qak-user-conent-data-top {
-	padding: 5px 15px;
+	padding: 0px 15px;
 	margin: 0;
 	display: block;
 	width: -webkit-fill-available;
 	cursor: default;
 	display: flex;
 	align-items: center;
+	height: 39px;
+	max-height: 39px;
+	min-height: 39px;
 }
 h2.qak-user-content-title-top {
 	padding: 2px 8px;
@@ -230,10 +233,10 @@ button.user-account {
 verification-user.user {
 	padding: 8px;
 	margin-left: 4px;
-	/* margin-top: 2px; */
+	margin-top: 2px;
 	pointer-events: auto;
 	position: absolute;
-	/* right: 0px; */
+	right: -21px;
 	top: 11px;
 }
 verification-user.user:hover h5.verification-user {
@@ -241,7 +244,7 @@ verification-user.user:hover h5.verification-user {
 }
 h5.verification-user {
 	display: none;
-	padding: 10px;
+	padding: 0px 10px;
 	margin: 0;
 	position: absolute;
 	width: auto;
@@ -369,7 +372,7 @@ button.user-contacts {
 div#qak-user-post-container-data {
 	padding: 0;
 	margin: 0;
-	width: 522px;
+	width: -webkit-fill-available;
 }
 
 h2.qak-user-message-wait {
@@ -473,6 +476,43 @@ div.qak-user-status img {
 	width: 24px;
 	height: 24px;
 	border-radius: 100%;
+}
+
+div.qak-user-content-users-follow {
+	padding: 0;
+	margin: 0;
+	display: flex;
+	align-items: center;
+}
+div.qak-user-content-users-follow div.item-follow-user {
+	padding: 0;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 2px solid var(--color-container-background);
+	border-radius: 100px;
+	overflow: hidden;
+	position: relative;
+	margin-left: -10px;
+	pointer-events: none;
+	user-select: none;
+	background-color: var(--color-img-default-background);
+} 
+div.qak-user-content-users-follow div.item-follow-user img {
+	--size-avatar-follow-item: 24px;
+	padding: 0;
+	margin: 0;
+	width: var(--size-avatar-follow-item);
+	max-width: var(--size-avatar-follow-item);
+	min-width: var(--size-avatar-follow-item);
+	height: var(--size-avatar-follow-item);
+	max-height: var(--size-avatar-follow-item);
+	min-height: var(--size-avatar-follow-item);
+	object-fit: cover;
+	object-position: center;
+	image-rendering: pixelated;
+	/* border-radius: 100px; */
 }
 
 

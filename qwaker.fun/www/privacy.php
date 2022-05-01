@@ -12,6 +12,7 @@
 	<?php include $_SERVER['DOCUMENT_ROOT'].'/vendor/page/style.php'; ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo $default_theme_site; ?>privacy-terms.css?v=<?php echo time(); ?>">
 	<link rel="shortcut icon" href="/assets/images/qak-favicon.png" type="image/png">
+	<?php include $_SERVER['DOCUMENT_ROOT'].'/vendor/page/meta.php'; ?>
 </head>
 <body>
 	<center>

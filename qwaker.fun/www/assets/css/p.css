@@ -132,6 +132,17 @@ h2.qak-p-message {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	vertical-align: middle;
+	padding-bottom: 4px;
+}
+h2.qak-p-message br {
+	margin: 2px 0;
+}
+h2.qak-p-message post-tag {
+	padding: 2px 5px;
+	background: var(--color-html-selected-item);
+	border-radius: 4px;
+	font-weight: 500;
+	color: var(--color-html-text-sub);
 }
 
 div.qak-p-bottom-item {

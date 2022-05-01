@@ -23,7 +23,7 @@
 		<?php
 			$usid = $_COOKIE['USID'];
 
-			// $url_user_alert = $default_api.'/user/data.php?id='.$usid.'&token='.$usid;
+			// $url_user_alert = $default_api.'/user/data.php?token='.$usid;
 			// $result_user_alert = json_decode(file_get_contents($url_user_alert, false), true);
 		?>
 	<?php } ?>
@@ -44,7 +44,7 @@
 					<div class="qak-popup-alert-item" id="qak-popup-alert-item-<?php echo $value['user_id']; ?>">
 						<img src="<?php echo $value['user_avatar']; ?>" class="qak-popup-alert-item-avatar" onerror="this.src = '/assets/images/qak-avatar-v3.png'">
 						<div class="qak-popup-alert-item-content">
-							<h2 class="qak-popup-alert-item-title">@<?php echo $value['user_login']; ?>
+							<h2 class="qak-popup-alert-item-title"><?php echo $value['user_login']; ?>
 								<?php if (intval($value['user_verification']) == 1) { ?>
 									<verification-user></verification-user>
 								<?php } ?>

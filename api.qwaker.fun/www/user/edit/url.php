@@ -23,6 +23,17 @@
 	$social = trim(mysqli_real_escape_string($connect, $_POST['social']));
 	$phone = trim(mysqli_real_escape_string($connect, $_POST['phone']));
 	$email = trim(mysqli_real_escape_string($connect, $_POST['email']));
+
+	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
+	if (mysqli_num_rows($checkSESSION) > 0) {
+		$session = mysqli_fetch_assoc($checkSESSION);
+		$sessionUTOKEN = $session['utoken'];
+		$check_u = mysqli_query($connect, "SELECT * FROM `users` WHERE `token_public` = '$sessionUTOKEN' LIMIT 1");
+		if (mysqli_num_rows($check_u) > 0) {
+			$sUSER = mysqli_fetch_assoc($check_u);
+			$token = $sUSER['token'];
+		}
+	}
 ?>
 <?php
 	$check_user = mysqli_query($connect, "SELECT * FROM `users` WHERE `token` = '$token' LIMIT 1");

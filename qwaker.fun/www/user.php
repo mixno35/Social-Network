@@ -64,7 +64,7 @@
 	function showDate2($date) {
 		include $_SERVER['DOCUMENT_ROOT'].'/vendor/lang.php';
 
-		if ($date == 1039554000 or $date == 1239148800 or $date == 1023235200) {
+		if ($date == 1039568400 or $date == 1239148800 or $date == 1023235200 or $date = 1041210000) {
 			return date('d M Y'.$string_time_year, $date);
 		} else {
 			$stf = 0;
@@ -131,6 +131,9 @@
 	<?php include $_SERVER['DOCUMENT_ROOT'].'/vendor/page/style.php'; ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo $default_theme_site; ?>user.css?v=<?php echo time(); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo $default_theme_site; ?>p.css?v=<?php echo time(); ?>">
+	<?php if (isMobile()) { ?>
+		<link rel="stylesheet" type="text/css" href="<?php echo $default_theme_site; ?>mobile.css?v=<?php echo time(); ?>">
+	<?php } ?>
 	<link rel="shortcut icon" href="/assets/images/qak-favicon.png" type="image/png">
 	<?php include $_SERVER['DOCUMENT_ROOT'].'/vendor/page/script.php'; ?>
 	<?php include $_SERVER['DOCUMENT_ROOT'].'/assets/js/p.php'; ?>
@@ -143,7 +146,7 @@
 	<?php include $_SERVER['DOCUMENT_ROOT'].'/vendor/page/placeholder.php'; ?>
 
 	<?php if (intval($result_user['you']) == 1) { ?>
-		<script src="/assets/js/edit/avatar.js?v=2"></script>
+		<script src="/assets/js/edit/avatar.js?v=3"></script>
 	<?php } ?>
 
 	<?php if (intval($_GET['view-post']) != '') { ?>
@@ -163,15 +166,17 @@
 						<div class="qak-container-data-top-sticky">
 							<div class="qak-container-data qak-container-data-user user-data">
 								<div class="qak-user-content-align">
-									<div class="qak-avatar-user">
-										<ul class="qak-avatar-user-menu">
-											<?php if (intval($result_user['you']) == 1) { ?>
-												<li onclick="updateAvatarAlert()"><img src="/assets/icons/icons8-upload-24.png"><?php echo $string['action_user_photo_update']; ?></li>
-											<?php } ?>
-											<?php if ($result_user['avatar'] != '') { ?>
-												<li onclick="viewPhoto(document.getElementById('qak-avatar-user').src)"><img src="/assets/icons/icons8-zoom-plus-24.png"><?php echo $string['action_user_photo_preview']; ?></li>
-											<?php } ?>
-										</ul>
+									<div class="qak-avatar-user" <?php if (isMobile()) { ?><?php if ($result_user['you']==1) { ?>onclick="updateAvatarAlert()"<?php } else { ?>onclick="viewPhoto(document.getElementById('qak-avatar-user').src)"<?php } ?><?php } ?>>
+										<?php if (isMobile()==false) { ?>
+											<ul class="qak-avatar-user-menu">
+												<?php if (intval($result_user['you']) == 1) { ?>
+													<li onclick="updateAvatarAlert()"><img src="/assets/icons/icons8-upload-24.png"><?php echo $string['action_user_photo_update']; ?></li>
+												<?php } ?>
+												<?php if ($result_user['avatar'] != '') { ?>
+													<li onclick="viewPhoto(document.getElementById('qak-avatar-user').src)"><img src="/assets/icons/icons8-zoom-plus-24.png"><?php echo $string['action_user_photo_preview']; ?></li>
+												<?php } ?>
+											</ul>
+										<?php } ?>
 										<?php if (intval($result_user['you']) == 1 or $result_user['ustatus'] > 0) { ?>
 											<?php
 												$ustatus = intval($result_user['ustatus']);
@@ -192,9 +197,10 @@
 											<verification-user class="user">
 												<h5 class="verification-user">
 													<?php 
-														$result_text_verification = str_replace('%1s', $result_user['login'], $string_message_user_verified);
-														$result_text_verification = str_replace('%2s', getVerificationType($result_user['user_verification_type']), $result_text_verification);
-														echo $result_text_verification; 
+														// $result_text_verification = str_replace('%1s', $result_user['login'], $string_message_user_verified);
+														// $result_text_verification = str_replace('%2s', getVerificationType($result_user['user_verification_type']), $result_text_verification);
+														// echo $result_text_verification; 
+													echo str_replace("%1s", $result_user['login'], $string['message_verify_user']);
 													?>
 													</h5>
 											</verification-user>
@@ -246,13 +252,38 @@
 										<h3 class="qak-user-content-message-top"><?php echo $string['title_posts']; ?></h3>
 										<h2 class="qak-user-content-title-top"><?php echo $result_user['user_posts']; ?></h2>
 									</center>
+									<?php $result_user_followers = json_decode($result_user['followers_list'], true); ?>
 									<center class="qak-user-conent-data-top" onclick="openFollowersAlert()">
 										<h3 class="qak-user-content-message-top"><?php echo $string['title_follows']; ?></h3>
-										<h2 class="qak-user-content-title-top"><?php echo $result_user['user_followers']; ?></h2>
+										<?php if (sizeof($result_user_followers) > 0) { ?>
+											<div class="qak-user-content-users-follow">
+												<?php foreach($result_user_followers as $key => $value) { ?>
+													<?php $result_user_follow_data = json_decode($value, true); ?>
+													<div class="item-follow-user">
+														<img src="<?php echo $result_user_follow_data['avatar']; ?>" onerror="this.src = '/assets/images/qak-avatar-v3.png'" draggable="false">
+													</div>
+												<?php } ?>
+											</div>
+										<?php } else { ?>
+											<h2 class="qak-user-content-title-top"><?php echo $result_user['user_followers']; ?></h2>
+										<?php } ?>
+										
 									</center>
+									<?php $result_user_following = json_decode($result_user['following_list'], true); ?>
 									<center class="qak-user-conent-data-top" onclick="openFollowedAlert()">
 										<h3 class="qak-user-content-message-top"><?php echo $string['title_followed']; ?></h3>
-										<h2 class="qak-user-content-title-top"><?php echo $result_user['user_following']; ?></h2>
+										<?php if (sizeof($result_user_following) > 0) { ?>
+											<div class="qak-user-content-users-follow">
+												<?php foreach($result_user_following as $key => $value) { ?>
+													<?php $result_user_follow_data = json_decode($value, true); ?>
+													<div class="item-follow-user">
+														<img src="<?php echo $result_user_follow_data['avatar']; ?>" onerror="this.src = '/assets/images/qak-avatar-v3.png'" draggable="false">
+													</div>
+												<?php } ?>
+											</div>
+										<?php } else { ?>
+											<h2 class="qak-user-content-title-top"><?php echo $result_user['user_following']; ?></h2>
+										<?php } ?>
 									</center>
 								</div>
 								<?php if ($result_user['user_show_url'] == 1) { ?>
@@ -279,11 +310,13 @@
 						<?php if ($result_user['you'] == 0) { ?>
 							<script type="text/javascript">
 								function reportUser(argument) {
+									showProgressBar();
 									$.ajax({
 										type: "GET", 
 										url:  '/assets/alert/view-report-user.php', 
 										data: {id: argument}, 
 										success: function(result) {
+											hideProgressBar();
 											$('body').append(result);
 										}
 									});
@@ -294,12 +327,14 @@
 						<?php if ($result_user['user_private_message'] == 1) { ?>
 							<script type="text/javascript">
 								function goMessage(argument) {
+									showProgressBar();
 									$.ajax({
 										type: "POST", 
 										url: "<?php echo $default_api; ?>/dialog/create-private-dialog.php", 
 										data: {token: '<?php echo $_COOKIE['USID'] ?>', id: argument}, 
 								    	success: function(result){
 											// console.log(result);
+											hideProgressBar();
 											var jsonOBJ = JSON.parse(result);
 											if (jsonOBJ['type'] == 'success') {
 												window.location = '/dialog.php?id=' + jsonOBJ['dialog_id'];
@@ -317,14 +352,18 @@
 
 						<script type="text/javascript">
 							function openFollowersAlert() {
+								showProgressBar();
 								$.ajax({type: "GET", url:  '/assets/alert/view-followers.php', data: "id=<?php echo $id; ?>", success: function(result) {
+										hideProgressBar();
 										$('body').append(result);
 									}
 								});
 							}
 
 							function openFollowedAlert() {
+								showProgressBar();
 								$.ajax({type: "GET", url:  '/assets/alert/view-followed.php', data: "id=<?php echo $id; ?>", success: function(result) {
+										hideProgressBar();
 										$('body').append(result);
 									}
 								});
@@ -342,7 +381,11 @@
 
 								<script type="text/javascript">
 									function updStatus() {
+										event.stopPropagation();
+										event.preventDefault();
+										showProgressBar();
 										$.ajax({type: "GET", url: "/assets/alert/upd-status.php", data: {req: 'ok'}, success: function(result) {
+												hideProgressBar();
 												$("body").append(result);
 											}
 										});
@@ -359,7 +402,9 @@
 							loadUserPosts();
 
 							function loadUserPosts() {
+								showProgressBar();
 								$.ajax({type: "GET", url: "/assets/content/user-page-posts.php", data: {id: '<?php echo $id; ?>'}, success: function(result) {
+									hideProgressBar();
 										$("#qak-user-post-container-data").empty();
 										$("#qak-user-post-container-data").append(result);
 									}

@@ -18,7 +18,7 @@
 		<input type="email" name="email" id="email" class="qak-input" autocomplete="off" placeholder="<?php echo $string['hint_edit_email']; ?>" value="<?php echo $result_user['email']; ?>">
 		<h4 class="qak-short-hint message"><?php echo $string['message_edit_email']; ?></h4>
 	</div>
-	<div class="qak-sign-container">
+	<div class="qak-sign-container" style="display: none; pointer-events: none;">
 		<h4 class="qak-short-hint"><?php echo $string['hint_edit_nickname']; ?></h4>
 		<input type="login" name="nickname" id="nickname" class="qak-input" autocomplete="off" placeholder="<?php echo $string['hint_edit_nickname']; ?>" value="<?php echo $result_user['nickname']; ?>">
 		<h4 class="qak-short-hint message"><?php echo $string['message_edit_nickname']; ?></h4>
@@ -39,12 +39,14 @@
 		var email = document.getElementById('email').value;
 		var nickname = document.getElementById('nickname').value;
 		var about = document.getElementById('about').value;
+		showProgressBar();
 		$.ajax({
 			type: "POST", 
 			url: "<?php echo $default_api; ?>/user/edit/def.php", 
 			data: {token: '<?php echo $_COOKIE['USID'] ?>', name: name, email: email, nickname: nickname, about: about}, 
 	    	success: function(result){
 				// console.log(result);
+				hideProgressBar();
 				var jsonOBJ = JSON.parse(result);
 				alert(jsonOBJ['message']);
 				if (jsonOBJ['type'] == 'success') {

@@ -21,6 +21,17 @@
 	$token = trim(mysqli_real_escape_string($connect, $_POST['token']));
 	$id = trim(mysqli_real_escape_string($connect, $_POST['id']));
 	$type = trim(mysqli_real_escape_string($connect, $_POST['type']));
+
+	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
+	if (mysqli_num_rows($checkSESSION) > 0) {
+		$session = mysqli_fetch_assoc($checkSESSION);
+		$sessionUTOKEN = $session['utoken'];
+		$check_u = mysqli_query($connect, "SELECT * FROM `users` WHERE `token_public` = '$sessionUTOKEN' LIMIT 1");
+		if (mysqli_num_rows($check_u) > 0) {
+			$sUSER = mysqli_fetch_assoc($check_u);
+			$token = $sUSER['token'];
+		}
+	}
 ?>
 <?php
 	$check_post = mysqli_query($connect, "SELECT * FROM `posts` WHERE `id` = '$id' LIMIT 1");
@@ -29,6 +40,7 @@
 		$post_id = intval($post['id']);
 		$post_user_id = intval($post['user_id']);
 		$post_message = strval($post['message']);
+		$post_category = intval($post['category']);
 	} else {
 		$check_post = mysqli_query($connect, "SELECT * FROM `posts` WHERE `post_id` = '$id' LIMIT 1");
 		if (mysqli_num_rows($check_post) > 0) {
@@ -36,6 +48,7 @@
 			$post_id = intval($post['id']);
 			$post_user_id = intval($post['user_id']);
 			$post_message = strval($post['message']);
+			$post_category = intval($post['category']);
 		}
 	}
 ?>
@@ -112,6 +125,14 @@
 			if ($post['user_id'] == $user['id']) {} else {
 				mysqli_query($connect, "INSERT INTO `notifications`(`user_id`, `sender_id`, `type`, `category`, `message`, `message2`, `message3`, `date_public`) VALUES ('$post_user_id', '$user_id', 'post', 'emotion', '$post_id', '$post_message', '$type', '$serverTIME')");
 			}
+
+			$check_post_category = mysqli_query($connect, "SELECT * FROM `post_category_favourites` WHERE `uid` = '$user_id' AND `category` = '$post_category' LIMIT 1");
+			if (mysqli_num_rows($check_post_category) > 0) {} else {
+				if ($post_category == 0 or $post_category == 999) {} else {
+					mysqli_query($connect, "INSERT INTO `post_category_favourites`(`uid`, `category`, `time`) VALUES ('$user_id', '$post_category', '$timeUSER')");
+				}
+			}
+
 			exit();
 		}
 	}

@@ -1,5 +1,5 @@
 <?php
-	header('Access-Control-Allow-Origin: http://qwaker.fun');
+	header('Access-Control-Allow-Origin: *');
 	header('Vary: Accept-Encoding, Origin');
 	header('Content-Length: 235');
 	header('Keep-Alive: timeout=2, max=99');
@@ -32,7 +32,7 @@
 		exit();
 	}
 
-	$password = substr(str_shuffle(str_repeat("0123456789QWERTYUIOPASDFGHJKLZXCVBNMabcdefghijklmnopqrstuvwxyz-+=!/", 15)), 0, 15);
+	$password = substr(str_shuffle(str_repeat("0123456789QWERTYUIOPASDFGHJKLZXCVBNMabcdefghijklmnopqrstuvwxyz", 15)), 0, 15);
 	$passwordMD5 = md5($password);
 
 	echo normJsonStr(json_encode(array(
@@ -43,7 +43,7 @@
 	)));
 
 	if (mysqli_num_rows($check_user) > 0) {
-		mysqli_query($connect, "UPDATE `users` SET `password`='$passwordMD5', `email_restore_password_code`=NULL WHERE `id`='$user_id'");
+		mysqli_query($connect, "UPDATE `users` SET `password`='$passwordMD5' WHERE `id`='$user_id'");
 	}
 
 	exit();

@@ -24,6 +24,8 @@
 <div class="qak-sign-container" id="qak-sign-container-code" style="display: none;">
 	<h4 class="qak-short-hint"><?php echo $string['hint_long_code']; ?></h4>
 	<input type="code" name="code" id="code" class="qak-input" autocomplete="off" placeholder="<?php echo $string['hint_short_code']; ?>">
+
+	<h3 class="qak-sign-container-messane-sign-up"><?php echo $string['message_sign_in_code_info']; ?></h3>
 </div>
 
 <button class="qak-sign-button" onclick="goSign()"><?php echo $string['action_sign_in']; ?></button>
@@ -38,9 +40,11 @@
 		var arguments3 = document.getElementById('code').value;
 
 		if (arguments2 != '') {
+			showProgressBar();
 			$.ajax({type: "POST", url: "<?php echo $default_api; ?>/auth/in.php", data: {login: arguments, password: arguments2, code: arguments3}, success: function(result) {
 					var jsonOBJ = JSON.parse(result);
 					// console.log(result);
+					hideProgressBar();
 					if (jsonOBJ['type'] == 'success') {
 						alert(jsonOBJ['message']);
 						if (jsonOBJ['task'] == 'auth:in:success-email') {

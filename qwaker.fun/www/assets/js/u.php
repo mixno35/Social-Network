@@ -7,8 +7,10 @@
 
 <script type="text/javascript">
 	function followUser(id, button, token) {
+		showProgressBar();
 		$.ajax({type: "POST", url: "<?php echo $default_api; ?>/user/follow.php", data: {id: id, token: '<?php echo $_COOKIE['USID']; ?>'}, success: function(result) {
 				// console.log(result);
+				hideProgressBar();
 				var jsonOBJ = JSON.parse(result);
 				if (jsonOBJ['type'] == 'success') {
 					if (jsonOBJ['id'] == 'id_user_follow_success_unfollowed') {
@@ -36,8 +38,10 @@
 	function blockUser(id, button, token) {
 		let isBlockUser = confirm(stringOBJ['message_user_ban_unban_description_confirm']);
 		if (isBlockUser) {
+			showProgressBar();
 			$.ajax({type: "POST", url: "<?php echo $default_api; ?>/user/block.php", data: {id: id, token: '<?php echo $_COOKIE['USID']; ?>'}, success: function(result) {
 					// console.log(result);
+					hideProgressBar();
 					var jsonOBJ = JSON.parse(result);
 					if (jsonOBJ['type'] == 'success') {
 						if (jsonOBJ['id'] == 'id_user_block_success_blocked') {

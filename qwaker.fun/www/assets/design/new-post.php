@@ -5,7 +5,7 @@
 	include $_SERVER['DOCUMENT_ROOT'].'/vendor/connect.php';
 ?>
 <?php
-	$url_user_new_p = $default_api.'/user/data.php?id='.$_COOKIE['USID'].'&token='.$_COOKIE['USID'];
+	$url_user_new_p = $default_api.'/user/data.php?token='.$_COOKIE['USID'];
 	$result_user_new_p = json_decode(file_get_contents($url_user_new_p, false), true);
 ?>
 <?php if ($_COOKIE['USID'] != '') { ?>
@@ -23,6 +23,9 @@
 		function openNewPostContainerPage() {
 			if (document.getElementById('new-post-container-v2').style.display == 'none') {
 				document.getElementById('new-post-container-v2').style.display = 'block';
+				try {
+					document.getElementById('message-new-post').focus();
+				} catch (exx) {}
 			} else {
 				document.getElementById('new-post-container-v2').style.display = 'none';
 			}

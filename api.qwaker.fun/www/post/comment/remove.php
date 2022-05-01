@@ -21,6 +21,17 @@
 	$token = trim(mysqli_real_escape_string($connect, $_POST['token']));
 	$post_id = intval(trim(mysqli_real_escape_string($connect, $_POST['post_id'])));
 	$id = intval(trim(mysqli_real_escape_string($connect, $_POST['id'])));
+
+	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
+	if (mysqli_num_rows($checkSESSION) > 0) {
+		$session = mysqli_fetch_assoc($checkSESSION);
+		$sessionUTOKEN = $session['utoken'];
+		$check_u = mysqli_query($connect, "SELECT * FROM `users` WHERE `token_public` = '$sessionUTOKEN' LIMIT 1");
+		if (mysqli_num_rows($check_u) > 0) {
+			$sUSER = mysqli_fetch_assoc($check_u);
+			$token = $sUSER['token'];
+		}
+	}
 ?>
 <?php
 	$check_user2 = mysqli_query($connect, "SELECT * FROM `users` WHERE `token` = '$token' LIMIT 1");
@@ -69,6 +80,7 @@
 	}
 
 	if (mysqli_query($connect, "DELETE FROM `comments` WHERE `id` = '$id' AND `user_id` = '$user2_id'")) {
+		mysqli_query($connect, "DELETE FROM `comments_likes` WHERE `cid` = '$id'");
 		echo normJsonStr(json_encode(array(
 			"id" => "id_post_comment_remove_success",
 			"type" => "success", 

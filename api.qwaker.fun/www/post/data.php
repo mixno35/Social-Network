@@ -20,6 +20,17 @@
 <?php
 	$token = trim(mysqli_real_escape_string($connect, $_GET['token']));
 	$id = trim(mysqli_real_escape_string($connect, $_GET['id']));
+
+	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
+	if (mysqli_num_rows($checkSESSION) > 0) {
+		$session = mysqli_fetch_assoc($checkSESSION);
+		$sessionUTOKEN = $session['utoken'];
+		$check_u = mysqli_query($connect, "SELECT * FROM `users` WHERE `token_public` = '$sessionUTOKEN' LIMIT 1");
+		if (mysqli_num_rows($check_u) > 0) {
+			$sUSER = mysqli_fetch_assoc($check_u);
+			$token = $sUSER['token'];
+		}
+	}
 ?>
 <?php
 	$check_user2 = mysqli_query($connect, "SELECT * FROM `users` WHERE `token` = '$token' LIMIT 1");
@@ -46,6 +57,7 @@
 		$check_user_post = mysqli_query($connect, "SELECT * FROM `users` WHERE `id` = '$user_id_post' LIMIT 1");
 		$check_comments_post = mysqli_query($connect, "SELECT * FROM `comments` WHERE `post_id` = '$id_post' LIMIT 1");
 		$check_post_my_comment = mysqli_query($connect, "SELECT * FROM `comments` WHERE `post_id` = '$id_post' AND `user_id` = '$user_id_post' LIMIT 1");
+		$check_post_views = mysqli_query($connect, "SELECT * FROM `post_views` WHERE `pid` = '$id_post'");
 
 		$check_blacklist = mysqli_query($connect, "SELECT * FROM `black_list` WHERE `user_blocker` = '$user_id_post' AND `user_blocked` = '$user2_id' LIMIT 1");
 		if (mysqli_num_rows($check_blacklist) > 0) {
@@ -79,7 +91,7 @@
 
 
 		$you_post = 0;
-		if ($post['public_id'] == $user2_id) {
+		if ($post['user_id'] == $user2_id) {
 			$you_post = 1;
 		}
 
@@ -128,7 +140,7 @@
 		// MY-EMOTIONS ---------------------------------------------------------------------------------------------------------------
 
 
-		if ($post['archive'] == 0 or $post['public_id'] == $user2_id) {
+		if ($post['archive'] == 0 or $post['user_id'] == $user2_id) {
 			echo json_encode(array(
 				"type" => "success",
 				"task" => "post:data:success", 
@@ -138,13 +150,14 @@
 				"post_message" => strval(htmlspecialchars($post['message'])),
 				"post_title" => strval(htmlspecialchars($post['title'])),
 				"post_date_public" => strval($post['date_public']),
+				"post_date_view" => intval($post['date_view']),
 				"post_language" => strval($post['language']),
 				"post_commented" => intval($post['commented']),
 				"post_you" => intval($you_post),
 				"post_comments" => intval(mysqli_num_rows($check_comments_post)),
 				"post_my_comment" => intval(mysqli_num_rows($check_post_my_comment)),
 				"post_images" => json_encode($array_images),
-				"post_views" => intval($post['views']),
+				"post_views" => intval(mysqli_num_rows($check_post_views)),
 				"post_emotions" => json_decode(json_encode($array_emotions)),
 				"post_my_emotion" => json_decode(json_encode($array_my_emotion)),
 				"user_id" => $user_post_id,
@@ -156,6 +169,10 @@
 			), 128);
 
 			mysqli_query($connect, "UPDATE `posts` SET `views`='$post_views_upd' WHERE `id`='$id_post'");
+			$num_views = mysqli_query($connect, "SELECT * FROM `post_views` WHERE `pid` = '$id_post' AND `uid` = '$user2_id' LIMIT 1");
+			if (mysqli_num_rows($num_views) == 0) {
+				mysqli_query($connect, "INSERT INTO `post_views`(`uid`, `pid`, `time`) VALUES ('$user2_id', '$id_post', '$timeUSER')");
+			}
 
 			// $post_category = $post['category'].' '.$user2['fav_posts'];
 			// mysqli_query($connect, "UPDATE `users` SET `fav_posts`='$post_category' WHERE `id`='$user2_id'");

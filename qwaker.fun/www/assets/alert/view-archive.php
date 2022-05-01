@@ -21,7 +21,7 @@
 	<div class="qak-alert-container-holder">
 		<h2 class="qak-alert-container-holder-title"><?php echo $string['title_list_archive']; ?></h2>
 		<div class="qak-alert-close" onclick="document.getElementById('qak-alert-container').remove()"></div>
-		<div class="qak-alert-list-archive" id="qak-alert-list-archive">
+		<div id="qak-alert-list-archive">
 			<h2 class="qak-alert-message"><?php echo $string['message_please_wait']; ?></h2>
 		</div>
 
@@ -46,7 +46,7 @@
 								loadListArchive();
 							} catch (exx) {}
 							try {
-								openType(posts_type, posts_limit);
+								openType(posts_type, posts_limit, '');
 							} catch (exx) {}
 							try {
 								loadUserPosts();

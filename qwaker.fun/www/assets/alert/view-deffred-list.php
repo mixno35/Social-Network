@@ -83,7 +83,7 @@
 							if (jsonOBJ['type'] == 'success') {
 								document.getElementById('qak-alert-container').remove();
 								try {
-									openType(posts_type, posts_limit);
+									openType(posts_type, posts_limit, '');
 								} catch (exx) {}
 								try {
 									loadUserPosts();

@@ -262,6 +262,7 @@ div.container-data-2-bottom {
 	border-top: 1px solid var(--color-container-border);
 	/* align-items: center; */
 	/* justify-content: flex-end; */
+	position: relative;
 }
 div.container-data-2-bottom input {
 	margin: 0;
@@ -392,6 +393,10 @@ div.qak-dialog-message-item div.container-2 h2 {
 	font-size: 12px;
 	font-family: system-ui;
 	padding-top: 6px;
+	white-space: normal;
+	word-spacing: 0px;
+	line-height: 14px;
+	overflow: hidden;
 }
 div.qak-dialog-message-item div.container-2 h4.resend-message {
 	padding: 0 10px;
@@ -575,6 +580,7 @@ div.qak-dialog-cut {
 	cursor: pointer;
 	border: 1px solid var(--color-container-border);
 	background: var(--color-container-background);
+	position: relative;
 }
 div.qak-dialog-cut:hover {
 	transform: scale(.92);
@@ -617,6 +623,16 @@ div.image-view:hover font {
 	display: block;
 }
 
+div.image-view.gif img {
+	max-width: 180px;
+	min-width: 60px;
+	width: 100px;
+	max-height: 180px;
+	min-height: 60px;
+	height: 100px;
+	pointer-events: none;
+}
+
 div.qak-dialog-screen-progress {
 	padding: 0;
 	margin: 0;
@@ -630,4 +646,52 @@ div.qak-dialog-screen-progress {
 	bottom: 0;
 	background: var(--color-alert-background-overlay-v2);
 	z-index: 99999;
+}
+
+div#modalContainer div.dialog-qak-gif-container {
+	padding: 0;
+	margin: 0;
+}
+div#modalContainer div.dialog-qak-gif-container div.list-gifs {
+	padding: 0 15px;
+	margin: 0;
+	max-height: 400px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	display: block;
+	text-align: left;
+	padding-bottom: 10px;
+	padding-top: 20px;
+}
+div#modalContainer div.dialog-qak-gif-container div.list-gifs div.item-gif {
+	--size-gif-item-dialog-w: 90px;
+	--size-gif-item-dialog-h: 90px;
+	padding: 0;
+	margin: 0;
+	/* pointer-events: none; */
+	user-select: none;
+	display: inline-block;
+	width: var(--size-gif-item-dialog-w);
+	height: var(--size-gif-item-dialog-h);
+	max-width: var(--size-gif-item-dialog-w);
+	min-width: var(--size-gif-item-dialog-w);
+	max-height: var(--size-gif-item-dialog-h);
+	min-height: var(--size-gif-item-dialog-h);
+}
+div#modalContainer div.dialog-qak-gif-container div.list-gifs div.item-gif:hover {
+	transform: scale(1.4);
+	top: 0;
+	bottom: 0;
+	position: relative;
+}
+div#modalContainer div.dialog-qak-gif-container div.list-gifs div.item-gif img {
+	padding: 0;
+	margin: 0;
+	width: var(--size-gif-item-dialog-w);
+	height: var(--size-gif-item-dialog-h);
+	max-width: var(--size-gif-item-dialog-w);
+	min-width: var(--size-gif-item-dialog-w);
+	max-height: var(--size-gif-item-dialog-h);
+	min-height: var(--size-gif-item-dialog-h);
+	background-color: var(--color-img-default-background);
 }

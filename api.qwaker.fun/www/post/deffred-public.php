@@ -20,6 +20,17 @@
 <?php
 	$token = trim(mysqli_real_escape_string($connect, $_POST['token']));
 	$id = trim(mysqli_real_escape_string($connect, $_POST['id']));
+
+	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
+	if (mysqli_num_rows($checkSESSION) > 0) {
+		$session = mysqli_fetch_assoc($checkSESSION);
+		$sessionUTOKEN = $session['utoken'];
+		$check_u = mysqli_query($connect, "SELECT * FROM `users` WHERE `token_public` = '$sessionUTOKEN' LIMIT 1");
+		if (mysqli_num_rows($check_u) > 0) {
+			$sUSER = mysqli_fetch_assoc($check_u);
+			$token = $sUSER['token'];
+		}
+	}
 ?>
 <?php
 	$check_post = mysqli_query($connect, "SELECT * FROM `posts` WHERE `id` = '$id' LIMIT 1");
@@ -98,7 +109,7 @@
 	}
 ?>
 <?php
-	if (mysqli_query($connect, "UPDATE `posts` SET `date_view`=0 WHERE `user_id`='$user_id' AND `id`='$id'")) {
+	if (mysqli_query($connect, "UPDATE `posts` SET `date_view`='$timeUSER' WHERE `user_id`='$user_id' AND `id`='$id'")) {
 		echo normJsonStr(json_encode(array(
 			"id" => "id_post_deffred_public_success",
 			"type" => "success", 

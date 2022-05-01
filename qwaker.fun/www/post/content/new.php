@@ -5,7 +5,7 @@
 	include $_SERVER['DOCUMENT_ROOT'].'/vendor/connect.php';
 ?>
 <?php
-	$url_user_post_c = $default_api.'/user/data.php?id='.$_COOKIE['USID'].'&token='.$_COOKIE['USID'];
+	$url_user_post_c = $default_api.'/user/data.php?token='.$_COOKIE['USID'];
 	$result_user_post_c = json_decode(file_get_contents($url_user_post_c, false), true);
 ?>
 <center>
@@ -14,7 +14,7 @@
 			<h2 class="title-qak-text"><?php echo $string['title_new_post']; ?></h2>
 
 			<div>
-				<input type="title" name="title" id="title-new-post" class="qak-input-post" placeholder="<?php echo $string['hint_post_title']; ?>">
+				<input type="title" name="title" id="title-new-post" class="qak-input-post" placeholder="<?php echo $string['hint_post_title']; ?>" style="display: none;">
 				<input type="file" name="pic[]" id="pic" multiple="3" onchange="updPreview(this)" accept=".jpg, .jpeg, .png" style="display: none;">
 				<textarea class="qak-textarea-post" id="message-new-post" placeholder="<?php echo $string['hint_post_message']; ?>"></textarea>
 				<?php if ($result_user_post_c['public_post'] == 1) { ?>
@@ -98,6 +98,8 @@
 						</center>
 						<button id="btn-pub" class="qak-button-public-post <?php if ($result_user_post_c['public_post'] == 0) { echo 'border'; } ?>" <?php if ($result_user_post_c['public_post'] == 1) { ?>onclick="goPublicPost()"<?php } else { echo 'disabled'; } ?>><?php if ($result_user_post_c['public_post'] == 1) { echo $string['action_post_public']; } else { echo $string['action_post_public_disable']; } ?></button>
 					</div>
+				<?php } else { ?>
+					<h3 class="message-short"><?php echo $string['message_public_post_off']; ?></h3>
 				<?php } ?>
 			</div>
 		</center>

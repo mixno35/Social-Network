@@ -22,6 +22,17 @@
 	$password = trim(mysqli_real_escape_string($connect, $_POST['password']));
 
 	$passwordMD5 = md5($password);
+
+	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
+	if (mysqli_num_rows($checkSESSION) > 0) {
+		$session = mysqli_fetch_assoc($checkSESSION);
+		$sessionUTOKEN = $session['utoken'];
+		$check_u = mysqli_query($connect, "SELECT * FROM `users` WHERE `token_public` = '$sessionUTOKEN' LIMIT 1");
+		if (mysqli_num_rows($check_u) > 0) {
+			$sUSER = mysqli_fetch_assoc($check_u);
+			$token = $sUSER['token'];
+		}
+	}
 ?>
 <?php
 	$check_user = mysqli_query($connect, "SELECT * FROM `users` WHERE `token` = '$token' LIMIT 1");
@@ -61,6 +72,7 @@
 <?php
 	mysqli_query($connect, "DELETE FROM `black_list` WHERE `user_blocker` = '$user_id' OR `user_blocked` = '$user_id'");
 	mysqli_query($connect, "DELETE FROM `comments` WHERE `user_id` = '$user_id'");
+	mysqli_query($connect, "DELETE FROM `comments_likes` WHERE `uid` = '$user_id'");
 	mysqli_query($connect, "DELETE FROM `dialog` WHERE `uid` = '$user_id' OR `uid2` = '$user_id'");
 	mysqli_query($connect, "DELETE FROM `dialog_messages` WHERE `uid` = '$user_id'");
 	mysqli_query($connect, "DELETE FROM `follows` WHERE `follower_id` = '$user_id' OR `followed_id` = '$user_id'");

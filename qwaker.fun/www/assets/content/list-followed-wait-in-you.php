@@ -23,7 +23,7 @@
 		<?php
 			$usid = $_COOKIE['USID'];
 
-			$url_user_alert = $default_api.'/user/data.php?id='.$usid.'&token='.$usid;
+			$url_user_alert = $default_api.'/user/data.php?token='.$usid;
 			$result_user_alert = json_decode(file_get_contents($url_user_alert, false), true);
 		?>
 	<?php } ?>
@@ -44,7 +44,7 @@
 					<div class="qak-popup-alert-item" id="qak-popup-alert-item-<?php echo $value['user_id']; ?>">
 						<img src="<?php echo $value['user_avatar']; ?>" class="qak-popup-alert-item-avatar" onerror="this.src = '/assets/images/qak-avatar-v3.png'">
 						<div class="qak-popup-alert-item-content">
-							<h2 class="qak-popup-alert-item-title">@<?php echo $value['user_login']; ?>
+							<h2 class="qak-popup-alert-item-title"><?php echo $value['user_login']; ?>
 								<?php if (intval($value['user_verification']) == 1) { ?>
 									<verification-user></verification-user>
 								<?php } ?>
@@ -53,8 +53,10 @@
 							</h2>
 							<h2 class="qak-popup-alert-item-message"><?php echo str_replace('%1s', '@<a href="/user?id='.$value['user_login'].'">'.$value['user_login'].'</a>', $string['message_user_follow_to_you']); ?></h2>
 							<div class="qak-popup-alert-item-actions">
-								<button onclick="goConfirmFollow(<?php echo $value['user_id']; ?>)"><?php echo $string['action_request_confirm']; ?></button>
-								<button onclick="goRejectFollow(<?php echo $value['user_id']; ?>)"><?php echo $string['action_request_reject']; ?></button>
+								<!-- <button onclick="goConfirmFollow(<?php echo $value['user_id']; ?>)"><?php echo $string['action_request_confirm']; ?></button>
+								<button onclick="goRejectFollow(<?php echo $value['user_id']; ?>)"><?php echo $string['action_request_reject']; ?></button> -->
+								<div class="action positive" title="<?php echo $string['action_request_confirm']; ?>" onclick="goConfirmFollow(<?php echo $value['user_id']; ?>)"></div>
+								<div class="action negative" title="<?php echo $string['action_request_reject']; ?>" onclick="goRejectFollow(<?php echo $value['user_id']; ?>)"></div>
 							</div>
 						</div>
 					</div>
@@ -64,6 +66,7 @@
 					<?php } ?>
 
 				<?php } ?>
+				<h5 class="qak-notify-limit"><?php echo $string['tooltip_hover_follow_list']; ?></h5>
 			<?php } ?>
 		</div>
 

@@ -54,6 +54,10 @@
 				break;
 		}
 
+		if ($year == date('Y')) {
+			return $day . ' ' . $result_mounth . ' ' . $hour . ':' . $minute;
+		}
+
 		return $day . ' ' . $result_mounth . ' ' . $year . ' ' . $hour . ':' . $minute;
 	}
 
@@ -108,6 +112,10 @@
 			default:
 				$mounth = $string['short_text_month_1'];
 				break;
+		}
+
+		if ($year == date('Y')) {
+			return $day . ' ' . $result_mounth . ' ' . $hour . ':' . $minute;
 		}
 
 		return $day . ' ' . $mounth . ' ' . $year . ' ' . $hour . ':' . $minute . ':' . $second;
@@ -165,5 +173,13 @@
 		$cases = array(2, 0, 1, 1, 1, 2);
 	 
 		return $titles[($number%100 > 4 && $number % 100 < 20 ) ? 2 : $cases[min($number % 10, 5)]];
+	}
+?>
+<?php
+	function isMobile() {
+		if (preg_match("/(android|webos|avantgo|iphone|ipad|ipod|blackberry|iemobile|bolt|boost|cricket|docomo|fone|hiptop|mini|opera mini|kitkat|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER['HTTP_USER_AGENT'])) {
+			return true;
+		}
+		return false;
 	}
 ?>

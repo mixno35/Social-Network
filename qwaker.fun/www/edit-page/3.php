@@ -31,12 +31,14 @@
 <script type="text/javascript">
 	function saveProf() {
 		var login = document.getElementById('login').value;
+		showProgressBar();
 		$.ajax({
 			type: "POST", 
 			url: "<?php echo $default_api; ?>/user/edit/prof.php", 
 			data: {token: '<?php echo $_COOKIE['USID'] ?>', login: login}, 
 	    	success: function(result){
 				// console.log(result);
+				hideProgressBar();
 				var jsonOBJ = JSON.parse(result);
 				alert(jsonOBJ['message']);
 				if (jsonOBJ['type'] == 'success') {

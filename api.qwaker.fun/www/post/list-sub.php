@@ -23,6 +23,17 @@
 	if ($limit < 100) {
 		$limit = 100;
 	}
+
+	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
+	if (mysqli_num_rows($checkSESSION) > 0) {
+		$session = mysqli_fetch_assoc($checkSESSION);
+		$sessionUTOKEN = $session['utoken'];
+		$check_u = mysqli_query($connect, "SELECT * FROM `users` WHERE `token_public` = '$sessionUTOKEN' LIMIT 1");
+		if (mysqli_num_rows($check_u) > 0) {
+			$sUSER = mysqli_fetch_assoc($check_u);
+			$token = $sUSER['token'];
+		}
+	}
 ?>
 <?php
 	$check_user = mysqli_query($connect, "SELECT * FROM `users` WHERE `token` = '$token' LIMIT 1");
@@ -146,6 +157,7 @@
 			"post_message" => strval(htmlspecialchars($row['message'])),
 			"post_title" => strval(htmlspecialchars($row['title'])),
 			"post_date_public" => strval($row['date_public']),
+			"post_date_view" => intval($row['date_view']),
 			"post_language" => strval($row['language']),
 			"post_you" => intval($value_you),
 			"post_comments" => intval(mysqli_num_rows($check_comments_post)),

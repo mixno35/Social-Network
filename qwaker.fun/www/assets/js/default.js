@@ -20,11 +20,13 @@ function showMenu(id) {
 function showUserPopup(argument, argument2) {
     event.stopPropagation();
     closePopups();
+    showProgressBar();
     $.ajax({
         type: "GET", 
         url: "/assets/alert/view-user.php", 
         data: {id: argument}, 
         success: function(result){
+            hideProgressBar();
             $("body").append(result);
         }
     });

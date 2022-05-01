@@ -8,7 +8,7 @@
 <?php
 	$maxSIZEAVATAR = intval(1); /* -- MB -- */
 
-	$url_user_upd = $default_api.'/user/data.php?id='.$_COOKIE['USID'].'&token='.$_COOKIE['USID'];
+	$url_user_upd = $default_api.'/user/data.php?token='.$_COOKIE['USID'];
 	$result_user_upd = json_decode(file_get_contents($url_user_upd, false), true);
 ?>
 <div class="qak-alert-container" id="qak-alert-container">

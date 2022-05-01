@@ -20,6 +20,17 @@
 <?php
 	$token = trim(mysqli_real_escape_string($connect, $_GET['token']));
 	$id = trim(mysqli_real_escape_string($connect, $_GET['id']));
+
+	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
+	if (mysqli_num_rows($checkSESSION) > 0) {
+		$session = mysqli_fetch_assoc($checkSESSION);
+		$sessionUTOKEN = $session['utoken'];
+		$check_u = mysqli_query($connect, "SELECT * FROM `users` WHERE `token_public` = '$sessionUTOKEN' LIMIT 1");
+		if (mysqli_num_rows($check_u) > 0) {
+			$sUSER = mysqli_fetch_assoc($check_u);
+			$token = $sUSER['token'];
+		}
+	}
 ?>
 <?php
 	$check_user2 = mysqli_query($connect, "SELECT * FROM `users` WHERE `token` = '$token' LIMIT 1");
@@ -44,9 +55,13 @@
 
 	$check_comment = mysqli_query($connect, "SELECT * FROM `comments` WHERE `post_id` = '$post_id' ORDER BY date_public ASC");
 
-	if (mysqli_num_rows($check_comment) > 0) {} else {
+	if (mysqli_num_rows($check_comment) > 0) {
+		
+	} else {
 		exit();
 	}
+
+	
 
 	// $check_post = mysqli_query($connect, "SELECT * FROM `posts` WHERE `id` = '$id'");
 	// if (mysqli_num_rows($check_post) > 0) {
@@ -69,9 +84,13 @@
 	echo('[');
 	while($row = mysqli_fetch_assoc($check_comment)) {
 		$user_id_comment = intval($row['user_id']);
-		$id_post = intval($row['id']);
+		$id_post = intval($row['post_id']);
+		$id_comment = intval($row['id']);
 
 		$check_user_comment = mysqli_query($connect, "SELECT * FROM `users` WHERE `id` = '$user_id_comment' LIMIT 1");
+
+		$check_comment_likes = mysqli_query($connect, "SELECT * FROM `comments_likes` WHERE `pid` = '$post_id' AND `cid` = '$id_comment'");
+		$check_comment_like_my = mysqli_query($connect, "SELECT * FROM `comments_likes` WHERE `pid` = '$post_id' AND `cid` = '$id_comment' AND `uid` = '$user2_id' LIMIT 1");
 		
 		if (mysqli_num_rows($check_user_comment) > 0) {
 			$user_comment = mysqli_fetch_assoc($check_user_comment);
@@ -110,6 +129,8 @@
 			"comment_message" => strval(htmlspecialchars($row['message'])),
 			"comment_date_public" => strval($row['date_public']),
 			"comment_you" => intval($you_comment),
+			"comment_likes" => intval(mysqli_num_rows($check_comment_likes)), 
+			"comment_like_you" => intval(mysqli_num_rows($check_comment_like_my)), 
 			"user_id" => $user_comment_id,
 			"user_login" => $user_comment_login,
 			"user_name" => htmlspecialchars($user_comment_name),

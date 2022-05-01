@@ -2,36 +2,61 @@
 	{
 		"name":"status_name_default",
 		"description":"status_description_default",
-		"key":"default"
+		"key":"default",
+		"category":null
 	},
 	{
 		"name":"status_name_jobs",
 		"description":"status_description_jobs",
-		"key":"jobs"
+		"key":"jobs",
+		"category":"work"
 	},
 	{
 		"name":"status_name_relax",
 		"description":"status_description_relax",
-		"key":"relax"
+		"key":"relax",
+		"category":"relax"
 	},
 	{
 		"name":"status_name_playing",
 		"description":"status_description_playing",
-		"key":"playing"
+		"key":"playing",
+		"category":"relax"
 	},
 	{
 		"name":"status_name_video",
 		"description":"status_description_video",
-		"key":"video"
+		"key":"video",
+		"category":"relax"
 	},
 	{
-		"name":"status_name_brush",
-		"description":"status_description_brush",
-		"key":"brush"
+		"name":"status_name_light",
+		"description":"status_description_light",
+		"key":"light",
+		"category":"work"
 	},
 	{
 		"name":"status_name_fishing",
 		"description":"status_description_fishing",
-		"key":"fishing"
+		"key":"fishing",
+		"category":"relax,work"
+	},
+	{
+		"name":"status_name_flying",
+		"description":"status_description_flying",
+		"key":"flying",
+		"category":"relax"
+	},
+	{
+		"name":"status_name_space_rocket",
+		"description":"status_description_space_rocket",
+		"key":"space_rocket",
+		"category":"relax"
+	},
+	{
+		"name":"status_name_find",
+		"description":"status_description_find",
+		"key":"find",
+		"category":"love"
 	}
 ]

@@ -5,7 +5,7 @@
 	include $_SERVER['DOCUMENT_ROOT'].'/vendor/connect.php';
 	include $_SERVER['DOCUMENT_ROOT'].'/vendor/only-load.php';
 
-	$url_user = $default_api.'/user/data.php?token='.$_COOKIE['USID'].'&id='.$_COOKIE['USID'];
+	$url_user = $default_api.'/user/data.php?token='.$_COOKIE['USID'];
 	$result_user = json_decode(file_get_contents($url_user, false), true);
 
 	$result_status = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].'/assets/json/status-list.json', false), true);
@@ -22,8 +22,10 @@
 						$name = $value['name'];
 						$desc = $value['description'];
 					?>
-					<div class="item <?php if($result_user['ustatus']==$key){echo 'active';} ?>" id="item-status-<?php echo $key; ?>" onclick="selectStatus(<?php echo $key; ?>, '<?php echo $value['key']; ?>')" status-name="<?php echo $string["$name"]; ?>" status-description="<?php echo $string["$desc"]; ?>">
-						<img src="<?php echo '/assets/icons/status/'.$value['key'].'.png'; ?>">
+					<div style="display: inline-block;">
+						<div class="item <?php if($result_user['ustatus']==$key){echo 'active';} ?>" id="item-status-<?php echo $key; ?>" onclick="selectStatus(<?php echo $key; ?>, '<?php echo $value['key']; ?>')" status-name="<?php echo $string["$name"]; ?>" status-description="<?php echo $string["$desc"]; ?>">
+							<img src="<?php echo '/assets/icons/status/'.$value['key'].'.png'; ?>">
+						</div>
 					</div>
 				<?php } ?>
 			</div>

@@ -5,9 +5,11 @@
 	function postEmotion(argument, argument2) {
 		event.stopPropagation();
 		event.preventDefault();
+		showProgressBar();
 		$.ajax({type: "POST", url: "<?php echo $default_api; ?>/post/emotion.php", data: {id: argument, type: argument2, token: '<?php echo $_COOKIE['USID'] ?>'}, success: function(result) {
 				var jsonOBJ = JSON.parse(result);
 				// console.log(result);
+				hideProgressBar();
 				toast(jsonOBJ['message']);
 				if (jsonOBJ['type'] == 'success') {
 					try {
@@ -28,7 +30,9 @@
 		goAlertPost(id);
 	}
 	function goAlertPost(id, comment) {
+		showProgressBar();
 		$.ajax({type: "GET", url: "/assets/alert/view-post.php", data: {id: id, comment: comment}, success: function(result) {
+				hideProgressBar();
 				$("body").append(result);
 			}
 		});

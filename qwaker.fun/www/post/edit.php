@@ -3,11 +3,12 @@
 	include $_SERVER['DOCUMENT_ROOT'].'/vendor/lang.php';
 	include $_SERVER['DOCUMENT_ROOT'].'/vendor/default.php';
 	include $_SERVER['DOCUMENT_ROOT'].'/vendor/connect.php';
+	include $_SERVER['DOCUMENT_ROOT'].'/vendor/only-load.php';
 ?>
 <?php
 	$id = intval($_GET['id']);
 
-	$url_user = $default_api.'/user/data.php?id='.$_COOKIE['USID'].'&token='.$_COOKIE['USID'];
+	$url_user = $default_api.'/user/data.php?token='.$_COOKIE['USID'];
 	$result_user = json_decode(file_get_contents($url_user, false), true);
 
 	$url_post = $default_api.'/post/edit/data.php?id='.$id.'&token='.$_COOKIE['USID'];
@@ -40,7 +41,7 @@
 	?>
 
 	<center>
-		<div class="qak-post-container">
+		<div class="qak-post-container" <?php if (isMobile()) { ?>style="width: -webkit-fill-available;margin: 0;"<?php } ?>>
 			<center>
 				<h2 class="title-qak-text"><?php echo $string['title_post_edit']; ?></h2>
 

@@ -1,5 +1,5 @@
 <?php
-	header('Access-Control-Allow-Origin: http://qwaker.fun');
+	header('Access-Control-Allow-Origin: *');
 	header('Vary: Accept-Encoding, Origin');
 	header('Content-Length: 235');
 	header('Keep-Alive: timeout=2, max=99');
@@ -29,24 +29,24 @@
 	$login = trim(strtolower(mysqli_real_escape_string($connect, $_POST['login'])));
 	$name = trim(mysqli_real_escape_string($connect, $_POST['name']));
 	$password = trim(mysqli_real_escape_string($connect, $_POST['password']));
-	// $invite = trim(mysqli_real_escape_string($connect, $_POST['invite']));
+	$invite = trim(mysqli_real_escape_string($connect, $_POST['invite']));
 
-	// $inviteMD5 = md5($invite);
+	$inviteMD5 = md5($invite);
 
 	// Проверяем корректность пригласительного кода................................................
-	// $check_invite = mysqli_query($connect, "SELECT * FROM `invites` WHERE `invite` = '$invite' AND `activated` = 0 LIMIT 1");
-	// if (mysqli_num_rows($check_invite) > 0) {} else {
-	// 	echo normJsonStr(json_encode(array(
-	// 		"id" => "id_invite_empty",
-	// 		"type" => "error", 
-	// 		"task" => "auth:invite:empty", 
-	// 		"camp" => "user", 
-	// 		"message" => 'Такого пригласительного кода нет или его уже активировали!',
-	// 		"error_value" => $invite,
-	// 		"time" => $serverTIME
-	// 	)));
-	// 	exit();
-	// }
+	$check_invite = mysqli_query($connect, "SELECT * FROM `invites` WHERE `invite` = '$inviteMD5' AND `activated` = 0 LIMIT 1");
+	if (mysqli_num_rows($check_invite) > 0) {} else {
+		echo normJsonStr(json_encode(array(
+			"id" => "id_invite_empty",
+			"type" => "error", 
+			"task" => "auth:invite:empty", 
+			"camp" => "user", 
+			"message" => 'Такого пригласительного кода нет или его уже активировали!',
+			"error_value" => $invite,
+			"time" => $serverTIME
+		)));
+		exit();
+	}
 
 	// Проверяем является ли значение "login" пустым, если да - запрещаем дальнейшую проверку....................................................
 	if (!trim($login)) {
@@ -56,6 +56,19 @@
 			"task" => "auth:up:login", 
 			"camp" => "user", 
 			"message" => 'Логин не может быть пустым!',
+			"error_value" => $login,
+			"time" => $serverTIME
+		)));
+		exit();
+	}
+
+	if ($login == 'login' or $login == 'unknown' or $login == 'admin' or $login == 'user') {
+		echo normJsonStr(json_encode(array(
+			"id" => "id_login_unsupported",
+			"type" => "error", 
+			"task" => "auth:up:login", 
+			"camp" => "user", 
+			"message" => 'Данный логин "'.$login.'" запрещен для регистрации!',
 			"error_value" => $login,
 			"time" => $serverTIME
 		)));
@@ -205,8 +218,8 @@
 	$token = substr(str_shuffle(str_repeat("0123456789QWERTYUIOPASDFGHJKLZXCVBNMabcdefghijklmnopqrstuvwxyz", 70)), 0, 70);
 	$tokenMD5 = md5($token);
 
-	$generateINVITECHARS = '0123456789QWERTYUIOPASDFGHJKLZXCVBNM';
-	$generateINVITE = substr(str_shuffle(str_repeat($generateINVITECHARS, 4)), 0, 4).'-'.substr(str_shuffle(str_repeat($generateINVITECHARS, 4)), 0, 4).'-'.substr(str_shuffle(str_repeat($generateINVITECHARS, 4)), 0, 4);
+	// $generateINVITECHARS = '0123456789QWERTYUIOPASDFGHJKLZXCVBNM';
+	// $generateINVITE = substr(str_shuffle(str_repeat($generateINVITECHARS, 4)), 0, 4).'-'.substr(str_shuffle(str_repeat($generateINVITECHARS, 4)), 0, 4).'-'.substr(str_shuffle(str_repeat($generateINVITECHARS, 4)), 0, 4);
 
 
 

@@ -43,6 +43,17 @@
 
 	$maxIMAGESIZE = intval(1); // MB
 
+	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
+	if (mysqli_num_rows($checkSESSION) > 0) {
+		$session = mysqli_fetch_assoc($checkSESSION);
+		$sessionUTOKEN = $session['utoken'];
+		$check_u = mysqli_query($connect, "SELECT * FROM `users` WHERE `token_public` = '$sessionUTOKEN' LIMIT 1");
+		if (mysqli_num_rows($check_u) > 0) {
+			$sUSER = mysqli_fetch_assoc($check_u);
+			$token = $sUSER['token'];
+		}
+	}
+
 	sleep(1);
 ?>
 <?php
@@ -133,7 +144,7 @@
 				"type" => "error", 
 				"task" => "edit:user:avatar:error", 
 				"camp" => "server", 
-				"message" => 'Вы совсем недавно меняли фото профиля. Следующее изменение фото будет доступно: <b>'.date("d M Y H:m", $last_upd_avatar).'</b>',
+				"message" => 'Вы совсем недавно меняли фото профиля. Следующее изменение фото будет доступно: <b>'.date("d M Y H:i", $last_upd_avatar).'</b>',
 				"time" => $serverTIME
 			)));
 			exit();
@@ -172,7 +183,7 @@
 
 	$newname = $user['login'].'-'.date('YmdHis', time()).rand(10000,999999).'.jpg';
 	$newdir = '/avatars/'.$newname;
-	$result_newdir = 'https://sun.qwaker.fun'.$newdir;
+	$result_newdir = 'https://sun.qwaker.net'.$newdir;
 
 	if (move_uploaded_file($file['tmp_name'][0], $result_path.$newdir)) {} else {
 		echo normJsonStr(json_encode(array(

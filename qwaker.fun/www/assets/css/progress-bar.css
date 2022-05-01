@@ -1,0 +1,44 @@
+pb.over {
+	padding: 0;
+	margin: 0;
+	width: -webkit-fill-available;
+	height: 3px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: transparent;
+	z-index: 999;
+	display: flex;
+	justify-content: center;
+	pointer-events: none;
+	user-select: none;
+	overflow: hidden;
+}
+pb.over cont {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #3d9dff, #ed000000 17%, #01ff1500 34%, #3d9dff 51%, #3d9dff 68%, #fb000c00 85%, #03f91600);
+  background-size: 300% 100%;
+  -webkit-animation: progress-animation 2s linear infinite;
+  animation: progress-animation 2s ease-in-out infinite;
+}
+
+@-webkit-keyframes progress-animation {
+  0% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: 0;
+  }
+}
+
+@keyframes progress-animation {
+  0% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: 0;
+  }
+}

@@ -38,8 +38,9 @@
 <script src="/assets/js/jquery/jquery-3.5.0.js"></script>
 <script src="/assets/js/jquery/jquery.min.js"></script>
 <script src="/assets/js/jquery/jquery-ui.min.js"></script>
-<script src="/assets/js/default.js?v=10"></script>
+<script src="/assets/js/default.js?v=11"></script>
 <script src="/assets/js/toast.js"></script>
+<script src="/assets/js/progress-bar.js"></script>
 <script src="/assets/js/alert-box.js"></script>
 <script type="text/javascript" id="qak-script-custom-theme">
 	let gMouseDownX = 0;
@@ -97,7 +98,9 @@
 <script type="text/javascript">
 	function viewPhoto(url, json, key) {
 		event.stopPropagation();
+		showProgressBar();
 		$.ajax({type: "GET", url: "/assets/alert/view-photo.php", data: {url: url, json: json, key: key}, success: function(result) {
+				hideProgressBar();
 				$('body').append(result);
 			}
 		});
@@ -141,6 +144,13 @@
 	function getLoadDialogBottom() {
 		return '<?php echo $_COOKIE['load-dialogs-b']; ?>';
 	}
+
+	function setHidePopupRec(argument) {
+		document.cookie = "hide-popup-rec=" + argument + "; path=/; domain=<?php echo $_SERVER['SERVER_NAME']; ?>; expires=Tue, <?php echo intval(date('d')); ?> <?php echo date('M'); ?> <?php echo intval(date('Y')+1); ?> 00:00:00 GMT";
+	}
+	function getHidePopupRec() {
+		return '<?php echo $_COOKIE['hide-popup-rec']; ?>';
+	}
 </script>
 <?php if (!trim($_COOKIE['lang'])) { ?>
 	<script type="text/javascript">
@@ -162,6 +172,11 @@
 		setLoadDialogBottom(false);
 	</script>
 <?php } ?>
+<?php if (!trim($_COOKIE['hide-popup-rec'])) { ?>
+	<script type="text/javascript">
+		setHidePopupRec(false);
+	</script>
+<?php } ?>
 <script type="text/javascript">
 	(function($) {
 	    $.fn.hasScrollBar = function() {
@@ -172,4 +187,11 @@
 	        };
 	    }
 	})(jQuery);
+</script>
+<script type="text/javascript">
+	if (navigator.cookieEnabled) {
+		
+	} else {
+		alert('Please, allowed cookie!');
+	}
 </script>

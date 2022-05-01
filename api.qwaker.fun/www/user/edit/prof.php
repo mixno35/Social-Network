@@ -24,6 +24,17 @@
 <?php
 	$token = trim(mysqli_real_escape_string($connect, $_POST['token']));
 	$login = trim(strtolower(mysqli_real_escape_string($connect, $_POST['login'])));
+
+	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
+	if (mysqli_num_rows($checkSESSION) > 0) {
+		$session = mysqli_fetch_assoc($checkSESSION);
+		$sessionUTOKEN = $session['utoken'];
+		$check_u = mysqli_query($connect, "SELECT * FROM `users` WHERE `token_public` = '$sessionUTOKEN' LIMIT 1");
+		if (mysqli_num_rows($check_u) > 0) {
+			$sUSER = mysqli_fetch_assoc($check_u);
+			$token = $sUSER['token'];
+		}
+	}
 ?>
 <?php
 	$check_user = mysqli_query($connect, "SELECT * FROM `users` WHERE `token` = '$token' LIMIT 1");
@@ -84,8 +95,21 @@
 			"type" => "error", 
 			"task" => "user:edit:login", 
 			"camp" => "user", 
-			"message" => 'Вы совсем недавно меняли логин. Следующее изменение логина будет доступно: <b>'.date("d M Y H:m", $last_upd_login).'</b>',
+			"message" => 'Вы совсем недавно меняли логин. Следующее изменение логина будет доступно: <b>'.date("d M Y H:i", $last_upd_login).'</b>',
 			"error_value" => $login.' | '.$last_upd_login.' | '.$last_upd_login_new,
+			"time" => $serverTIME
+		)));
+		exit();
+	}
+
+	if ($login == 'login' or $login == 'unknown' or $login == 'admin' or $login == 'user') {
+		echo normJsonStr(json_encode(array(
+			"id" => "id_login_unsupported",
+			"type" => "error", 
+			"task" => "user:edit:login", 
+			"camp" => "user", 
+			"message" => 'Данный логин запрещен!',
+			"error_value" => $login,
 			"time" => $serverTIME
 		)));
 		exit();

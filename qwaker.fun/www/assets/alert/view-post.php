@@ -43,7 +43,7 @@
 									<verification-user></verification-user>
 								<?php } ?>
 							</h2>
-							<h2 class="qak-alert-comment-data-date"><?php echo convertTimeRus($result_post['post_date_public']); ?></h2>
+							<h2 class="qak-alert-comment-data-date"><?php echo convertTimeRus(date('d.m.Y H:m:i', $result_post['post_date_view'])); ?></h2>
 						</div>
 					</div>
 					<div class="qak-alert-comment-container-bottom">
@@ -57,6 +57,12 @@
 										$nameLink = str_replace('@', '', $userNewLink);
 										$message = str_replace($userNewLink, '<user-marked onclick="showUserPopup(\''.$nameLink.'\')">'.$userNewLink.'</user-marked>', $message);
 									}
+								}
+							}
+							
+							if (preg_match_all('~#+\S+~', $message, $postTAG)) {
+								foreach($postTAG[0] as $usedTAG) {
+									$message = str_replace($usedTAG, '<post-tag>'.$usedTAG.'</post-tag>', $message);
 								}
 							}
 						?>
@@ -75,6 +81,11 @@
 							</h6>
 						<?php } ?>
 					</div>
+					<?php if ($result_post['post_you'] > 0) { ?>
+						<div class="action-stat" onclick="goStat(<?php echo $result_post['id']; ?>)" title="<?php echo $string['action_post_stat']; ?>">
+							<img src="/assets/icons/ic-post-stat-coverage.png">
+						</div>
+					<?php } ?>
 				</div>
 				<?php if (intval($result_post['post_commented']) == 1) { ?>
 					<hr class="qak-alert">
@@ -149,6 +160,17 @@
 						}
 					});
 				}
+			}
+
+			function goStat(argument) {
+				$.ajax({
+					type: "GET", 
+					url:  '/assets/alert/view-stat-post.php', 
+					data: {id: argument}, 
+					success: function(result) {
+						$('body').append(result);
+					}
+				});
 			}
 
 			function reportComment(argument) {

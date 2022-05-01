@@ -17,6 +17,9 @@ html.theme-default-light {
 	--color-button-fab-background: #22b16f;
 	--color-button-fab-background-hover: #1d925c;
 	--color-button-fab-text: #FFFFFF;
+	--color-button-positive: #22b16f;
+	--color-button-negative: #e30000;
+	--color-button-neutral: #72b8ff;
 
 	--color-html-text: #000000;
 	--color-html-text-sub: rgba(0,0,0,.4);
@@ -124,6 +127,8 @@ html.theme-default-light {
 	--color-scam-border: #d60000;
 	--color-scam-text: #d60000;
 
+	--color-progress-over: rgba(0,0,0,.3);
+	--color-progress-bar: rgba(255,255,255,1);
 	--color-progress-background: rgba(0,0,0,.1);
 	--color-progress-background-active: rgba(0,0,0,1);
 
@@ -186,6 +191,9 @@ html.theme-default-dark {
 	--color-button-fab-background: rgb(255 255 255 / 27%);
 	--color-button-fab-background-hover: rgb(255 255 255 / 38%);
 	--color-button-fab-text: #FFFFFF;
+	--color-button-positive: green;
+	--color-button-negative: red;
+	--color-button-neutral: blue;
 
 	--color-html-text: #FFFFFF;
 	--color-html-text-sub: rgba(255,255,255,.4);
@@ -293,6 +301,8 @@ html.theme-default-dark {
 	--color-scam-border: #ff5b5b;
 	--color-scam-text: #ff5b5b;
 
+	--color-progress-over: rgba(0,0,0,.3);
+	--color-progress-bar: rgba(255,255,255,1);
 	--color-progress-background: rgba(255,255,255,.1);
 	--color-progress-background-active: rgba(255,255,255,1);
 

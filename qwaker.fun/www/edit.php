@@ -58,13 +58,16 @@
 						<div class="tl" id="tl-item-secure" tooltip="<?php echo $string['edit_title_2']; ?>" onclick="swipePage('secure')">
 							<div class="tl-item secure"></div>
 						</div>
+						<div class="tl" id="tl-item-private" tooltip="<?php echo $string['edit_title_5']; ?>" onclick="swipePage('private')">
+							<div class="tl-item private"></div>
+						</div>
 					</ul>
 				</center>
 
 				<div class="qak-container-data-two">
 					<div>
 						<div id="container-content">
-							
+							<h2 class="qak-edit-message"><?php echo $string['message_please_wait']; ?></h2>
 						</div>
 					</div>
 					<div>
@@ -84,6 +87,8 @@
 							resultSwipePage = '2';
 						} if (argument == 'account') {
 							resultSwipePage = '3';
+						} if (argument == 'private') {
+							resultSwipePage = '5';
 						}
 
 						updParam('act', argument);
@@ -99,7 +104,9 @@
 						document.getElementById('tl-item-' + argument).classList.add('active');
 
 						document.getElementById('container-content').style.opacity = '0.5';
+						showProgressBar();
 						$.ajax({type: "GET", url: "/edit-page/"+resultSwipePage+".php", data: {req: 'ok'}, success: function(result) {
+								hideProgressBar();
 								document.getElementById('container-content').style.opacity = '1.0';
 								$("#container-content").empty();
 								$("#container-content").append(result);

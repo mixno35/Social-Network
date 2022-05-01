@@ -20,8 +20,20 @@
 <?php
 	$token = trim(mysqli_real_escape_string($connect, $_GET['token']));
 	$limit = intval($_GET['limit']);
+	$hashtag = trim(mysqli_real_escape_string($connect, $_GET['hashtag']));
 	if ($limit < 100) {
 		$limit = 100;
+	}
+
+	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
+	if (mysqli_num_rows($checkSESSION) > 0) {
+		$session = mysqli_fetch_assoc($checkSESSION);
+		$sessionUTOKEN = $session['utoken'];
+		$check_u = mysqli_query($connect, "SELECT * FROM `users` WHERE `token_public` = '$sessionUTOKEN' LIMIT 1");
+		if (mysqli_num_rows($check_u) > 0) {
+			$sUSER = mysqli_fetch_assoc($check_u);
+			$token = $sUSER['token'];
+		}
 	}
 ?>
 <?php
@@ -41,13 +53,36 @@
 ?>
 <?php
 
+	$check_category = mysqli_query($connect, "SELECT * FROM `post_category_favourites` WHERE `uid` = '$user_id'");
+
+	$result_category = array();
+	$result_category[] = intval(0);
+	$result_category[] = intval(999);
+	while($row = mysqli_fetch_assoc($check_category)) {
+		$result_category[] = intval($row['category']);
+	}
+
 	$user_like = $user['like_posts'];
 	$user_language = $user['language'];
 
 	sleep(1);
 
+	$postTAGNUM = 0;
+
+	if (strlen($hashtag) > 3) {
+		if (preg_match_all('~#+\S+~', $hashtag, $postTAG)) {
+			foreach($postTAG[0] as $usedTAG) {
+				$postTAGNUM = intval($postTAGNUM + 1);
+			}
+		}
+	}
+
 	// $check_post = mysqli_query($connect, "SELECT * FROM `posts` WHERE `category` LIKE '$user_like' AND `archive` = 0 ORDER BY date_public DESC");
-	$check_post = mysqli_query($connect, "SELECT * FROM `posts` WHERE `language` = '$user_language' AND `archive` = 0 AND `date_view` < '$timeUSER' ORDER BY date_public DESC LIMIT $limit");
+	if (strlen($hashtag) > 3) {
+		$check_post = mysqli_query($connect, "SELECT * FROM `posts` WHERE `message` LIKE '%hashtag%' AND `archive` = 0 AND `date_view` < '$timeUSER' ORDER BY date_public DESC LIMIT $limit");
+	} else {
+		$check_post = mysqli_query($connect, "SELECT * FROM `posts` WHERE `language` = '$user_language' AND `category` IN('" . implode("','", $result_category) . "') AND `archive` = 0 AND `date_view` < '$timeUSER' ORDER BY date_public DESC LIMIT $limit");
+	}
 
 	$num_posts = mysqli_num_rows($check_post);
 ?>
@@ -142,6 +177,7 @@
 			"post_message" => strval(htmlspecialchars($row['message'])),
 			"post_title" => strval(htmlspecialchars($row['title'])),
 			"post_date_public" => strval($row['date_public']),
+			"post_date_view" => intval($row['date_view']),
 			"post_language" => strval($row['language']),
 			"post_you" => intval($value_you),
 			"post_comments" => intval(mysqli_num_rows($check_comments_post)),

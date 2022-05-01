@@ -84,7 +84,10 @@
 						<h6 class="reply-container" id="reply-container" style="display: none;" tooltip="<?php echo $action_message_reply_cancel; ?>" onclick="cancelReplyMessage()"></h6>
 						<div class="default-container">
 							<div class="qak-dialog-cut" title="<?php echo $string['tooltip_click_to_select_image_cut']; ?>" onclick="document.getElementById('pic').click();event.stopPropagation();event.preventDefault()">
-								<img src="/assets/icons/ic-cut-image.png">
+								<img src="/assets/icons/ic-cut-image.png?v=2">
+							</div>
+							<div class="qak-dialog-cut" id="qak-dialog-cut" title="<?php echo $string['tooltip_click_to_select_image_gif']; ?>" onclick="goSelectGif()">
+								<img src="/assets/icons/ic-gif-image.png">
 							</div>
 							<input type="file" name="pic[]" id="pic" multiple="1" onchange="sendMessageImage(this)" accept=".jpg, .jpeg, .png" style="display: none;">
 							<input id="container-data-2-input" type="message" placeholder="<?php echo $string['hint_input_enter_message']; ?>" oninput="inputMessageValueData(this.value)" onchange="inputMessageValueData(this.value)">
@@ -166,7 +169,9 @@
 
 			function loadDialogs() {
 				// document.getElementById('container-data-1-content').style.opacity = '.5';
+				showProgressBar();
 				$.ajax({type: "GET", url: "/assets/content/list-dialogs.php", data: {token: '<?php echo $_COOKIE['USID']; ?>'}, success: function(result) {
+						hideProgressBar();
 						$("#container-data-1-content").empty();
 						$("#container-data-1-content").append(result);
 						// document.getElementById('container-data-1-content').style.opacity = '1';
@@ -179,8 +184,21 @@
 				});
 			}
 
+			function goSelectGif() {
+				event.stopPropagation();
+				event.preventDefault();
+				showProgressBar();
+				$.ajax({type: "GET", url: "/assets/alert/view-gif-anim.php", data: {req: 'ok'}, success: function(result) {
+						hideProgressBar();
+						$("#dialog-bottom-bar").append(result);
+					}
+				});
+			}
+
 			function goRecordVoice() {
+				showProgressBar();
 				$.ajax({type: "GET", url: "/assets/alert/view-record-message.php", data: {req: 'ok'}, success: function(result) {
+						hideProgressBar();
 						$("body").append(result);
 					}
 				});
@@ -191,7 +209,9 @@
 					$("#container-data-2-content").empty();
 					$("#container-data-2-content").append('<?php echo $choose_dialog_html; ?>');
 				} else {
+					showProgressBar();
 					$.ajax({type: "GET", url: "/assets/content/list-dialog-messages.php", data: {id: argument}, success: function(result) {
+							hideProgressBar();
 							if (jsonMESSAGES != result) {
 								$("#container-data-2-content").empty();
 								$("#container-data-2-content").append(result);
@@ -203,11 +223,35 @@
 				}
 			}
 
+			function sendGifMessage(argument, argument2) {
+				if (message.value.trim() != '') {
+					showProgressBar();
+					$.ajax({
+						type: "POST", 
+						url: "<?php echo $default_api; ?>/dialog/send-message-gif-private.php", 
+						data: {token: '<?php echo $_COOKIE['USID'] ?>', id: dialogID, static: argument, url: argument2}, 
+				    	success: function(result){
+				    		hideProgressBar();
+							// console.log(result);
+							var jsonOBJ = JSON.parse(result);
+							if (jsonOBJ['type'] == 'success') {
+								loadMessages(dialogID);
+							} if (jsonOBJ['type'] == 'error') {
+								toast(jsonOBJ['message']);
+							}
+						}
+					});
+				} else {
+					toast(stringOBJ['message_enter_message']);
+				}
+			}
+
 			function sendMessageImage(argument) {
 				if (window.URL.createObjectURL(argument.files[0]) != null) {
 					document.getElementById('qak-dialog-screen-progress').style.display = 'flex';
 				}
 				try {
+					// showProgressBar();
 					toast(stringOBJ['toast_dialog_image_selected']+' <img onclick="viewPhoto(this.src)" src="'+window.URL.createObjectURL(argument.files[0])+'">');
 					var formdata = new FormData();
 					formdata.append('token', '<?php echo $_COOKIE['USID']; ?>');
@@ -235,6 +279,7 @@
 				    	contentType: false,
 				    	processData: false,
 				    	success: function(result){
+				    		// hideProgressBar();
 				    		// console.log(result);
 							var jsonOBJ = JSON.parse(result);
 							if (jsonOBJ['type'] == 'success') {
@@ -266,12 +311,14 @@
 			function sendMessage() {
 				var message = document.getElementById('container-data-2-input');
 				if (message.value.trim() != '') {
+					showProgressBar();
 					$.ajax({
 						type: "POST", 
 						url: "<?php echo $default_api; ?>/dialog/send-message-text-private-dialog.php", 
 						data: {token: '<?php echo $_COOKIE['USID'] ?>', id: dialogID, message: message.value, reply: replyMESSAGE}, 
 				    	success: function(result){
 							// console.log(result);
+							hideProgressBar();
 							var jsonOBJ = JSON.parse(result);
 							if (jsonOBJ['type'] == 'success') {
 								inputMessageValueData('');
@@ -291,12 +338,14 @@
 			function editMessageGo(id) {
 				var message = document.getElementById('container-data-2-input');
 				if (message.value.trim() != '') {
+					showProgressBar();
 					$.ajax({
 						type: "POST", 
 						url: "<?php echo $default_api; ?>/dialog/edit-message-private-dialog.php", 
 						data: {token: '<?php echo $_COOKIE['USID'] ?>', id: id, message: message.value}, 
 				    	success: function(result){
 							// console.log(result);
+							hideProgressBar();
 							var jsonOBJ = JSON.parse(result);
 							if (jsonOBJ['type'] == 'success') {
 								editMessageCancel();
@@ -365,12 +414,14 @@
 		<script type="text/javascript">
 			function deleteMessage(argument) {
 				if (confirm(stringOBJ['message_delete_are'])) {
+					showProgressBar();
 					$.ajax({
 						type: "POST", 
 						url: "<?php echo $default_api; ?>/dialog/delete-message-private-dialog.php", 
 						data: {token: '<?php echo $_COOKIE['USID'] ?>', id: dialogID, message_id: argument}, 
 				    	success: function(result){
 							// console.log(result);
+							hideProgressBar();
 							var jsonOBJ = JSON.parse(result);
 							toast(jsonOBJ['message']);
 							closeMenuMessage('qak-dialog-message-item-'+argument);
@@ -409,12 +460,14 @@
 
 			function deleteDialog() {
 				if (confirm(stringOBJ['message_delete_dialog_are'])) {
+					showProgressBar();
 					$.ajax({
 						type: "POST", 
 						url: "<?php echo $default_api; ?>/dialog/delete-private-dialog.php", 
 						data: {token: '<?php echo $_COOKIE['USID'] ?>', id: dialogID}, 
 				    	success: function(result){
 							// console.log(result);
+							hideProgressBar();
 							var jsonOBJ = JSON.parse(result);
 							toast(jsonOBJ['message']);
 							if (jsonOBJ['type'] == 'success') {
@@ -427,12 +480,14 @@
 
 			function clearDialog() {
 				if (confirm(stringOBJ['message_clear_dialog_are'])) {
+					showProgressBar();
 					$.ajax({
 						type: "POST", 
 						url: "<?php echo $default_api; ?>/dialog/clear-private-dialog.php", 
 						data: {token: '<?php echo $_COOKIE['USID'] ?>', id: dialogID}, 
 				    	success: function(result){
 							// console.log(result);
+							hideProgressBar();
 							var jsonOBJ = JSON.parse(result);
 							toast(jsonOBJ['message']);
 							if (jsonOBJ['type'] == 'success') {
@@ -444,12 +499,14 @@
 			}
 
 			function statusDialog(argument) {
+				showProgressBar();
 				$.ajax({
 					type: "POST", 
 					url: "<?php echo $default_api; ?>/dialog/status-private-dialog.php", 
 					data: {token: '<?php echo $_COOKIE['USID'] ?>', id: dialogID, status: argument}, 
 			    	success: function(result){
 						// console.log(result);
+						hideProgressBar();
 						var jsonOBJ = JSON.parse(result);
 						toast(jsonOBJ['message']);
 						if (jsonOBJ['type'] == 'success') {

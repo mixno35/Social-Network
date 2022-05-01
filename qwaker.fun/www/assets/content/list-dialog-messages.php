@@ -13,6 +13,13 @@
 	function str_starts_with($haystack, $needle) {
 		return strpos($haystack, $needle) === 0;
 	}
+
+	function str_replace2($find, $replacement, $subject, $limit = 0){
+		if ($limit == 0)
+			return str_replace($find, $replacement, $subject);
+		$ptn = '/' . preg_quote($find,'/') . '/';
+		return preg_replace($ptn, $replacement, $subject, $limit);
+	}
 ?>
 <?php if (sizeof($result_messages) > 0) { ?>
 	<?php $num_mesages = intval(sizeof($result_messages)); ?>
@@ -26,6 +33,19 @@
 					foreach($user_link[0] as $userNewLink) {
 						$nameLink = str_replace('@', '', $userNewLink);
 						$text = str_replace($userNewLink, '<user-marked onclick="showUserPopup(\''.$nameLink.'\')">'.$userNewLink.'</user-marked>', $text);
+					}
+				}
+
+				if (preg_match_all('/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i', $text, $user_link)) {
+					$limit_user_noted = 1;
+					foreach($user_link[0] as $newUserLink) {
+						if ($limit_user_noted !== 0) {
+							$start_http = "";
+							if (str_starts_with($newUserLink, "www.")) {
+								$start_http = "http://";
+							}
+							$text = str_replace($newUserLink, '<a href="/redirect.php?url='.urlencode($start_http.$newUserLink).'">'.$newUserLink.'</a>', $text);
+						}
 					}
 				}
 
@@ -62,6 +82,15 @@
 			<?php if ($value['type'] == 'image') { ?>
 				<div class="image-view">
 					<img onclick="viewPhoto(this.src)" src="<?php echo $value['source']; ?>" date="<?php echo showDateOnlineUser($value['date']); ?>">
+					<font onclick="event.stopPropagation(); deleteMessage('<?php echo $value['id']; ?>')"><?php echo $string['action_message_delete']; ?></font>
+				</div>
+			<?php } ?>
+			<?php if ($value['type'] == 'gif') { ?>
+				<?php
+					$gif = json_decode($value['source'], true);
+				?>
+				<div class="image-view gif" onmouseover="document.getElementById('img-gif-<?php echo $value['id']; ?>').src = '<?php echo $gif['url']; ?>'" onmouseout="document.getElementById('img-gif-<?php echo $value['id']; ?>').src = '<?php echo $gif['static']; ?>'" onclick="viewPhoto('<?php echo $gif['url']; ?>');">
+					<img id="img-gif-<?php echo $value['id']; ?>" src="<?php echo $gif['static']; ?>">
 					<font onclick="event.stopPropagation(); deleteMessage('<?php echo $value['id']; ?>')"><?php echo $string['action_message_delete']; ?></font>
 				</div>
 			<?php } ?>

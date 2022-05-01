@@ -45,8 +45,12 @@
 									<?php if (intval($value['user_verification']) == 1) { ?>
 										<verification-user></verification-user>
 									<?php } ?>
+									<!-- <font class="date"><?php echo str_replace('%1s', convertTimeRus($value['follow_date_confirm']), $string['text_confirmed_follow']); ?></font> -->
+									<font class="date"><?php echo convertTimeRus($value['follow_date_confirm']); ?></font>
 								</h2>
-								<h3><?php echo str_replace('%1s', convertTimeRus($value['follow_date_confirm']), $string['text_confirmed_follow']); ?></h3>
+								<h3><?php
+									echo $value['user_name'];
+								?></h3>
 							</div>
 							<?php if ($value['follow_you'] == 1) { ?>
 								<button class="border" id="qak-follow-button-<?php echo $value['id']; ?>" onclick="followUser(<?php echo $value['user_id']; ?>, this.id, '')"><?php echo $string['action_followed']; ?></button>

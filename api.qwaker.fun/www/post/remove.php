@@ -20,6 +20,17 @@
 <?php
 	$token = trim(mysqli_real_escape_string($connect, $_POST['token']));
 	$id = trim(mysqli_real_escape_string($connect, $_POST['id']));
+
+	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
+	if (mysqli_num_rows($checkSESSION) > 0) {
+		$session = mysqli_fetch_assoc($checkSESSION);
+		$sessionUTOKEN = $session['utoken'];
+		$check_u = mysqli_query($connect, "SELECT * FROM `users` WHERE `token_public` = '$sessionUTOKEN' LIMIT 1");
+		if (mysqli_num_rows($check_u) > 0) {
+			$sUSER = mysqli_fetch_assoc($check_u);
+			$token = $sUSER['token'];
+		}
+	}
 ?>
 <?php
 	$check_post = mysqli_query($connect, "SELECT * FROM `posts` WHERE `id` = '$id' LIMIT 1");
@@ -105,6 +116,7 @@
 	if (mysqli_query($connect, "DELETE FROM `posts` WHERE `id` = '$post_id' AND `user_id` = '$user_id'")) {
 		mysqli_query($connect, "DELETE FROM `comments` WHERE `post_id` = '$post_id'");
 		mysqli_query($connect, "DELETE FROM `post_emotions` WHERE `pid` = '$post_id'");
+		mysqli_query($connect, "DELETE FROM `comments_likes` WHERE `pid` = '$id'");
 		// mysqli_query($connect, "DELETE FROM `post_likes` WHERE `post_id` = '$post_id'");
 		// mysqli_query($connect, "DELETE FROM `post_dislikes` WHERE `post_id` = '$post_id'");
 		echo normJsonStr(json_encode(array(

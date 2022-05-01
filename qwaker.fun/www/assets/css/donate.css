@@ -1,0 +1,41 @@
+div.qak-container-data h2.qak-container-data-title {
+	padding: 10px;
+	margin: 0;
+	font-weight: 700;
+	font-family: system-ui;
+	font-size: 18px;
+	color: var(--color-html-text);
+}
+div.qak-container-data h5.qak-container-data-message {
+	padding: 0 20px;
+	margin: 0;
+	font-weight: 400;
+	font-family: system-ui;
+	font-size: 14px;
+	color: var(--color-html-text-sub);
+}
+div.qak-container-data ul.list-donate {
+	padding: 0 20px;
+	margin: 0;
+	list-style: none;
+	text-align: left;
+	padding-bottom: 20px;
+	font-weight: 500;
+	font-family: system-ui;
+	font-size: 14px;
+}
+div.qak-container-data ul.list-donate li {
+	padding: 0;
+	margin: 0;
+	height: 22px;
+	display: flex;
+	align-items: center;
+}
+
+div.qak-container-data hr {
+	padding: 0;
+	border: none;
+	height: 1px;
+	width: -webkit-fill-available;
+	background: var(--color-container-data-border);
+}
