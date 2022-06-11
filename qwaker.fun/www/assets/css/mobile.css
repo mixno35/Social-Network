@@ -148,3 +148,47 @@ div#toastContainer {
 div#toastContainer p {
 	font-size: 14px;
 }
+div.qak-dialog-container-home {
+	width: -webkit-fill-available;
+	max-width: -webkit-fill-available;
+	min-width: -webkit-fill-available;
+	display: block;
+	margin: 10px;
+}
+div.qak-dialog-container-home.d {
+	padding: 0;
+	margin: 0;
+	background: rgba(0,0,0,0);
+	border: none;
+	border-radius: 0;
+	width: -webkit-fill-available;
+	max-width: -webkit-fill-available;
+	min-width: -webkit-fill-available;
+	/* height: -webkit-fill-available; */
+	/* min-height: -webkit-fill-available; */
+	box-shadow: none;
+}
+div.container-data-2-top {
+	position: absolute;
+	top: 5px;
+	right:0;
+	z-index: 99;
+}
+div.container-data-2-bottom {
+	position: fixed;
+	bottom: 0;
+	width: --webkit-fill-available;
+	max-width: -webkit-fill-available;
+	min-width: -webkit-fill-available;
+}
+div#container-data-2-content {
+	width: --webkit-fill-available;
+	max-width: -webkit-fill-available;
+	min-width: -webkit-fill-available;
+	position: absolute;
+	height: auto;
+	min-height: auto;
+	max-height: --webkit-fill-available;
+	bottom: 50px;
+	z-index: 20;
+}

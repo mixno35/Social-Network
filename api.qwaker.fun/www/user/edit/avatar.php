@@ -179,11 +179,11 @@
 		exit();
 	}
 
-	$result_path = str_replace('api.', 'sun.', $_SERVER['DOCUMENT_ROOT']);
+	$result_path = str_replace($defaultDOMAINSTORAGE_START, $defaultDOMAINSTORAGE_END, $_SERVER['DOCUMENT_ROOT']);
 
 	$newname = $user['login'].'-'.date('YmdHis', time()).rand(10000,999999).'.jpg';
 	$newdir = '/avatars/'.$newname;
-	$result_newdir = 'https://sun.qwaker.net'.$newdir;
+	$result_newdir = $defaultDOMAINSTORAGE_URL.$newdir;
 
 	if (move_uploaded_file($file['tmp_name'][0], $result_path.$newdir)) {} else {
 		echo normJsonStr(json_encode(array(

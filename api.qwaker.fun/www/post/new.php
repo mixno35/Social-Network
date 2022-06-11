@@ -220,9 +220,9 @@
 	$fileSIZE2 = $image2['size'][0] / 1024 / 1024;
 	$fileSIZE3 = $image3['size'][0] / 1024 / 1024;
 
-	$result_path = str_replace('api.', 'sun.', $_SERVER['DOCUMENT_ROOT']);
+	$result_path = str_replace($defaultDOMAINSTORAGE_START, $defaultDOMAINSTORAGE_END, $_SERVER['DOCUMENT_ROOT']);
 
-	$domain_path = 'https://sun.qwaker.net';
+	$domain_path = $defaultDOMAINSTORAGE_URL;
 
 	sleep(1);
 

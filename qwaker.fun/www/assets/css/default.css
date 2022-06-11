@@ -2015,6 +2015,10 @@ header.qak-mobile-bar div.bitem img {
 	width: 18px;
 }
 
+div.disclaimer {
+	display: none;
+}
+
 
 
 

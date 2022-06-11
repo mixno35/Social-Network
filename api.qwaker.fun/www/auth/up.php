@@ -34,19 +34,19 @@
 	$inviteMD5 = md5($invite);
 
 	// Проверяем корректность пригласительного кода................................................
-	$check_invite = mysqli_query($connect, "SELECT * FROM `invites` WHERE `invite` = '$inviteMD5' AND `activated` = 0 LIMIT 1");
-	if (mysqli_num_rows($check_invite) > 0) {} else {
-		echo normJsonStr(json_encode(array(
-			"id" => "id_invite_empty",
-			"type" => "error", 
-			"task" => "auth:invite:empty", 
-			"camp" => "user", 
-			"message" => 'Такого пригласительного кода нет или его уже активировали!',
-			"error_value" => $invite,
-			"time" => $serverTIME
-		)));
-		exit();
-	}
+	// $check_invite = mysqli_query($connect, "SELECT * FROM `invites` WHERE `invite` = '$inviteMD5' AND `activated` = 0 LIMIT 1");
+	// if (mysqli_num_rows($check_invite) > 0) {} else {
+	// 	echo normJsonStr(json_encode(array(
+	// 		"id" => "id_invite_empty",
+	// 		"type" => "error", 
+	// 		"task" => "auth:invite:empty", 
+	// 		"camp" => "user", 
+	// 		"message" => 'Такого пригласительного кода нет или его уже активировали!',
+	// 		"error_value" => $invite,
+	// 		"time" => $serverTIME
+	// 	)));
+	// 	exit();
+	// }
 
 	// Проверяем является ли значение "login" пустым, если да - запрещаем дальнейшую проверку....................................................
 	if (!trim($login)) {

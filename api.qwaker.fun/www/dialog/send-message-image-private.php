@@ -143,7 +143,7 @@
 			$check_image_file = mysqli_query($connect, "SELECT * FROM `uploaded_files` WHERE `full_url` = '$user_image_data'");
 			if (mysqli_num_rows($check_image_file) > 0) {
 				while($row = mysqli_fetch_assoc($check_image_file)) {
-					$result_path = str_replace('api.', 'sun.', $_SERVER['DOCUMENT_ROOT']);
+					$result_path = str_replace($defaultDOMAINSTORAGE_START, $defaultDOMAINSTORAGE_END, $_SERVER['DOCUMENT_ROOT']);
 					$result_upath = $result_path.$row['short_url'];
 					if (unlink($result_upath)) {
 						mysqli_query($connect, "DELETE FROM `uploaded_files` WHERE `full_url` = '$user_image_data'");
@@ -160,9 +160,9 @@
 
 	$imageSIZE1 = $image1['size'][0] / 1024 / 1024;
 
-	$result_path = str_replace('api.', 'sun.', $_SERVER['DOCUMENT_ROOT']);
+	$result_path = str_replace($defaultDOMAINSTORAGE_START, $defaultDOMAINSTORAGE_END, $_SERVER['DOCUMENT_ROOT']);
 
-	$domain_path = 'https://sun.qwaker.fun';
+	$domain_path = $defaultDOMAINSTORAGE_URL;
 
 	if ($imageSIZE1 > $maxIMAGESIZE) {
 		echo normJsonStr(json_encode(array(
