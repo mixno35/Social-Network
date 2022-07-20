@@ -20,6 +20,8 @@
 <?php
 	$token = trim(mysqli_real_escape_string($connect, $_POST['token']));
 	$id = trim(mysqli_real_escape_string($connect, $_POST['id']));
+	$type = trim(mysqli_real_escape_string($connect, $_POST['type']));
+
 
 	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
 	if (mysqli_num_rows($checkSESSION) > 0) {
@@ -39,6 +41,7 @@
 		$post_id = intval($post['id']);
 		$post_user_id = intval($post['user_id']);
 		$post_message = strval($post['message']);
+		$post_category = intval($post['category']);
 	} else {
 		$check_post = mysqli_query($connect, "SELECT * FROM `posts` WHERE `post_id` = '$id' LIMIT 1");
 		if (mysqli_num_rows($check_post) > 0) {
@@ -46,7 +49,12 @@
 			$post_id = intval($post['id']);
 			$post_user_id = intval($post['user_id']);
 			$post_message = strval($post['message']);
+			$post_category = intval($post['category']);
 		}
+	}
+
+	if (mysqli_num_rows($check_post) > 0) {} else {
+		exit();
 	}
 ?>
 <?php
@@ -82,54 +90,50 @@
 	}
 ?>
 <?php
-	if (mysqli_num_rows($check_post) == 0) {
-		echo normJsonStr(json_encode(array(
-			"id" => "id_post_empty",
-			"type" => "error", 
-			"task" => "post:remove:empty", 
-			"camp" => "user", 
-			"message" => 'Такой записи не существует!',
-			"error_value" => $id,
-			"time" => $serverTIME
-		)));
-		exit();
+	$check_emotions = mysqli_query($connect, "SELECT * FROM `post_emotions` WHERE `pid` = '$post_id'");
+	if (strlen($type) > 2) {
+		$check_emotions = mysqli_query($connect, "SELECT * FROM `post_emotions` WHERE `pid` = '$post_id' AND `type` = '$type'");
 	}
 
-	if ($user_id == $post_user_id) {} else {
-		echo normJsonStr(json_encode(array(
-			"id" => "id_post_empty",
-			"type" => "error", 
-			"task" => "post:archive:empty2", 
-			"camp" => "user", 
-			"message" => 'Ошибка доступа к записи!',
-			"error_value" => $id,
-			"time" => $serverTIME
-		)));
-		exit();
+	$num_array = mysqli_num_rows($check_emotions);
+
+	echo "[";
+
+	if (mysqli_num_rows($check_emotions) > 0) {
+
+
+		while($row = mysqli_fetch_assoc($check_emotions)) {
+			$userID = $row['uid'];
+			$userName = 'unknown';
+			$userAVATAR = null;
+
+			$check_user = mysqli_query($connect, "SELECT * FROM `users` WHERE `id` = '$userID'");
+			if (mysqli_num_rows($check_user) > 0) {
+				$user = mysqli_fetch_assoc($check_user);
+				$userName = $user['nickname'];
+				$userAVATAR = $user['avatar'];
+			}
+
+			$userARRAY = json_encode(array(
+				"id" => intval($userID),
+				"nickname" => strval($userName),
+				"avatar" => strval($userAVATAR)
+			), 128);
+
+
+			echo json_encode(array(
+				"id" => intval($row['id']),
+				"type" => strval($row['type']),
+				"date_pub" => strval($row['date_pub']),
+				"user" => json_decode($userARRAY)
+			), 128);
+
+			$num_array = $num_array - 1;
+			if ($num_array != 0) {
+				echo(',');
+			}
+		}
 	}
-?>
-<?php
-	if (mysqli_query($connect, "UPDATE `posts` SET `date_view`=0 WHERE `user_id`='$user_id' AND `id`='$id'")) {
-		echo normJsonStr(json_encode(array(
-			"id" => "id_post_deffred_public_success",
-			"type" => "success", 
-			"task" => "post:deffred-public:success", 
-			"camp" => "server", 
-			"message" => 'Запись успешно опубликована!',
-			"error_value" => $id,
-			"time" => $serverTIME
-		)));
-		exit();
-	} else {
-		echo normJsonStr(json_encode(array(
-			"id" => "id_post_deffred_public_error",
-			"type" => "error", 
-			"task" => "post:deffred-public:error", 
-			"camp" => "server", 
-			"message" => 'Нам не удалось опубликовать эту запись. Попробуйте позже!',
-			"error_value" => $id,
-			"time" => $serverTIME
-		)));
-		exit();
-	}
+
+	echo "]";
 ?>

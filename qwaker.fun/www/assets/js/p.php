@@ -6,7 +6,7 @@
 		event.stopPropagation();
 		event.preventDefault();
 		showProgressBar();
-		$.ajax({type: "POST", url: "<?php echo $default_api; ?>/post/emotion.php", data: {id: argument, type: argument2, token: '<?php echo $_COOKIE['USID'] ?>'}, success: function(result) {
+		$.ajax({type: "POST", url: "<?php echo $default_api; ?>/post/emotion/emotion.php", data: {id: argument, type: argument2, token: '<?php echo $_COOKIE['USID'] ?>'}, success: function(result) {
 				var jsonOBJ = JSON.parse(result);
 				// console.log(result);
 				hideProgressBar();

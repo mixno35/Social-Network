@@ -43,7 +43,8 @@
 								<h2>
 									<?php echo $value['user_login']; ?>
 									<?php if (intval($value['user_verification']) == 1) { ?>
-										<verification-user></verification-user>
+										<!-- <verification-user></verification-user> -->
+										<span class="material-symbols-outlined verification">verified</span>
 									<?php } ?>
 								</h2>
 								<h3><?php echo str_replace('%1s', convertTimeRus($value['block_date']), $string['text_user_blocked_date']); ?></h3>

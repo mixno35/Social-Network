@@ -20,7 +20,8 @@
 			<h2>
 				<?php echo $result_user['login']; ?>
 				<?php if (intval($result_user['user_verification']) == 1) { ?>
-					<verification-user style="position: absolute;margin-top: 5px;margin-left: 4px;"></verification-user>
+					<!-- <verification-user style="position: absolute;margin-top: 5px;margin-left: 4px;"></verification-user> -->
+					<span class="material-symbols-outlined verification">verified</span>
 				<?php } ?>
 			</h2>
 			<h3>

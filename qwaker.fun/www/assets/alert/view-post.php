@@ -40,7 +40,8 @@
 							<h2 class="qak-alert-comment-data-name">
 								<?php echo $result_post['user_login']; ?>
 								<?php if (intval($result_post['user_verification']) == 1) { ?>
-									<verification-user></verification-user>
+									<!-- <verification-user></verification-user> -->
+									<span class="material-symbols-outlined verification">verified</span>
 								<?php } ?>
 							</h2>
 							<h2 class="qak-alert-comment-data-date"><?php echo convertTimeRus(date('d.m.Y H:m:i', $result_post['post_date_view'])); ?></h2>

@@ -82,16 +82,29 @@
 
 		<?php if (isMobile()) { ?>
 			<header class="qak-mobile-bar">
-				<div class="bitem" onclick="openPageFullScreen('notifications')">
-					<img src="/assets/icons/bar/notifications.png">
-					<?php if ($result_user_bar['user_notifications_r'] > 0) { ?>
-						<bouble id="qak-bar-top-notification-indicator"><?php echo getNumNotify($result_user_bar['user_notifications_r']); ?></bouble>
-					<?php } ?>
+				<div class="bitem" onclick="window.location = '/'">
+					<!-- <img src="/assets/icons/bar/home.png"> -->
+					<span class="material-symbols-outlined">home</span>
 				</div>
 				<div class="bitem" onclick="openPageFullScreen('requests')">
-					<img src="/assets/icons/bar/requests.png">
+					<!-- <img src="/assets/icons/bar/requests.png"> -->
+					<span class="material-symbols-outlined">person</span>
 					<?php if ($result_user_bar['user_followed_toyou_wait'] > 0) { ?>
 						<bouble id="qak-bar-top-notification-indicator"><?php echo getNumNotify($result_user_bar['user_followed_toyou_wait']); ?></bouble>
+					<?php } ?>
+				</div>
+				<div class="bitem" onclick="window.location = '/m.php'">
+					<!-- <img src="/assets/icons/bar/messages.png"> -->
+					<span class="material-symbols-outlined">forum</span>
+					<?php if ($result_user_bar['user_dialog_no_read'] > 0) { ?>
+						<bouble id="qak-bar-top-notification-indicator"><?php echo getNumNotify($result_user_bar['user_dialog_no_read']); ?></bouble>
+					<?php } ?>
+				</div>
+				<div class="bitem" onclick="openPageFullScreen('notifications')">
+					<!-- <img src="/assets/icons/bar/notifications.png"> -->
+					<span class="material-symbols-outlined">notifications</span>
+					<?php if ($result_user_bar['user_notifications_r'] > 0) { ?>
+						<bouble id="qak-bar-top-notification-indicator"><?php echo getNumNotify($result_user_bar['user_notifications_r']); ?></bouble>
 					<?php } ?>
 				</div>
 			</header>

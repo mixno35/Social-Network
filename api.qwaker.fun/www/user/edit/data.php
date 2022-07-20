@@ -47,13 +47,13 @@
 	}
 ?>
 <?php
-	echo normJsonStr(json_encode(array(
-		"id" => $user['id'],
-		"type" => $user['type'], 
-		"name" => $user['name'], 
+	echo json_encode(array(
+		"id" => intval($user['id']),
+		"type" => strval($user['type']), 
+		"name" => htmlspecialchars($user['name']), 
 		"avatar" => $user['avatar'], 
-		"login" => $user['login'], 
-		"nickname" => $user['nickname'], 
+		"login" => htmlspecialchars($user['login']), 
+		"nickname" => htmlspecialchars($user['nickname']), 
 		"about" => $user['about'], 
 		"email" => $user['email'], 
 		"url_site" => $user['url_site'], 
@@ -71,6 +71,6 @@
 		"chat_invite" => intval($user['chat_invite']), 
 		"language" => $user['language'], 
 		"time" => $serverTIME
-	)));
+	), 128);
 	exit();
 ?>

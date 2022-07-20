@@ -28,13 +28,16 @@
 	$category = intval($_POST['category']);
 	$date_view = intval($_POST['deffred']);
 	$token = trim(mysqli_real_escape_string($connect, $_POST['token']));
+	$youtube = trim(mysqli_real_escape_string($connect, $_POST['youtube']));
 	$image1 = $_FILES['image1'];
 	$image2 = $_FILES['image2'];
 	$image3 = $_FILES['image3'];
+	$video1 = $_FILES['video1'];
 
 	// $timePublic = time();
 
 	$maxIMAGESIZE = intval(1); // MB
+	$maxVIDEOSIZE = intval(5); // MB
 
 	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
 	if (mysqli_num_rows($checkSESSION) > 0) {
@@ -216,15 +219,85 @@
 	$photo2 = '';
 	$photo3 = '';
 
+	$media1 = '';
+
 	$fileSIZE1 = $image1['size'][0] / 1024 / 1024;
 	$fileSIZE2 = $image2['size'][0] / 1024 / 1024;
 	$fileSIZE3 = $image3['size'][0] / 1024 / 1024;
+
+	$videoSIZE3 = $video1['size'][0] / 1024 / 1024;
 
 	$result_path = str_replace($defaultDOMAINSTORAGE_START, $defaultDOMAINSTORAGE_END, $_SERVER['DOCUMENT_ROOT']);
 
 	$domain_path = $defaultDOMAINSTORAGE_URL;
 
 	sleep(1);
+
+	if (!filter_var($youtube, FILTER_VALIDATE_URL)) {
+		if ($video1['name'][0] == '') {} else {
+			if ($videoSIZE3 > $maxVIDEOSIZE) {
+				echo normJsonStr(json_encode(array(
+					"id" => "id_new_post_video_maxsize",
+					"type" => "error", 
+					"task" => "post:new:video:maxsize", 
+					"camp" => "user", 
+					"message" => 'Видео[1] слишком тяжелое. Допустимый вес для видео '.$maxVIDEOSIZE.'МБ!',
+					"time" => $serverTIME
+				)));
+				exit();
+			}
+
+
+			if ($video1['type'][0] == 'video/mp4') {} else {
+				echo normJsonStr(json_encode(array(
+					"id" => "id_new_post_video_type",
+					"type" => "error", 
+					"task" => "post:new:video:type", 
+					"camp" => "user", 
+					"message" => "Видео[1] содержит недопустимый формат!",
+					"time" => $serverTIME
+				)));
+				exit();
+			}
+
+			$vidnewname1 = $user['login'].'-POST-VIDEO-'.date('YmdHis', time()).'-'.rand(10000,999999).'.mp4';
+			$vidnewdir1 = '/uploads/'.$vidnewname1;
+			$media1 = $domain_path.$vidnewdir1;
+			$makecryptvid1 = md5($media1);
+
+			if (move_uploaded_file($video1['tmp_name'][0], $result_path.$vidnewdir1)) {
+				mysqli_query($connect, "INSERT INTO `uploaded_files`(`crypt`, `uid`, `full_url`, `short_url`, `type`) VALUES ('$makecryptvid1', '$user_id', '$media1', '$vidnewdir1', 'post_video1')");
+			} else {
+				echo normJsonStr(json_encode(array(
+					"id" => "id_new_post_video_error",
+					"type" => "error", 
+					"task" => "post:new:video:error", 
+					"camp" => "server", 
+					"message" => 'Нам не удалось загрузить новое видео[1]. Повторите попытку позже!',
+					"time" => $serverTIME
+				)));
+				exit();
+			}
+		}
+	} else {
+		$regex_pattern = "/(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?/";
+		$match;
+		if (preg_match($regex_pattern, $youtube, $match)) {
+		    $media1 = $youtube;
+		} else {
+		    echo json_encode(array(
+				"id" => "id_edit_post_video_youtube",
+				"type" => "error", 
+				"task" => "post:new:video:youtube", 
+				"camp" => "user", 
+				"message" => 'Ссылка на YouTube ролик некорректна!',
+				"time" => $serverTIME
+			), 128);
+			exit();
+		}
+	}
+
+	
 
 	if ($image1['name'][0] == '') {} else {
 		if ($fileSIZE1 > $maxIMAGESIZE) {
@@ -254,9 +327,10 @@
 		$newname1 = $user['login'].'-POST-'.date('YmdHis', time()).'-'.rand(10000,999999).'.png';
 		$newdir1 = '/uploads/'.$newname1;
 		$photo1 = $domain_path.$newdir1;
+		$makecryptpic1 = md5($photo1);
 
 		if (move_uploaded_file($image1['tmp_name'][0], $result_path.$newdir1)) {
-			mysqli_query($connect, "INSERT INTO `uploaded_files`(`uid`, `full_url`, `short_url`, `type`) VALUES ('$user_id', '$photo1', '$newdir1', 'post_image1')");
+			mysqli_query($connect, "INSERT INTO `uploaded_files`(`crypt`,`uid`, `full_url`, `short_url`, `type`) VALUES ('$makecryptpic1','$user_id', '$photo1', '$newdir1', 'post_image1')");
 		} else {
 			echo normJsonStr(json_encode(array(
 				"id" => "id_edit_user_avatar_error",
@@ -300,9 +374,10 @@
 		$newname2 = $user['login'].'-POST-'.date('YmdHis', time()).'-'.rand(10000,999999).'.png';
 		$newdir2 = '/uploads/'.$newname2;
 		$photo2 = $domain_path.$newdir2;
+		$makecryptpic2 = md5($photo2);
 
 		if (move_uploaded_file($image2['tmp_name'][0], $result_path.$newdir2)) {
-			mysqli_query($connect, "INSERT INTO `uploaded_files`(`uid`, `full_url`, `short_url`, `type`) VALUES ('$user_id', '$photo2', '$newdir2', 'post_image2')");
+			mysqli_query($connect, "INSERT INTO `uploaded_files`(`crypt`,`uid`, `full_url`, `short_url`, `type`) VALUES ('$makecryptpic2','$user_id', '$photo2', '$newdir2', 'post_image2')");
 		} else {
 			echo normJsonStr(json_encode(array(
 				"id" => "id_edit_user_avatar_error",
@@ -346,9 +421,10 @@
 		$newname3 = $user['login'].'-POST-'.date('YmdHis', time()).'-'.rand(10000,999999).'.png';
 		$newdir3 = '/uploads/'.$newname3;
 		$photo3 = $domain_path.$newdir3;
+		$makecryptpic3 = md5($photo3);
 
 		if (move_uploaded_file($image3['tmp_name'][0], $result_path.$newdir3)) {
-			mysqli_query($connect, "INSERT INTO `uploaded_files`(`uid`, `full_url`, `short_url`, `type`) VALUES ('$user_id', '$photo3', '$newdir3', 'post_image3')");
+			mysqli_query($connect, "INSERT INTO `uploaded_files`(`crypt`,`uid`, `full_url`, `short_url`, `type`) VALUES ('$makecryptpic3','$user_id', '$photo3', '$newdir3', 'post_image3')");
 		} else {
 			echo normJsonStr(json_encode(array(
 				"id" => "id_edit_user_avatar_error",
@@ -364,7 +440,7 @@
 
 	$post_id = substr(str_shuffle(str_repeat("0123456789QWERTYUIOPASDFGHJKLZXCVBNMabcdefghijklmnopqrstuvwxyz_", 30)), 0, 30);
 
-	$public_post = mysqli_query($connect, "INSERT INTO `posts`(`post_id`, `user_id`, `creator_id`, `title`, `message`, `date_public`, `language`, `image1`, `image2`, `image3`, `category`, `date_view`) VALUES ('$post_id', '$user_id', '$user_id', '$title', '$message', '$serverTIME', '$userLANGUAGE', '$photo1', '$photo2', '$photo3', '$category', '$date_view')");
+	$public_post = mysqli_query($connect, "INSERT INTO `posts`(`post_id`, `user_id`, `creator_id`, `title`, `message`, `date_public`, `language`, `image1`, `image2`, `image3`, `video1`, `category`, `date_view`) VALUES ('$post_id', '$user_id', '$user_id', '$title', '$message', '$serverTIME', '$userLANGUAGE', '$photo1', '$photo2', '$photo3', '$media1', '$category', '$date_view')");
 	if ($public_post) {
 		echo normJsonStr(json_encode(array(
 			"id" => "id_post_success_public",

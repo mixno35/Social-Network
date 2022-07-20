@@ -53,9 +53,9 @@
 								<li onclick="goArchivePost(<?php echo $value['id']; ?>)"><?php echo $string['action_post_archive']; ?></li>
 								<hr>
 								<li onclick="goStatPost(<?php echo $value['id']; ?>)"><?php echo $string['action_post_stat']; ?></li>
-								<li onclick="goSettingsPost(<?php echo $value['id']; ?>)"><?php echo $string['action_post_settings']; ?></li>
 								<li onclick="goRemovePost(<?php echo $value['id']; ?>)"><?php echo $string['action_post_remove']; ?></li>
 							<?php } ?>
+							<li onclick="goPostEmotions(<?php echo $value['id']; ?>)"><?php echo $string['action_post_emotions']; ?></li>
 							<?php if ($value['post_you'] == 0) { ?>
 								<li onclick="goReportPost(<?php echo $value['id']; ?>)"><?php echo $string['action_post_report']; ?></li>
 							<?php } ?>
@@ -69,7 +69,8 @@
 							<h2 class="qak-p-login-user">
 								<?php echo $value['user_login']; ?>
 								<?php if (intval($value['user_verification']) == 1) { ?>
-									<verification-user></verification-user>
+									<!-- <verification-user></verification-user> -->
+									<span class="material-symbols-outlined verification">verified</span>
 								<?php } ?>
 							</h2>
 							<!-- <bouble-divider></bouble-divider> -->
@@ -93,6 +94,13 @@
 								<?php } ?>
 							</div>
 						<?php } ?>
+						<?php if (filter_var($value['post_video']['url'], FILTER_VALIDATE_URL)) { ?>
+							<?php if (preg_match("/(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?/", $value['post_video']['url'], $match)) { ?>
+								<div class="video-cont-youtube">
+									<iframe src="https://www.youtube.com/embed/<?php echo str_replace('embed/', '', $match[4]); ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+							<?php } ?>
+						<?php } ?>
 						<h2 class="qak-p-message">
 							<?php
 								$text = $value['post_message'];
@@ -105,6 +113,9 @@
 							?>
 							<?php echo nl2br($text, true); ?>
 						</h2>
+						<?php if ($value['post_type'] == 'ads') { ?>
+							<span class="post-ads"><?php echo $string['text_post_ads']; ?></span>
+						<?php } ?>
 					</div>
 					<div class="qak-p-content-bottom">
 						<div class="qak-p-container-emotions">
@@ -229,11 +240,11 @@
 			});
 		}
 
-		function goSettingsPost(argument) {
+		function goPostEmotions(argument) {
 			showProgressBar();
 			$.ajax({
 				type: "GET", 
-				url:  '/assets/alert/view-post-settings.php', 
+				url:  '/assets/alert/view-list-emotions.php', 
 				data: {id: argument}, 
 				success: function(result) {
 					hideProgressBar();

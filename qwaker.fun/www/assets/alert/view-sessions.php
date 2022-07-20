@@ -35,12 +35,12 @@
 		<?php } else { ?>
 			<div class="qak-alert-list-follows">
 				<div class="qak-alert-list-items-names-titles">
-					<h4 style="width: 20px;"><?php echo $string['title_sessions_id']; ?></h4>
-					<h4 style="width: 60px;"><?php echo $string['title_sessions_active']; ?></h4>
-					<h4 style="width: 80px;"><?php echo $string['title_sessions_created']; ?></h4>
-					<h4 style="width: 80px;"><?php echo $string['title_sessions_updated']; ?></h4>
-					<h4 style="width: 80px;"><?php echo $string['title_sessions_timemax']; ?></h4>
-					<h4 style="width: 30px;"><?php echo $string['title_sessions_device']; ?></h4>
+					<h4 style="width: 20px;" title="<?php echo $string['title_sessions_id']; ?>"><?php echo $string['title_sessions_id']; ?></h4>
+					<h4 style="width: 60px;" title="<?php echo $string['title_sessions_active']; ?>"><?php echo $string['title_sessions_active']; ?></h4>
+					<h4 style="width: 80px;" title="<?php echo $string['title_sessions_created']; ?>"><?php echo $string['title_sessions_created']; ?></h4>
+					<h4 style="width: 80px;" title="<?php echo $string['title_sessions_updated']; ?>"><?php echo $string['title_sessions_updated']; ?></h4>
+					<h4 style="width: 80px;" title="<?php echo $string['title_sessions_timemax']; ?>"><?php echo $string['title_sessions_timemax']; ?></h4>
+					<h4 style="width: 30px;" title="<?php echo $string['title_sessions_device']; ?>"><?php echo $string['title_sessions_device']; ?></h4>
 				</div>
 				<div style="max-height: 400px; overflow-y: auto;" class="scroll-new">
 					<?php foreach($result_session as $key => $value) { ?>

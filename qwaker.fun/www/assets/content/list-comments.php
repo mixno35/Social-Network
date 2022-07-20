@@ -52,7 +52,8 @@
 					<h2 class="qak-alert-comment-data-name">
 						<?php echo $value['user_login']; ?>
 						<?php if (intval($value['user_verification']) == 1) { ?>
-							<verification-user></verification-user>
+							<!-- <verification-user></verification-user> -->
+							<span class="material-symbols-outlined verification">verified</span>
 						<?php } ?>
 					</h2>
 					<h2 class="qak-alert-comment-data-date"><?php echo convertTimeRus($value['comment_date_public']); ?></h2>

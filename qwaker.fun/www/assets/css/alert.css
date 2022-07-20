@@ -23,7 +23,7 @@ div.qak-alert-container-holder {
 	/* max-height: 80vh; */
 	background-color: var(--color-alert-background-holder);
 	border: 1px solid var(--color-alert-background-holder-border);
-	border-radius: 27px;
+	border-radius: 20px;
 	box-shadow: 0 15px 30px rgba(0,0,0,.1);
 	overflow: hidden;
 	animation: scalePopup linear .1s;
@@ -221,6 +221,8 @@ h2.qak-alert-comment-data-name {
 	color: var(--color-html-text);
 	/* margin-left: 10px; */
 	/* margin-top: -14px; */
+	display: flex;
+	align-items: center;
 }
 h2.qak-alert-comment-data-date {
 	padding: 0;
@@ -254,6 +256,67 @@ div.qak-alert-comment-data-nd {
 	margin: 0;
 	margin-left: 10px;
 	width: -webkit-fill-available;
+}
+
+div.qak-alert-list-emotions {
+	padding: 0 15px;
+	margin: 0;
+	max-height: 400px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	display: block;
+	padding-bottom: 15px;
+}
+div.qak-alert-list-emotions div {
+	padding: 10px 5px;
+	margin: 5px;
+	/* border: 1px solid var(--color-container-data-border); */
+	border-radius: 15px;
+	display: inline-flex;
+	position: relative;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+div.qak-alert-list-emotions div:hover {
+	background: var(--color-html-selected-item);
+}
+div.qak-alert-list-emotions img {
+	padding: 0;
+	margin: 0;
+	width: 60px;
+	height: 60px;
+	max-width: 60px;
+	min-width: 60px;
+	max-height: 60px;
+	min-height: 60px;
+	object-fit: cover;
+	border-radius: 100%;
+}
+div.qak-alert-list-emotions span {
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--color-container-background);
+	border-radius: 100px;
+	border: 1px solid var(--color-container-data-border);
+	box-shadow: 0 2px 10px var(--color-container-border);
+	bottom: 3px;
+	right: 3px;
+}
+div.qak-alert-list-emotions span img {
+	--size-emotion: 20px;
+	padding: 5px;
+	margin: 0;
+	width: var(--size-emotion);
+	height: var(--size-emotion);
+	max-width: var(--size-emotion);
+	min-width: var(--size-emotion);
+	max-height: var(--size-emotion);
+	min-height: var(--size-emotion);
 }
 
 div.qak-alert-list-comments {
@@ -554,6 +617,8 @@ div.qak-follow-item div.qak-follow-item-data h2 {
 	font-weight: 700;
 	font-size: 15px;
 	font-family: system-ui;
+	display: flex;
+	align-items: center;
 }
 div.qak-follow-item div.qak-follow-item-data h2 font {
 	padding: 1px 6px;
@@ -562,6 +627,7 @@ div.qak-follow-item div.qak-follow-item-data h2 font {
 	font-family: system-ui;
 	border: 1px solid var(--color-alert-background-holder-border);
 	border-radius: 4px;
+	margin-left: 4px;
 }
 div.qak-follow-item div.qak-follow-item-data h3 {
 	padding: 0;
@@ -1312,27 +1378,4 @@ div.qak-alert-list-items-names-titles h4 {
 	text-overflow: ellipsis;
 	vertical-align: middle;
 	overflow: hidden;
-}
-div.qak-alert-container-data-settings-post {
-	padding: 0;
-	margin: 0;
-user-select: none;}
-div.qak-alert-container-data-settings-post div.qak-sign-container.check {
-	padding: 15px 20px;
-	margin: 0;
-	display: flex;
-align-items: center;}
-div.qak-alert-container-data-settings-post h4.qak-short-hint.title {
-	padding: 0;
-	margin: 0;
-font-size: 16px;font-weight: 500;color: var(--color-html-text);}
-div.qak-alert-container-data-settings-post h4.qak-short-hint.message {
-	padding: 0;
-	margin: 0;
-font-size: 12px;}
-div.qak-alert-container-data-settings-post h4.qak-short-hint.title::after {
-	content: "";
-}
-div.qak-alert-container-data-settings-post h4.qak-short-hint.message::after {
-	content: "";
 }

@@ -20,7 +20,10 @@
 				<img src="<?php echo $result_user_upd['avatar']; ?>" class="qak-alert-container-data-avatar-preview" id="qak-alert-container-data-avatar-preview" onerror="this.src = '/assets/images/qak-avatar-v3.png'">
 				<h4 class="qak-alert-upd-avatar-mess-click" onclick="document.getElementById('profile_pic').click();"><?php echo $string['text_click_go_choose_picture']; ?></h4>
 				<input type="file" id="profile_pic" name="profile_pic" onchange="updPreview(this)" accept=".jpg, .jpeg, .png" style="display: none;">
-				<h4 style="margin-top: 5px;" class="qak-short-hint"><?php echo str_replace('%1s', $maxSIZEAVATAR, $string['message_user_photo_update_valid_format']); ?></h4>
+				<h4 style="margin-top: 5px;" class="qak-short-hint">
+					<span class="material-symbols-outlined">info</span>
+					<?php echo str_replace('%1s', $maxSIZEAVATAR, $string['message_user_photo_update_valid_format']); ?>
+				</h4>
 				<button style="margin-top: 20px;" id="a-s" onclick="updAvatar('upd')"><?php echo $string['action_save']; ?></button>
 				<button style="margin-top: 20px;" id="a-s-2" onclick="updAvatar('remove')"><?php echo $string['action_user_photo_remove']; ?></button>
 

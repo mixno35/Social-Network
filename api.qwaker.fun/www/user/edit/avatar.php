@@ -184,6 +184,8 @@
 	$newname = $user['login'].'-'.date('YmdHis', time()).rand(10000,999999).'.jpg';
 	$newdir = '/avatars/'.$newname;
 	$result_newdir = $defaultDOMAINSTORAGE_URL.$newdir;
+	$makecryptavatar = md5($result_newdir);
+	$cryptedavatar = $domain.'/content/get-avatar.php?i='.$makecryptavatar;
 
 	if (move_uploaded_file($file['tmp_name'][0], $result_path.$newdir)) {} else {
 		echo normJsonStr(json_encode(array(
@@ -222,7 +224,7 @@
 			}
 		}
 
-		mysqli_query($connect, "INSERT INTO `uploaded_files`(`uid`, `full_url`, `short_url`, `type`) VALUES ('$user_id', '$result_newdir', '$newdir', 'avatar')");
+		mysqli_query($connect, "INSERT INTO `uploaded_files`(`crypt`,`uid`, `full_url`, `short_url`, `type`) VALUES ('$makecryptavatar','$user_id', '$result_newdir', '$newdir', 'avatar')");
 		exit();
 	} else {
 		echo normJsonStr(json_encode(array(

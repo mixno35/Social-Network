@@ -139,8 +139,14 @@
 		$array_my_emotion += array("shit"=>strval($my_emotion_shit));
 		// MY-EMOTIONS ---------------------------------------------------------------------------------------------------------------
 
+		$videoARRAY = null;
 
-		if ($post['archive'] == 0 or $post['user_id'] == $user2_id) {
+
+		if ($post['archive'] == 0 or $post['public_id'] == $user2_id) {
+			$videoARRAY = json_encode(array(
+				"url" => strval($post['video1'])
+			), 128);
+
 			echo json_encode(array(
 				"type" => "success",
 				"task" => "post:data:success", 
@@ -154,12 +160,14 @@
 				"post_language" => strval($post['language']),
 				"post_commented" => intval($post['commented']),
 				"post_you" => intval($you_post),
+				"post_clip" => intval($post['clip']),
 				"post_comments" => intval(mysqli_num_rows($check_comments_post)),
 				"post_my_comment" => intval(mysqli_num_rows($check_post_my_comment)),
 				"post_images" => json_encode($array_images),
 				"post_views" => intval(mysqli_num_rows($check_post_views)),
 				"post_emotions" => json_decode(json_encode($array_emotions)),
 				"post_my_emotion" => json_decode(json_encode($array_my_emotion)),
+				"post_video" => json_decode($videoARRAY),
 				"user_id" => $user_post_id,
 				"user_login" => $user_post_login,
 				"user_name" => htmlspecialchars($user_post_name),
@@ -194,6 +202,7 @@
 			"post_date_public" => strval('1970-01-01 03.00.00'),
 			"post_language" => strval('en'),
 			"post_you" => intval(0),
+			"post_clip" => intval(0),
 			"post_likes" => intval(0),
 			"post_my_like" => intval(0),
 			"post_dislikes" => intval(0),
@@ -201,6 +210,7 @@
 			"post_my_comment" => intval(0),
 			"post_images" => '',
 			"post_views" => intval(0),
+			"post_video" => null,
 			"user_id" => intval(0),
 			"user_login" => 'unknown',
 			"user_name" => 'Unknown',

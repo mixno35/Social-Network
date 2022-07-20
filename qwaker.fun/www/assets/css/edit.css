@@ -36,6 +36,9 @@ h4.qak-short-hint.message {
 	/* opacity: .4; */
 	position: relative;
 	margin-top: 4px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
 }
 h4.qak-short-hint.message::after {
 	padding: 1px 7px;
@@ -118,6 +121,9 @@ div.qak-container-data hr {
 h4.qak-short-hint {
 	margin-left: 0px;
 	margin-bottom: 2px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
 }
 h4.qak-short-hint::after {
 	display: none;

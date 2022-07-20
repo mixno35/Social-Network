@@ -192,3 +192,25 @@ div#container-data-2-content {
 	bottom: 50px;
 	z-index: 20;
 }
+
+input#find-users {
+	margin: 0 15px;
+	margin-top: 15px;
+}
+
+div.find-item-user {
+	padding: 10px 15px;
+}
+
+div.qak-popup-alert-container {
+	padding-top: 10px;
+}
+div.qak-popup-alert-container img {
+	--size-p-a-avatar: 45px;
+}
+div.qak-popup-alert-container hr {
+	height: 1px;
+	border: none;
+	outline: none;
+	background: var(--color-container-data-border);
+}

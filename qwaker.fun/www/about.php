@@ -19,7 +19,11 @@
 		<div class="qak-pt-container">
 			<h1><?php echo $string['title_about_site']; ?></h1>
 
-			
+			<p><?php echo $string['string_about_1']; ?></p>
+			<p><?php echo $string['string_about_2']; ?></p>
+			<p><?php echo $string['string_about_3']; ?></p>
+			<p><?php echo $string['string_about_4']; ?></p>
+			<p><?php echo $string['string_about_5']; ?></p>
 			
 		</div>
 	</center>

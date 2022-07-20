@@ -327,6 +327,98 @@
 		
 		exit();
 	} 
+	if ($command[0] === "/makerequestfollow") { // User request
+		if ($dataUSER['rang'] < 4) {
+			echo("Ваш ранг слишком мал для использвания команды \"".$command[0]."\"");
+			exit();
+		}
+
+		if ($command[1] === $command[2]) {
+			echo "Вы не можете подписать себя на самого себя.";
+			exit();
+		}
+
+		$follower_id = intval($command[2]);
+		$followed_id = intval($command[1]);
+		$confirm = intval($command[3]);
+
+		$checkUser1 = mysqli_query($connect, "SELECT * FROM `users` WHERE `id` = '$follower_id' LIMIT 1");
+		if (mysqli_num_rows($checkUser1) > 0) {
+			$dataUser1 = mysqli_fetch_assoc($checkUser1);
+		} else {
+			echo "Пользователя под ID-".$follower_id." не существует.";
+			exit();
+		}
+
+		$checkUser2 = mysqli_query($connect, "SELECT * FROM `users` WHERE `id` = '$followed_id' LIMIT 1");
+		if (mysqli_num_rows($checkUser2) > 0) {
+			$dataUser2 = mysqli_fetch_assoc($checkUser2);
+		} else {
+			echo "Пользователя под ID-".$followed_id." не существует.";
+			exit();
+		}
+
+		$confirmDate = '';
+		$confirmMess = 'не подтвержденным';
+		if ($confirm == 1) {
+			$confirmDate = $timeUSER;
+			$confirmMess = 'подтвержденным';
+		}
+
+		$checkFollow = mysqli_query($connect, "SELECT * FROM `follows` WHERE `followed_id` = '$followed_id' AND `follower_id` = '$follower_id' LIMIT 1");
+		if (mysqli_num_rows($checkFollow) > 0) {
+			echo "Пользователь @".$dataUser1['login']." уже подписан на пользователя @".$dataUser2['login'].".";
+			exit();
+		}
+
+		if (mysqli_query($connect, "INSERT INTO `follows`(`follower_id`, `followed_id`, `date_follow`, `confirm`, `date_confirm`) VALUES ('$follower_id', '$followed_id', '$timeUSER', '$confirm', '$confirmDate')")) {
+			$resultTEXT = "Пользователь @".$dataUser1['login']." успешно подписан на пользователя @".$dataUser2['login']." с ".$confirmMess." состоянием.";
+			echo $resultTEXT;
+
+			mysqli_query($connect, "INSERT INTO `notifications`(`user_id`, `sender_id`, `type`, `category`, `message`, `date_public`) VALUES ('$follower_id', '$mid', 'system', 'admin', '$resultTEXT', '$serverTIME')");
+			mysqli_query($connect, "INSERT INTO `notifications`(`user_id`, `sender_id`, `type`, `category`, `message`, `date_public`) VALUES ('$followed_id', '$mid', 'system', 'admin', '$resultTEXT', '$serverTIME')");
+
+			mysqli_query($connect, "INSERT INTO `admin_command`(`command`, `uid`, `time`) VALUES ('$command_archive', '$mid', '$timeUSER')");
+			exit();
+		} else {
+			echo "Нам не удалось подписать пользователя @".$dataUser1['login']." на пользователя @".$dataUser2['login'].". Повторите попытку позже или проверьте корректность ID.";
+			exit();
+		}
+	}
+
+	if ($command[0] === '/sendnotify') {
+		if ($dataUSER['rang'] < 3) {
+			echo("Ваш ранг слишком мал для использвания команды \"".$command[0]."\"");
+			exit();
+		}
+
+		$usID = intval($command[1]);
+
+		$checkUser1 = mysqli_query($connect, "SELECT * FROM `users` WHERE `id` = '$usID' LIMIT 1");
+		if (mysqli_num_rows($checkUser1) > 0) {
+			$dataUser1 = mysqli_fetch_assoc($checkUser1);
+		} else {
+			echo "Пользователя под ID-".$usID." не существует.";
+			exit();
+		}
+
+		$resultTEXT = trim(str_replace($command[0].' '.$command[1].' ', '', strval($command_archive)));
+
+		if (mb_strlen($resultTEXT, 'utf8') < 20 or mb_strlen($resultTEXT, 'utf8') > 200) {
+			echo 'Текст не должен быть короче 20 или длинее 200 символов.';
+			exit();
+		}
+
+		if (mysqli_query($connect, "INSERT INTO `notifications`(`user_id`, `sender_id`, `type`, `category`, `message`, `date_public`) VALUES ('$usID', '$mid', 'system', 'admin', '$resultTEXT', '$serverTIME')")) {
+			echo 'Уведомление пользователю @'.$dataUser1['login'].' с текстом "'.$resultTEXT.'" успешно отправлено.';
+			mysqli_query($connect, "INSERT INTO `admin_command`(`command`, `uid`, `time`) VALUES ('$command_archive', '$mid', '$timeUSER')");
+			exit();
+		} else {
+			echo 'Нам не удалось отправить уведомление пользователю @'.$dataUser1['login'].' с текстом "'.$resultTEXT.'".';
+			exit();
+		}
+		exit();
+	}
 
 	// POST --------------------------------------------------------------------------------------------------------------
 

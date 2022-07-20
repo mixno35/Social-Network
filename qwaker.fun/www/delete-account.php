@@ -56,7 +56,6 @@
 			<script type="text/javascript">
 				function goDeleteAccount() {
 					if (confirm(stringOBJ['message_delete_account_are'])) {
-						showProgressDialog();
 						$.ajax({
 							type: "POST", 
 							url: "<?php echo $default_api; ?>/user/delete-account.php", 
@@ -66,7 +65,6 @@
 							}, 
 					    	success: function(result){
 								// console.log(result);
-								hideProgressDialog();
 								var jsonOBJ = JSON.parse(result);
 								alert(jsonOBJ['message']);
 								if (jsonOBJ['type'] == 'success') {

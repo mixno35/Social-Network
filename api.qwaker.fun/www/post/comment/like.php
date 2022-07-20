@@ -69,9 +69,6 @@
 	if (mysqli_num_rows($check_comment) > 0) {
 		$comment = mysqli_fetch_assoc($check_comment);
 		$pid = $comment['post_id'];
-		$uid = $comment['user_id'];
-		$cid = $comment['id'];
-		$comment_message = $comment['message'];
 	} else {
 		echo normJsonStr(json_encode(array(
 			"id" => "id_comment_empty",
@@ -88,7 +85,6 @@
 	$check_post = mysqli_query($connect, "SELECT * FROM `posts` WHERE `id` = '$pid' LIMIT 1");
 	if (mysqli_num_rows($check_post) > 0) {
 		$post = mysqli_fetch_assoc($check_post);
-		$post_id = intval($post['id']);
 		$post_user_id = intval($post['user_id']);
 		$post_message = strval($post['message']);
 	} else {
@@ -150,10 +146,6 @@
 				"message" => 'Вам нравится этот комментарий!',
 				"time" => $serverTIME
 			)));
-
-			if ($user2_id == $uid) {} else {
-				mysqli_query($connect, "INSERT INTO `notifications`(`user_id`, `sender_id`, `type`, `category`, `message`, `message2`, `message3`, `date_public`) VALUES ('$uid', '$user2_id', 'comment', 'like', '$pid', '$cid', '$comment_message', '$serverTIME')");
-			}
 			exit();
 		} else {
 			echo normJsonStr(json_encode(array(

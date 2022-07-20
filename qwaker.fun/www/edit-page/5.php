@@ -58,8 +58,8 @@
 			<input type="checkbox" <?php if($result_user['private_message']==1){echo 'checked';} ?> name="private_message" id="private_message" class="qak-input-check" autocomplete="off" placeholder="<?php echo $string['hint_edit_private_message']; ?>">
 		</div>
 	</label>
-	<hr>
-	<label for="chat_invite">
+	<!-- <hr> -->
+	<label for="chat_invite" style="display:none;">
 		<div class="qak-sign-container check">
 			<div style="width: 100%;">
 				<h4 class="qak-short-hint title"><?php echo $string['hint_edit_chat_invite']; ?></h4>

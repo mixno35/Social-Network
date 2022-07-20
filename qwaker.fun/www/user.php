@@ -194,16 +194,16 @@
 											<online><?php echo $string_message_online; ?></online>
 										<?php } ?> -->
 										<?php if (intval($result_user['user_verification']) == 1) { ?>
-											<verification-user class="user">
+											<!-- <verification-user class="user">
 												<h5 class="verification-user">
 													<?php 
-														// $result_text_verification = str_replace('%1s', $result_user['login'], $string_message_user_verified);
-														// $result_text_verification = str_replace('%2s', getVerificationType($result_user['user_verification_type']), $result_text_verification);
-														// echo $result_text_verification; 
-													echo str_replace("%1s", $result_user['login'], $string['message_verify_user']);
+														$result_text_verification = str_replace('%1s', $result_user['login'], $string_message_user_verified);
+														$result_text_verification = str_replace('%2s', getVerificationType($result_user['user_verification_type']), $result_text_verification);
+														echo $result_text_verification; 
 													?>
 													</h5>
-											</verification-user>
+											</verification-user> -->
+											<span class="material-symbols-outlined verification">verified</span>
 										<?php } ?>
 										<?php if (intval($result_user['scam']) == 1) { ?>
 											<scam-user><?php echo $string['text_user_scam']; ?></scam-user>

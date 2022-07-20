@@ -23,11 +23,11 @@
 <html lang="<?php echo $langTAG; ?>" class="<?php echo $default_theme; ?>">
 <head>
 	<title><?php echo $string['title_dialog']; ?></title>
+	<link rel="stylesheet" type="text/css" href="<?php echo $default_theme_site; ?>dialog.css?v=<?php echo time(); ?>">
 	<?php include $_SERVER['DOCUMENT_ROOT'].'/vendor/page/style.php'; ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo $default_theme_site; ?>p.css?v=<?php echo time(); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo $default_theme_site; ?>user.css?v=<?php echo time(); ?>">
 	<link rel="shortcut icon" href="/assets/images/qak-favicon.png" type="image/png">
-	<link rel="stylesheet" type="text/css" href="<?php echo $default_theme_site; ?>dialog.css?v=<?php echo time(); ?>">
 	<?php include $_SERVER['DOCUMENT_ROOT'].'/vendor/page/script.php'; ?>
 	<?php include $_SERVER['DOCUMENT_ROOT'].'/vendor/page/meta.php'; ?>
 	<?php include $_SERVER['DOCUMENT_ROOT'].'/assets/js/u.php'; ?>
@@ -51,16 +51,22 @@
 
 	<?php if ($_COOKIE['USID'] !== '') { ?>
 
+		<?php if (isMobile()) { ?>
+			<h1 class="qak-title-page" onclick="window.history.back()"><?php echo $string['title_dialog']; ?></h1>
+		<?php } ?>
+
 		<center style="margin-top: 20px;">
-			<div class="qak-dialog-container-home">
-				<div class="container-data-1">
-					<div class="container-data-1-top">
-						<h1 class="title"><?php echo $string['title_dialog_small']; ?></h1>
+			<div class="qak-dialog-container-home d">
+				<?php if (!isMobile()) { ?>
+					<div class="container-data-1">
+						<div class="container-data-1-top">
+							<h1 class="title"><?php echo $string['title_dialog_small']; ?></h1>
+						</div>
+						<div id="container-data-1-content" class="scroll-new">
+							<h2 class="message"><?php echo $string['message_please_wait']; ?></h2>
+						</div>
 					</div>
-					<div id="container-data-1-content" class="scroll-new">
-						<h2 class="message"><?php echo $string['message_please_wait']; ?></h2>
-					</div>
-				</div>
+				<?php } ?>
 				<div class="container-data-2">
 					<div class="container-data-2-top" id="dialog-top-bar" style="display: none;">
 						<h1 id="dialog-top-bar-title"></h1>
@@ -136,7 +142,11 @@
 					document.getElementById('dialog-top-bar').style.display = 'none';
 					document.getElementById('dialog-bottom-bar').style.display = 'none';
 					loadMessages('');
-					loadDialogs();
+					<?php if (!isMobile()) { ?>
+						loadDialogs();
+					<?php } else { ?>
+						window.history.back();
+					<?php } ?>
 				} else {
 					if (dialogID != argument) {
 						$("#container-data-2-content").empty();
@@ -144,7 +154,9 @@
 
 						updParam('id', argument);
 						cancelReplyMessage();
-						loadDialogs();
+						<?php if (!isMobile()) { ?>
+							loadDialogs();
+						<?php } ?>
 						// loadMessages(argument);
 						try {
 							timeRepeat = setInterval(() => loadMessages(argument), <?php echo $interval_m; ?>);
@@ -359,7 +371,9 @@
 				}
 			}
 
-			loadDialogs();
+			<?php if (!isMobile()) { ?>
+				loadDialogs();
+			<?php } ?>
 		</script>
 		<script type="text/javascript">
 			function openMenuMessage(argument, argument2, argument3, argument4, argument5) {
@@ -519,8 +533,10 @@
 
 	<?php } ?>
 
-	<?php include $_SERVER['DOCUMENT_ROOT'].'/assets/design/bar.php'; ?>
-	<?php include $_SERVER['DOCUMENT_ROOT'].'/assets/design/holder.php'; ?>
+	<?php if (!isMobile()) { ?>
+		<?php include $_SERVER['DOCUMENT_ROOT'].'/assets/design/bar.php'; ?>
+		<?php include $_SERVER['DOCUMENT_ROOT'].'/assets/design/holder.php'; ?>
+	<?php } ?>
 
 </body>
 </html>

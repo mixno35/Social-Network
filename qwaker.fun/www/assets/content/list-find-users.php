@@ -46,7 +46,8 @@
 				<h2 class="find-users-title">
 					<?php echo $value['login']; ?>
 					<?php if (intval($value['verification']) == 1) { ?>
-						<verification-user></verification-user>
+						<!-- <verification-user></verification-user> -->
+						<span class="material-symbols-outlined verification">verified</span>
 					<?php } ?>
 				</h2>
 				<h2 class="find-users-subtitle">

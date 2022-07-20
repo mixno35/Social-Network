@@ -109,13 +109,16 @@ h2.qak-login-user {
 	text-align: left;
 	display: flex;
 	align-items: center;
-	/* overflow: hidden; */
+	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	line-height: 35px;
 	vertical-align: middle;
-	width: fit-content;
+	width: -webkit-fill-available;
 	position: relative;
+}
+h2.qak-login-user span.material-symbols-outlined.verification {
+	font-size: 21px;
 }
 h2.qak-name-user {
 	padding: 0;
@@ -182,7 +185,7 @@ div.qak-user-content-data {
 	margin: 0;
 	padding-top: 0;
 	width: -webkit-fill-available;
-text-align: left;}
+}
 
 center.qak-user-conent-data-top {
 	padding: 0px 15px;
@@ -233,10 +236,10 @@ button.user-account {
 verification-user.user {
 	padding: 8px;
 	margin-left: 4px;
-	margin-top: 2px;
+	/* margin-top: 2px; */
 	pointer-events: auto;
 	position: absolute;
-	right: -21px;
+	/* right: 0px; */
 	top: 11px;
 }
 verification-user.user:hover h5.verification-user {
@@ -244,7 +247,7 @@ verification-user.user:hover h5.verification-user {
 }
 h5.verification-user {
 	display: none;
-	padding: 0px 10px;
+	padding: 10px;
 	margin: 0;
 	position: absolute;
 	width: auto;

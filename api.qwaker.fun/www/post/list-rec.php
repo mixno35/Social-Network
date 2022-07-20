@@ -170,6 +170,10 @@
 		$array_my_emotion += array("shit"=>strval($my_emotion_shit));
 		// MY-EMOTIONS ---------------------------------------------------------------------------------------------------------------
 
+		$videoARRAY = json_encode(array(
+			"url" => strval($row['video1'])
+		), 128);
+
 		$num_posts = $num_posts - 1;
 		echo json_encode(array(
 			"id" => intval($row['id']),
@@ -179,13 +183,16 @@
 			"post_date_public" => strval($row['date_public']),
 			"post_date_view" => intval($row['date_view']),
 			"post_language" => strval($row['language']),
+			"post_type" => strval($row['type']),
 			"post_you" => intval($value_you),
+			"post_clip" => intval($row['clip']),
 			"post_comments" => intval(mysqli_num_rows($check_comments_post)),
 			"post_images" => json_encode($array_images),
 			"post_my_comment" => mysqli_num_rows($check_post_my_comment),
 			"post_views" => intval($row['views']),
 			"post_emotions" => json_decode(json_encode($array_emotions)),
 			"post_my_emotion" => json_decode(json_encode($array_my_emotion)),
+			"post_video" => json_decode($videoARRAY),
 			"user_id" => intval($user_post_id),
 			"user_login" => $user_post_login,
 			"user_name" => strval(htmlspecialchars($user_post_name)),

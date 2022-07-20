@@ -8,14 +8,14 @@
 	$result_user = json_decode(file_get_contents($url_user, false), true);
 
 	if ($result_user['private'] == 1) {
-		$message_lc_public = $string['message_link_contact_account_private'];
+		$message_lc_public = '<span class="material-symbols-outlined">lightbulb</span>'.$string['message_link_contact_account_private'];
 		$class_lc_public = 'info';
 	} else {
 		if ($result_user['show_url'] == 1) {
-			$message_lc_public = $string['message_link_contact_true_public'];
+			$message_lc_public = '<span class="material-symbols-outlined">done</span>'.$string['message_link_contact_true_public'];
 			$class_lc_public = 'success';
 		} else {
-			$message_lc_public = $string['message_link_contact_false_public'];
+			$message_lc_public = '<span class="material-symbols-outlined">link_off</span>'.$string['message_link_contact_false_public'];
 			$class_lc_public = 'error';
 		}
 	}

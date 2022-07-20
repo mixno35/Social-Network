@@ -43,7 +43,8 @@
 								<h2>
 									<?php echo $value['user_login']; ?>
 									<?php if (intval($value['user_verification']) == 1) { ?>
-										<verification-user></verification-user>
+										<!-- <verification-user></verification-user> -->
+										<span class="material-symbols-outlined verification">verified</span>
 									<?php } ?>
 									<!-- <font class="date"><?php echo str_replace('%1s', convertTimeRus($value['follow_date_confirm']), $string['text_confirmed_follow']); ?></font> -->
 									<font class="date"><?php echo convertTimeRus($value['follow_date_confirm']); ?></font>

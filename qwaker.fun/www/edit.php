@@ -47,19 +47,24 @@
 				<center style="margin: 20px 0;">
 					<ul class="tablayout-qak" >
 						<div class="tl" id="tl-item-default" tooltip="<?php echo $string['edit_title_1']; ?>" onclick="swipePage('default')">
-							<div class="tl-item default"></div>
+							<!-- <div class="tl-item default"></div> -->
+							<span class="material-symbols-outlined">sort</span>
 						</div>
 						<div class="tl" id="tl-item-link" tooltip="<?php echo $string['edit_title_4']; ?>" onclick="swipePage('link')">
-							<div class="tl-item link"></div>
+							<!-- <div class="tl-item link"></div> -->
+							<span class="material-symbols-outlined">link</span>
 						</div>
 						<div class="tl" id="tl-item-account" tooltip="<?php echo $string['edit_title_3']; ?>" onclick="swipePage('account')">
-							<div class="tl-item account"></div>
+							<!-- <div class="tl-item account"></div> -->
+							<span class="material-symbols-outlined">person</span>
 						</div>
 						<div class="tl" id="tl-item-secure" tooltip="<?php echo $string['edit_title_2']; ?>" onclick="swipePage('secure')">
-							<div class="tl-item secure"></div>
+							<!-- <div class="tl-item secure"></div> -->
+							<span class="material-symbols-outlined">lock</span>
 						</div>
 						<div class="tl" id="tl-item-private" tooltip="<?php echo $string['edit_title_5']; ?>" onclick="swipePage('private')">
-							<div class="tl-item private"></div>
+							<!-- <div class="tl-item private"></div> -->
+							<span class="material-symbols-outlined">security</span>
 						</div>
 					</ul>
 				</center>

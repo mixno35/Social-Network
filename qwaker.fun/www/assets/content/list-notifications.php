@@ -109,7 +109,7 @@
     <?php if (sizeof($result_notifications) > 0) { ?>
         
         <?php $num_n = intval(sizeof($result_notifications)); ?>
-        <div class="qak-popup-alert-container scroll-new" <?php if (isMobile()) { ?>style="height: auto;min-height: auto;max-height: auto;"<?php } ?>>
+        <div class="qak-popup-alert-container scroll-new">
             <?php if (is_array($result_notifications)) { ?>
                 <?php foreach($result_notifications as $key => $value) { ?>
                     <?php $num_n = $num_n - 1; ?>
@@ -141,6 +141,10 @@
                                 $result_message = str_replace('%2s', $value['notify_message'], $result_message);
                                 $result_message = str_replace('%3s', get_browser_name($value['notify_message2']), $result_message);
                                 $result_message = str_replace('%4s', getSocialNetwork($value['notify_message3']), $result_message);
+                            }
+
+                            if ($notify_category == 'admin') {
+                                $result_title = $string['notification_name_system_admin'];
                             }
                         }
 
@@ -208,8 +212,7 @@
                             $result_avatar = $result_avatar;
 
                             if ($notify_category == 'like') {
-                                // $result_title = $string['notification_name_comment_like'];
-                                $result_title = '@'.$value['user_login'];
+                                $result_title = $string['notification_name_comment_like'];
                                 $result_message = str_replace('%1s', '@'.strval($value['user_login']), $string['notification_message_comment_like']);
                                 $result_message = str_replace('%2s', '<post-l onclick="goAlertPost(\''.$value['notify_message'].'\', \''.$value['notify_message2'].'\')">'.$value['notify_message3'].'</post-l>', $result_message);
                             }

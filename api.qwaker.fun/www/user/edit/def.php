@@ -26,7 +26,7 @@
 	$name = trim(mysqli_real_escape_string($connect, $_POST['name']));
 	$email = trim(mysqli_real_escape_string($connect, $_POST['email']));
 	$nickname = trim(strtolower(mysqli_real_escape_string($connect, $_POST['nickname'])));
-	$about = trim(strtolower(mysqli_real_escape_string($connect, $_POST['about'])));
+	$about = trim(mysqli_real_escape_string($connect, $_POST['about']));
 
 	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
 	if (mysqli_num_rows($checkSESSION) > 0) {

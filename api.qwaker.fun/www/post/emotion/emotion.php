@@ -20,6 +20,7 @@
 <?php
 	$token = trim(mysqli_real_escape_string($connect, $_POST['token']));
 	$id = trim(mysqli_real_escape_string($connect, $_POST['id']));
+	$type = trim(mysqli_real_escape_string($connect, $_POST['type']));
 
 	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
 	if (mysqli_num_rows($checkSESSION) > 0) {
@@ -39,6 +40,7 @@
 		$post_id = intval($post['id']);
 		$post_user_id = intval($post['user_id']);
 		$post_message = strval($post['message']);
+		$post_category = intval($post['category']);
 	} else {
 		$check_post = mysqli_query($connect, "SELECT * FROM `posts` WHERE `post_id` = '$id' LIMIT 1");
 		if (mysqli_num_rows($check_post) > 0) {
@@ -46,6 +48,7 @@
 			$post_id = intval($post['id']);
 			$post_user_id = intval($post['user_id']);
 			$post_message = strval($post['message']);
+			$post_category = intval($post['category']);
 		}
 	}
 ?>
@@ -82,54 +85,65 @@
 	}
 ?>
 <?php
-	if (mysqli_num_rows($check_post) == 0) {
+	if ($type == 'like' or $type == 'dislike' or $type == 'heart' or $type == 'respect' or $type == 'shit') {} else {
 		echo normJsonStr(json_encode(array(
-			"id" => "id_post_empty",
+			"id" => "id_emotion_unknown",
 			"type" => "error", 
-			"task" => "post:remove:empty", 
-			"camp" => "user", 
-			"message" => 'Такой записи не существует!',
-			"error_value" => $id,
-			"time" => $serverTIME
-		)));
-		exit();
-	}
-
-	if ($user_id == $post_user_id) {} else {
-		echo normJsonStr(json_encode(array(
-			"id" => "id_post_empty",
-			"type" => "error", 
-			"task" => "post:archive:empty2", 
-			"camp" => "user", 
-			"message" => 'Ошибка доступа к записи!',
-			"error_value" => $id,
+			"task" => "emotion:unknown", 
+			"camp" => "server", 
+			"message" => 'Вы не можете использовать эту эмоцию. Оставьте другую!',
 			"time" => $serverTIME
 		)));
 		exit();
 	}
 ?>
 <?php
-	if (mysqli_query($connect, "UPDATE `posts` SET `date_view`=0 WHERE `user_id`='$user_id' AND `id`='$id'")) {
-		echo normJsonStr(json_encode(array(
-			"id" => "id_post_deffred_public_success",
-			"type" => "success", 
-			"task" => "post:deffred-public:success", 
-			"camp" => "server", 
-			"message" => 'Запись успешно опубликована!',
-			"error_value" => $id,
-			"time" => $serverTIME
-		)));
-		exit();
+	$check_my_emotion = mysqli_query($connect, "SELECT * FROM `post_emotions` WHERE `pid` = '$post_id' AND `uid` = '$user_id' AND `type` = '$type' LIMIT 1");
+	if (mysqli_num_rows($check_my_emotion) > 0) {
+		if (mysqli_query($connect, "DELETE FROM `post_emotions` WHERE `pid` = '$post_id' AND `uid` = '$user_id' AND `type` = '$type'")) {
+			echo normJsonStr(json_encode(array(
+				"id" => "id_emotion_delete_".$type."_success",
+				"type" => "success", 
+				"task" => "emotion:delete:".$type.":success", 
+				"camp" => "server", 
+				"message" => 'Вы отменили свою эмоцию!',
+				"time" => $serverTIME
+			)));
+			exit();
+		}
 	} else {
-		echo normJsonStr(json_encode(array(
-			"id" => "id_post_deffred_public_error",
-			"type" => "error", 
-			"task" => "post:deffred-public:error", 
-			"camp" => "server", 
-			"message" => 'Нам не удалось опубликовать эту запись. Попробуйте позже!',
-			"error_value" => $id,
-			"time" => $serverTIME
-		)));
-		exit();
+		if (mysqli_query($connect, "INSERT INTO `post_emotions`(`pid`, `uid`, `type`, `date_pub`) VALUES ('$post_id', '$user_id', '$type', '$timeUSER')")) {
+			echo normJsonStr(json_encode(array(
+				"id" => "id_emotion_set_".$type."_success",
+				"type" => "success", 
+				"task" => "emotion:set:".$type.":success", 
+				"camp" => "server", 
+				"message" => 'Вы оставили эмоцию!',
+				"time" => $serverTIME
+			)));
+
+			if ($post['user_id'] == $user['id']) {} else {
+				mysqli_query($connect, "INSERT INTO `notifications`(`user_id`, `sender_id`, `type`, `category`, `message`, `message2`, `message3`, `date_public`) VALUES ('$post_user_id', '$user_id', 'post', 'emotion', '$post_id', '$post_message', '$type', '$serverTIME')");
+			}
+
+			$check_post_category = mysqli_query($connect, "SELECT * FROM `post_category_favourites` WHERE `uid` = '$user_id' AND `category` = '$post_category' LIMIT 1");
+			if (mysqli_num_rows($check_post_category) > 0) {} else {
+				if ($post_category == 0 or $post_category == 999) {} else {
+					mysqli_query($connect, "INSERT INTO `post_category_favourites`(`uid`, `category`, `time`) VALUES ('$user_id', '$post_category', '$timeUSER')");
+				}
+			}
+
+			exit();
+		}
 	}
+
+	echo normJsonStr(json_encode(array(
+		"id" => "id_emotion_error",
+		"type" => "error", 
+		"task" => "emotion:error", 
+		"camp" => "server", 
+		"message" => 'Ошибка. Повторите попытку позже!',
+		"time" => $serverTIME
+	)));
+	exit();
 ?>

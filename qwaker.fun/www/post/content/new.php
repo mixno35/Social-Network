@@ -16,6 +16,7 @@
 			<div>
 				<input type="title" name="title" id="title-new-post" class="qak-input-post" placeholder="<?php echo $string['hint_post_title']; ?>" style="display: none;">
 				<input type="file" name="pic[]" id="pic" multiple="3" onchange="updPreview(this)" accept=".jpg, .jpeg, .png" style="display: none;">
+				<input type="file" name="vid[]" id="vid" multiple="1" onchange="updPreviewVid(this)" accept=".mp4" style="display: none;">
 				<textarea class="qak-textarea-post" id="message-new-post" placeholder="<?php echo $string['hint_post_message']; ?>"></textarea>
 				<?php if ($result_user_post_c['public_post'] == 1) { ?>
 					<div class="qak-post-div-cntr-bottom">
@@ -51,52 +52,92 @@
 							<li class="category-post" id="category999" onclick="chooseCategory(999, this.textContent, this.id)"><?php echo $string['post_category_999']; ?></li>
 						</ol>
 						<!-- <help-m data-tooltip="<?php echo $string_help_post_category; ?>" data-tooltip-position="bottom">?</help-m> -->
-						<div style="width: -webkit-fill-available;"></div>
-						<div style="position: relative;">
-							<div style="display: flex;align-items: center;">
-								<div class="qak-action-deffred-post" onclick="closePopups();popupWindow('post-deffred-popup')" title="<?php echo $string['tooltip_post_deffred']; ?>" ></div>
-								<div class="qak-action-picture-add" onclick="closePopups();popupWindow('post-pic-list-popup')" title="<?php echo $string['tooltip_post_add_image']; ?>"></div>
-							</div>
-							<ol class="popup arrow post-pic-list-popup" id="post-pic-list-popup" style="display: none;" onclick="document.getElementById('pic').click(); event.stopPropagation();event.preventDefault()">
-								<div>
-									<img src="" class="post-pic-item" id="post-pic-item-1" src="/assets/images/qak-avatar-add-image.png">
-									<img src="" class="post-pic-item" id="post-pic-item-2" src="/assets/images/qak-avatar-add-image.png">
-									<img src="" class="post-pic-item" id="post-pic-item-3" src="/assets/images/qak-avatar-add-image.png">
+						<div class="cont-bottom-act-new-post">
+							<span class="material-symbols-outlined" onclick="openclosePutDocs()" title="<?php echo $string['tooltip_click_put_docs']; ?>">attach_file</span>
+							<!-- <div style="position: relative;">
+								<div style="display: flex;align-items: center;">
+									<div class="qak-action-post video" onclick="closePopups();popupWindow('post-deffred-popup')" title="<?php echo $string['tooltip_post_video']; ?>" ></div>
+									<div class="qak-action-post deffred" onclick="closePopups();popupWindow('post-deffred-popup')" title="<?php echo $string['tooltip_post_deffred']; ?>" ></div>
+									<div class="qak-action-post picture-add" onclick="closePopups();popupWindow('post-pic-list-popup')" title="<?php echo $string['tooltip_post_add_image']; ?>"></div>
 								</div>
-							</ol>
-							<ol class="popup arrow post-deffred-popup" id="post-deffred-popup" style="display: none;" onclick="event.stopPropagation();event.preventDefault()">
-								<div class="post-deffred-ddd-ttt">
-									<h2 class="post-deffred-ddd"><?php echo $string['short_text_day']; ?></h2>
-									<h2 class="post-deffred-ddd"><?php echo $string['short_text_month']; ?></h2>
-									<h2 class="post-deffred-ddd"><?php echo $string['short_text_year']; ?></h2>
-								</div>
-								<div class="post-deffred-ddd-ccc">
-									<input type="number" class="post-deffred-ddd" value="<?php echo date('d'); ?>" id="post-deffred-day" maxlength="2" max="31" min="1">
-									<input type="number" class="post-deffred-ddd" value="<?php echo date('m'); ?>" id="post-deffred-month" maxlength="2" max="12" min="1">
-									<input type="number" class="post-deffred-ddd" value="<?php echo date('Y'); ?>" id="post-deffred-year" maxlength="4" minlength="4" max="<?php echo date('Y')+1; ?>" min="<?php echo date('Y'); ?>">
-								</div>
-								<div class="post-deffred-ddd-ttt">
-									<h2 class="post-deffred-ddd"><?php echo $string['short_text_hour']; ?></h2>
-									<h2 class="post-deffred-ddd"><?php echo $string['short_text_minute']; ?></h2>
-									<h2 class="post-deffred-ddd"><?php echo $string['short_text_second']; ?></h2>
-								</div>
-								<div class="post-deffred-ddd-ccc">
-									<input type="number" class="post-deffred-ddd" value="<?php echo date('H'); ?>" id="post-deffred-hour" maxlength="2" max="23" min="0">
-									<input type="number" class="post-deffred-ddd" value="<?php echo date('i'); ?>" id="post-deffred-min" maxlength="2" max="59" min="0">
-									<input type="number" class="post-deffred-ddd" value="<?php echo date('s'); ?>" id="post-deffred-sec" maxlength="2" max="59" min="0">
-								</div>
-								<hr class="post-deffred-divider">
-								<button class="post-deffred-aply" onclick="setTimeDeffPost()"><?php echo $string['action_post_deffred_apply']; ?></button>
-								<button class="border post-deffred-aply" onclick="deleteTimeDeffPost()"><?php echo $string['action_post_deffred_cancel']; ?></button>
-							</ol>
-							<script type="text/javascript">
-								
-							</script>
+								<ol class="popup arrow post-pic-list-popup" id="post-pic-list-popup" style="display: none;" onclick="document.getElementById('pic').click(); event.stopPropagation();event.preventDefault()">
+									<div>
+										<img src="" class="post-pic-item" id="post-pic-item-1" src="/assets/images/qak-avatar-add-image.png">
+										<img src="" class="post-pic-item" id="post-pic-item-2" src="/assets/images/qak-avatar-add-image.png">
+										<img src="" class="post-pic-item" id="post-pic-item-3" src="/assets/images/qak-avatar-add-image.png">
+									</div>
+								</ol>
+								<ol class="popup arrow post-deffred-popup" id="post-deffred-popup" style="display: none;" onclick="event.stopPropagation();event.preventDefault()">
+									<div class="post-deffred-ddd-ttt">
+										<h2 class="post-deffred-ddd"><?php echo $string['short_text_day']; ?></h2>
+										<h2 class="post-deffred-ddd"><?php echo $string['short_text_month']; ?></h2>
+										<h2 class="post-deffred-ddd"><?php echo $string['short_text_year']; ?></h2>
+									</div>
+									<div class="post-deffred-ddd-ccc">
+										<input type="number" class="post-deffred-ddd" value="<?php echo date('d'); ?>" id="post-deffred-day" maxlength="2" max="31" min="1">
+										<input type="number" class="post-deffred-ddd" value="<?php echo date('m'); ?>" id="post-deffred-month" maxlength="2" max="12" min="1">
+										<input type="number" class="post-deffred-ddd" value="<?php echo date('Y'); ?>" id="post-deffred-year" maxlength="4" minlength="4" max="<?php echo date('Y')+1; ?>" min="<?php echo date('Y'); ?>">
+									</div>
+									<div class="post-deffred-ddd-ttt">
+										<h2 class="post-deffred-ddd"><?php echo $string['short_text_hour']; ?></h2>
+										<h2 class="post-deffred-ddd"><?php echo $string['short_text_minute']; ?></h2>
+										<h2 class="post-deffred-ddd"><?php echo $string['short_text_second']; ?></h2>
+									</div>
+									<div class="post-deffred-ddd-ccc">
+										<input type="number" class="post-deffred-ddd" value="<?php echo date('H'); ?>" id="post-deffred-hour" maxlength="2" max="23" min="0">
+										<input type="number" class="post-deffred-ddd" value="<?php echo date('i'); ?>" id="post-deffred-min" maxlength="2" max="59" min="0">
+										<input type="number" class="post-deffred-ddd" value="<?php echo date('s'); ?>" id="post-deffred-sec" maxlength="2" max="59" min="0">
+									</div>
+									<hr class="post-deffred-divider">
+									<button class="post-deffred-aply" onclick="setTimeDeffPost()"><?php echo $string['action_post_deffred_apply']; ?></button>
+									<button class="border post-deffred-aply" onclick="deleteTimeDeffPost()"><?php echo $string['action_post_deffred_cancel']; ?></button>
+								</ol>
+								<script type="text/javascript">
+									
+								</script>
+							</div> -->
+							<center style="margin: 0;margin-top: 20px;display: none;align-items: center;justify-content: center;" id="p-s">
+								<div id="qak-progress-div" class="qak-progress-div" style="margin: 0;margin-top: -19px;width: 128px;"><div style="margin: 0;" id="qak-progress-bar" class="qak-progress-bar"></div></div>
+							</center>
+							<button id="btn-pub" class="qak-button-public-post <?php if ($result_user_post_c['public_post'] == 0) { echo 'border'; } ?>" <?php if ($result_user_post_c['public_post'] == 1) { ?>onclick="goPublicPost()"<?php } else { echo 'disabled'; } ?>><?php if ($result_user_post_c['public_post'] == 1) { echo $string['action_post_public']; } else { echo $string['action_post_public_disable']; } ?></button>
 						</div>
-						<center style="margin: 0;margin-top: 20px;display: none;align-items: center;justify-content: center;" id="p-s">
-							<div id="qak-progress-div" class="qak-progress-div" style="margin: 0;margin-top: -19px;width: 128px;"><div style="margin: 0;" id="qak-progress-bar" class="qak-progress-bar"></div></div>
-						</center>
-						<button id="btn-pub" class="qak-button-public-post <?php if ($result_user_post_c['public_post'] == 0) { echo 'border'; } ?>" <?php if ($result_user_post_c['public_post'] == 1) { ?>onclick="goPublicPost()"<?php } else { echo 'disabled'; } ?>><?php if ($result_user_post_c['public_post'] == 1) { echo $string['action_post_public']; } else { echo $string['action_post_public_disable']; } ?></button>
+						<div class="qak-post-put-docs" id="put-docs" style="display: none;">
+							<h2><?php echo $string['title_put_docs']; ?></h2>
+							<div class="cont-m border">
+								<h4><?php echo $string['title_put_docs_images']; ?></h4>
+								<ul onclick="document.getElementById('pic').click()">
+									<li>
+										<img src="" class="post-pic-item" id="post-pic-item-1" src="/assets/images/qak-avatar-add-image.png">
+										<h6 id="post-pic-text-item-1"><?php echo $string['text_put_docs_no_image']; ?></h6>
+										<span class="material-symbols-outlined" id="post-pic-prev-1" onclick="previewPhoto(document.getElementById('pic'), 0)" title="<?php echo $string['tooltip_preview']; ?>">visibility</span>
+										<span class="material-symbols-outlined" id="post-pic-rem-1" onclick="removeImage(document.getElementById('pic'), 0)">close</span>
+									</li>
+									<li>
+										<img src="" class="post-pic-item" id="post-pic-item-2" src="/assets/images/qak-avatar-add-image.png">
+										<h6 id="post-pic-text-item-2"><?php echo $string['text_put_docs_no_image']; ?></h6>
+										<span class="material-symbols-outlined" id="post-pic-prev-2" onclick="previewPhoto(document.getElementById('pic'), 1)" title="<?php echo $string['tooltip_preview']; ?>">visibility</span>
+										<span class="material-symbols-outlined" id="post-pic-rem-2" onclick="removeImage(document.getElementById('pic'), 1)">close</span>
+									</li>
+									<li>
+										<img src="" class="post-pic-item" id="post-pic-item-3" src="/assets/images/qak-avatar-add-image.png">
+										<h6 id="post-pic-text-item-3"><?php echo $string['text_put_docs_no_image']; ?></h6>
+										<span class="material-symbols-outlined" id="post-pic-prev-3" onclick="previewPhoto(document.getElementById('pic'), 2)" title="<?php echo $string['tooltip_preview']; ?>">visibility</span>
+										<span class="material-symbols-outlined" id="post-pic-rem-3" onclick="removeImage(document.getElementById('pic'), 2)">close</span>
+									</li>
+								</ul>
+							</div>
+							<div class="cont-m border">
+								<h4><?php echo $string['title_put_docs_videos']; ?></h4>
+								<ul onclick="document.getElementById('vid').click()">
+									<li>
+										<img src="" class="post-vid-item" id="post-vid-item-1" src="/assets/images/qak-avatar-add-video.png">
+										<h6 id="post-vid-text-item-1"><?php echo $string['text_put_docs_no_video']; ?></h6>
+										<span class="material-symbols-outlined" id="post-vid-rem-1">close</span>
+									</li>
+									<input onclick="event.stopPropagation();event.preventDefault()" type="search" name="" placeholder="https://youtube.com?v=video" id="youtube">
+								</ul>
+							</div>
+						</div>
 					</div>
 				<?php } else { ?>
 					<h3 class="message-short"><?php echo $string['message_public_post_off']; ?></h3>
@@ -124,6 +165,14 @@
 		// if (document.getElementById('post-category-popup').style.display != 'none') {
 		// 	popupWindow('post-category-popup');
 		// }
+	}
+
+	function openclosePutDocs() {
+		if (document.getElementById('put-docs').style.display == 'block') {
+			document.getElementById('put-docs').style.display = 'none';
+		} else {
+			document.getElementById('put-docs').style.display = 'block';
+		}
 	}
 </script>
 
@@ -159,18 +208,22 @@
 			// return;
 
 			var arguments = document.getElementById('title-new-post').value;
+			var arguments3 = document.getElementById('youtube').value;
 			var arguments2 = document.getElementById('message-new-post').value;
 			var fl = document.getElementById('pic');
+			var vd = document.getElementById('vid');
 			var formdata = new FormData();
 
 			formdata.append('title', arguments);
 			formdata.append('message', arguments2);
 			formdata.append('category', category_result);
 			formdata.append('deffred', time_post_deff);
+			formdata.append('youtube', arguments3);
 			formdata.append('token', '<?php echo $_COOKIE['USID']; ?>');
 			formdata.append('image1[]', fl.files[0]);
 			formdata.append('image2[]', fl.files[1]);
 			formdata.append('image3[]', fl.files[2]);
+			formdata.append('video1', vd.files[0]);
 
 			if (arguments2 != '') {
 				document.getElementById('p-s').style.display = 'flex';
@@ -230,20 +283,64 @@
 		}
 
 		updPreview(null);
+		updPreviewVid(null);
+
+		function removeImage(argument, argument2) {
+			// console.log(argument);
+			event.stopPropagation();
+			event.preventDefault();
+			argument.files[argument2].value = '';
+			updPreview(argument);
+		}
+
+		function previewPhoto(argument, argument2) {
+			viewPhoto(window.URL.createObjectURL(argument.files[argument2]));
+		}
 
 		function updPreview(argument) {
 			try {
 				document.getElementById('post-pic-item-1').src = window.URL.createObjectURL(argument.files[0]);
+				document.getElementById('post-pic-text-item-1').textContent = argument.files[0].name;
+				document.getElementById('post-pic-rem-1').style.display = 'block';
+				document.getElementById('post-pic-prev-1').style.display = 'block';
 			} catch (exx) {
 				document.getElementById('post-pic-item-1').src = '/assets/images/qak-avatar-add-image.png';
+				document.getElementById('post-pic-text-item-1').textContent = "<?php echo $string['text_put_docs_no_image']; ?>";
+				document.getElementById('post-pic-rem-1').style.display = 'none';
+				document.getElementById('post-pic-prev-1').style.display = 'none';
 			} try {
 				document.getElementById('post-pic-item-2').src = window.URL.createObjectURL(argument.files[1]);
+				document.getElementById('post-pic-text-item-2').textContent = argument.files[1].name;
+				document.getElementById('post-pic-rem-2').style.display = 'block';
+				document.getElementById('post-pic-prev-2').style.display = 'block';
 			} catch (exx) {
 				document.getElementById('post-pic-item-2').src = '/assets/images/qak-avatar-add-image.png';
+				document.getElementById('post-pic-text-item-2').textContent = "<?php echo $string['text_put_docs_no_image']; ?>";
+				document.getElementById('post-pic-rem-2').style.display = 'none';
+				document.getElementById('post-pic-prev-2').style.display = 'none';
 			} try {
 				document.getElementById('post-pic-item-3').src = window.URL.createObjectURL(argument.files[2]);
+				document.getElementById('post-pic-text-item-3').textContent = argument.files[2].name;
+				document.getElementById('post-pic-rem-3').style.display = 'block';
+				document.getElementById('post-pic-prev-3').style.display = 'block';
 			} catch (exx) {
 				document.getElementById('post-pic-item-3').src = '/assets/images/qak-avatar-add-image.png';
+				document.getElementById('post-pic-text-item-3').textContent = "<?php echo $string['text_put_docs_no_image']; ?>";
+				document.getElementById('post-pic-rem-3').style.display = 'none';
+				document.getElementById('post-pic-prev-3').style.display = 'none';
+			}
+		}
+
+		function updPreviewVid(argument) {
+			try {
+				// document.getElementById('post-vid-item-1').src = window.URL.createObjectURL(argument.files[0]);
+				document.getElementById('post-vid-item-1').src = '/assets/images/qak-avatar-add-video.png';
+				document.getElementById('post-vid-text-item-1').textContent = argument.files[0].name;
+				document.getElementById('post-vid-rem-1').style.display = 'block';
+			} catch (exx) {
+				document.getElementById('post-vid-item-1').src = '/assets/images/qak-avatar-add-video.png';
+				document.getElementById('post-vid-text-item-1').textContent = "<?php echo $string['text_put_docs_no_video']; ?>";
+				document.getElementById('post-vid-rem-1').style.display = 'none';
 			}
 		}
 	</script>

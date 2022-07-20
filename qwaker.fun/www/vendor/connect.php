@@ -9,5 +9,5 @@
 	$useragent = $_SERVER['HTTP_USER_AGENT'];
 	$domain = $_SERVER['SERVER_NAME'];
 	$timeUSER = time();
-	$emailSENDER = 'no-reply@qwaker.fun';
+	$emailSENDER = 'no-reply@qwaker.net';
 ?>

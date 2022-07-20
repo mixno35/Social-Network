@@ -1,10 +1,10 @@
 <?php
 	$default_theme = 'theme-default-light';
 	$default_theme_site = '/assets/css/';
-	$default_api = 'http://api.qwaker.net';
-	$default_api2 = 'http://api.qwaker.net';
-	$default_domain = 'http://qwaker.net';
-	$default_name = 'QWAKER.net';
+	$default_api = 'https://api.qwaker.fun';
+	$default_api2 = 'http://api.qwaker.fun';
+	$default_domain = 'https://qwaker.fun';
+	$default_name = 'QWAKER.fun';
 ?>
 <?php if (trim($_COOKIE['color-scheme'])) {
 	$default_theme = $_COOKIE['color-scheme'];

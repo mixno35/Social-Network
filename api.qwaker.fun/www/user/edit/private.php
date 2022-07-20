@@ -24,7 +24,7 @@
 	$show_url = trim(mysqli_real_escape_string($connect, $_POST['show_url']));
 	$find_me = trim(mysqli_real_escape_string($connect, $_POST['find_me']));
 	$private_message = trim(mysqli_real_escape_string($connect, $_POST['private_message']));
-	$chat_invite = trim(mysqli_real_escape_string($connect, $_POST['chat_invite']));
+	// $chat_invite = trim(mysqli_real_escape_string($connect, $_POST['chat_invite']));
 
 	$checkSESSION = mysqli_query($connect, "SELECT * FROM `user_sessions` WHERE `sid` = '$token' LIMIT 1");
 	if (mysqli_num_rows($checkSESSION) > 0) {
@@ -134,18 +134,18 @@
 		exit();
 	}
 
-	if ($chat_invite == 'true' or $chat_invite == 'false') {} else {
-		echo normJsonStr(json_encode(array(
-			"id" => "id_private_edit_unvalid",
-			"type" => "error", 
-			"task" => "user:edit:chat_invite", 
-			"camp" => "user", 
-			"message" => 'Недопустимое значение для функции: [chat_invite]!',
-			"error_value" => $chat_invite,
-			"time" => $serverTIME
-		)));
-		exit();
-	}
+	// if ($chat_invite == 'true' or $chat_invite == 'false') {} else {
+	// 	echo normJsonStr(json_encode(array(
+	// 		"id" => "id_private_edit_unvalid",
+	// 		"type" => "error", 
+	// 		"task" => "user:edit:chat_invite", 
+	// 		"camp" => "user", 
+	// 		"message" => 'Недопустимое значение для функции: [chat_invite]!',
+	// 		"error_value" => $chat_invite,
+	// 		"time" => $serverTIME
+	// 	)));
+	// 	exit();
+	// }
 
 	if ($online == 'true') {
 		$online = 1;
@@ -177,20 +177,20 @@
 		$private_message = 0;
 	} 
 
-	if ($chat_invite == 'true') {
-		$chat_invite = 1;
-	} if ($chat_invite == 'false') {
-		$chat_invite = 0;
-	} 
+	// if ($chat_invite == 'true') {
+	// 	$chat_invite = 1;
+	// } if ($chat_invite == 'false') {
+	// 	$chat_invite = 0;
+	// } 
 
-	if (mysqli_query($connect, "UPDATE `users` SET `show_online`='$online', `private`='$private', `show_url`='$show_url', `find_me`='$find_me', `private_message`='$private_message', `chat_invite`='$chat_invite' WHERE `id`='$user_id'")) {
+	if (mysqli_query($connect, "UPDATE `users` SET `show_online`='$online', `private`='$private', `show_url`='$show_url', `find_me`='$find_me', `private_message`='$private_message' WHERE `id`='$user_id'")) {
 		echo normJsonStr(json_encode(array(
 			"id" => "id_edit_success",
 			"type" => "success", 
 			"task" => "user:edit:success", 
 			"camp" => "server", 
 			"message" => 'Изменения успешно сохранены!',
-			"error_value" => $online.' | '.$private.' | '.$show_url.' | '.$find_me.' | '.$private_message.' | '.$chat_invite,
+			"error_value" => $online.' | '.$private.' | '.$show_url.' | '.$find_me.' | '.$private_message,
 			"time" => $serverTIME
 		)));
 		exit();
@@ -201,7 +201,7 @@
 			"task" => "user:edit:error", 
 			"camp" => "server", 
 			"message" => 'Нам не удалось сохранить изменения. Повторите попытку позже!',
-			"error_value" => $online.' | '.$private.' | '.$show_url.' | '.$find_me.' | '.$private_message.' | '.$chat_invite,
+			"error_value" => $online.' | '.$private.' | '.$show_url.' | '.$find_me.' | '.$private_message,
 			"time" => $serverTIME
 		)));
 		exit();
